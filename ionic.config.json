@@ -1,6 +1,8 @@
 {
   "name": "Seize",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular",
   "id": "6ebe47be"
 }
