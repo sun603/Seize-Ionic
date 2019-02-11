@@ -40,25 +40,25 @@ app.use(function(err, req, res, next) {
 
 var mysql = require('mysql');
 
-var pool        = mysql.createPool({
-  connectionLimit : 10, // default = 10
-  host            : 'cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com',
-  user            : 'shao44',
-  password        : 'ShaoZH0923?',
-  database        : 'cs307_sp19_team31'
+var con = mysql.createConnection({
+  host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+  user: "shao44",
+  password: "ShaoZH0923?",
+  database: "cs307_sp19_team31"
 });
 
-app.get('/', function (req, res) {
-  pool.getConnection(function (err, connection) {
-    connection.query("SELECT * FROM userlogin", function (err, rows) {
-      connection.release();
-      if (err) throw err;
-
-      console.log(rows.length);
-      res.send(JSON.stringify(rows));
-    });
+var sql = "SELECT * from userlogin";
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected");
+  con.query(sql, function(err, result) {
+    if (err) throw err;
+    console.log(result);
+    console.log('uid:      ',result[0].uid);
+    console.log('username: ',result[0].username);
+    console.log('pswd:     ',result[0].pswd);
+    console.log('email:    ',result[0].email);
   });
 });
-
 
 module.exports = app;
