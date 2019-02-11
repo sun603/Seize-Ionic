@@ -38,5 +38,18 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+var mysql      = require('mysql');
+var connection = mysql.createConnection({
+  host     : 'cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com',
+  user     : 'shao44',
+  password : 'ShaoZH0923?',
+  database : 'cs307_sp19_team31'
+});
+
+connection.connect();
+
+connection.query()
+
+connection.end();
 
 module.exports = app;
