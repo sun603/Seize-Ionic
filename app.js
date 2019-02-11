@@ -38,23 +38,27 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-var mysql      = require('mysql');
-var connection = mysql.createConnection({
-  host     : 'cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com',
-  user     : 'shao44',
-  password : 'ShaoZH0923?',
-  database : 'cs307_sp19_team31'
+var mysql = require('mysql');
+
+var pool        = mysql.createPool({
+  connectionLimit : 10, // default = 10
+  host            : 'cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com',
+  user            : 'shao44',
+  password        : 'ShaoZH0923?',
+  database        : 'cs307_sp19_team31'
 });
 
-connection.query('SELECT * from userlogin', function(err, rows, fields) {
-  if (err) throw err;
-  console.log('query success');
+app.get('/', function (req, res) {
+  pool.getConnection(function (err, connection) {
+    connection.query("SELECT * FROM userlogin", function (err, rows) {
+      connection.release();
+      if (err) throw err;
+
+      console.log(rows.length);
+      res.send(JSON.stringify(rows));
+    });
+  });
 });
 
-connection.connect();
-
-connection.query()
-
-connection.end();
 
 module.exports = app;
