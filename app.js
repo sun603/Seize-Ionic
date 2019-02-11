@@ -46,6 +46,11 @@ var connection = mysql.createConnection({
   database : 'cs307_sp19_team31'
 });
 
+connection.query('SELECT * from userlogin', function(err, rows, fields) {
+  if (err) throw err;
+  console.log('query success');
+});
+
 connection.connect();
 
 connection.query()
