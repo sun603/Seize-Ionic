@@ -1,4 +1,4 @@
-/* ===== username and password login ===== */
+/* ===== email and password login ===== */
 
 var express = require('express');
 var router = express.Router();
@@ -7,10 +7,10 @@ var return_respond = "";
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-    var username = req.query.username;
+    var email = req.query.email;
     var password = req.query.password;
     //res.send('respond with a resource');
-    console.log('username: ', username);
+    console.log('email: ', email);
     console.log('password: ', password);
 
     var con = mysql.createConnection({
@@ -20,8 +20,8 @@ router.get('/', function(req, res, next) {
         database: "cs307_sp19_team31"
     });
 
-    var sql = "SELECT * FROM userlogin WHERE username = \"";
-    sql = sql + username;
+    var sql = "SELECT * FROM userlogin WHERE email = \"";
+    sql = sql + email;
     sql = sql + "\" AND pswd = \"";
     sql = sql + password + "\"";
     //res.send(sql);
