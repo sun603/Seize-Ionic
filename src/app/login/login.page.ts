@@ -32,5 +32,6 @@ export class LoginPage implements OnInit {
 
   signUp(){
     console.log("singup");
+    this.router.navigate(['/signup']);
   }
 }
