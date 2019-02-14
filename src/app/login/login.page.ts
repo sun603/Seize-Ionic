@@ -8,6 +8,9 @@ import { Router } from '@angular/router';
 })
 export class LoginPage implements OnInit {
 
+  private username:any;
+  private password:any;
+
   constructor(private router: Router) {}
 
   ngOnInit() {
@@ -19,7 +22,12 @@ export class LoginPage implements OnInit {
   }
 
   signIn(){
-    console.log("signin");
+    console.log(this.username+this.password);
+    if(this.username == ""){
+      alert("Plase enter your username");
+    }else if(this.password == ""){
+      alert("Plase enter your password");
+    }
   }
 
   signUp(){
