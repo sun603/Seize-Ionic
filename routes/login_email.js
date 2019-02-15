@@ -44,7 +44,7 @@ router.get('/', function(req, res, next) {
                 }
                 else {
                     var db_password = result[0].pswd;
-                    if (db_password != passwrod) {
+                    if (db_password !== password) {
                         // wrong passwrod
                         res.send({"status": 202});
                     } else {
