@@ -29,7 +29,7 @@ router.get('/', function(req, res, next) {
     con.connect(function(err) {
         if (err) {
             res.send({"status":404});
-            throw err;
+            //throw err;
         }
         else {
             console.log("Connected");
