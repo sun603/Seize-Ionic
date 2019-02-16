@@ -35,7 +35,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+app.use(bodyParser.json()); // for parsing application/json
+app.post('/', function (req, res) {
+  console.log(req.body);
+  res.json(req.body);
+})
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
