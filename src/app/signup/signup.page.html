@@ -18,10 +18,9 @@
 
   <ion-item>
     <ion-label>Univeristy</ion-label>
-    <ion-input type="text" [(ngModel)]="univeristy" list="ulist"></ion-input>
-    <datalist name="ulist" id="ulist">
-      <option value="Purdue Univeristy (West Lafayette)">
-    </datalist>
+    <ion-select placeholder="Select One" id="fullWidth">
+      <ion-select-option value="purdue">Purdue Univeristy (West Lafayette)</ion-select-option>
+    </ion-select>
   </ion-item>
 </ion-list>
   <div padding>
