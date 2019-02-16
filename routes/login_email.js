@@ -3,7 +3,8 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
-var return_respond = "";
+var bodyParser = require('body-parser');
+var multer = require('multer');
 
 /* POST users listing. */
 router.post('/', function(req, res, next) {
