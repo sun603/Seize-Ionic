@@ -5,8 +5,8 @@ var router = express.Router();
 var mysql = require('mysql');
 var return_respond = "";
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
+/* POST users listing. */
+router.post('/', function(req, res, next) {
     var email = req.query.email;
     var password = req.query.password;
     //res.send('respond with a resource');
