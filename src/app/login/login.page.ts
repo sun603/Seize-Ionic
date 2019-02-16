@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 })
 export class LoginPage implements OnInit {
 
-  private username:any;
+  private email:any;
   private password:any;
 
   constructor(private router: Router, private http: HttpClient) {}
@@ -26,11 +26,11 @@ export class LoginPage implements OnInit {
 
   signIn(){
     let data ={
-      email: this.username,
+      email: this.email,
       password: this.password,
     }
 
-    console.log(this.username+this.password);
+    console.log(this.email+this.password);
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -38,7 +38,7 @@ export class LoginPage implements OnInit {
         'Access-Control-Allow-Origin' : '*',
       })
     };
-    if(this.username == ""){
+    if(this.email == ""){
       alert("Plase enter your username");
     }else if(this.password == ""){
       alert("Plase enter your password");
