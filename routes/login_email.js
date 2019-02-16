@@ -45,7 +45,7 @@ router.post('/', function(req, res, next) {
                     res.json({"status":201});
                 }
                 else {
-                    var db_password = result[0].pswd;
+                    var db_password = result[0].password;
                     if (db_password !== password) {
                         // wrong passwrod
                         res.json({"status": 202});
