@@ -47,10 +47,12 @@ export class AuthenticationService {
       return this.http.post(this.apiUrl+'/email_login', data).pipe(map(res => res)).subscribe(
         (val) => {
             console.log("POST call successful value returned in body", val);
-            if(val[status] == 200){
+            if(val["status"]== 200){
               this.storage.set(TOKEN_KEY,val["uid"]).then(() => {
                 this.authenticationState.next(true);
               });
+            }else{
+              console.log("no pass for login");
             }
         },
         response => {
@@ -62,10 +64,10 @@ export class AuthenticationService {
   }
 
   signup(data){
-    return this.http.post(this.apiUrl+'/sign-up', data).subscribe(
+    return this.http.post(this.apiUrl+'/signup', data).subscribe(
       (val) => {
           console.log("POST call successful value returned in body", val);
-          if(val[status] == 200){
+          if(val["status"] == 200){
             this.storage.set(TOKEN_KEY,val["uid"]).then(() => {
               this.authenticationState.next(true);
             });
