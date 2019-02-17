@@ -2,6 +2,9 @@
   <ion-toolbar>
     <ion-title>signup</ion-title>
   </ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-back-button defaultHref="login">back</ion-back-button>
+  </ion-buttons>
 </ion-header>
 
 <ion-content padding>
@@ -25,7 +28,7 @@
 </ion-list>
   <div padding>
     <ion-button block (click)="signUp()">
-        SIGN UP
-      </ion-button>
+      SIGN UP
+    </ion-button>
   </div>
 </ion-content>
