@@ -44,12 +44,14 @@ export class AuthenticationService {
   }
 
   login(data){
-      return this.http.post(this.apiUrl+'/email_login', data).subscribe(
+      return this.http.post(this.apiUrl+'/email_login', data).pipe(map(res => res)).subscribe(
         (val) => {
             console.log("POST call successful value returned in body", val);
-            this.storage.set(TOKEN_KEY,val["uid"]).then(() => {
-              this.authenticationState.next(true);
-            });
+            if(val[status] == 200){
+              this.storage.set(TOKEN_KEY,val["uid"]).then(() => {
+                this.authenticationState.next(true);
+              });
+            }
         },
         response => {
             console.log("POST call in error", response);
@@ -60,12 +62,16 @@ export class AuthenticationService {
   }
 
   signup(data){
-    return this.http.post(this.apiUrl+'/email_login', data).subscribe(
+    return this.http.post(this.apiUrl+'/sign-up', data).subscribe(
       (val) => {
           console.log("POST call successful value returned in body", val);
-          this.storage.set(TOKEN_KEY,val["uid"]).then(() => {
-            this.authenticationState.next(true);
-          });
+          if(val[status] == 200){
+            this.storage.set(TOKEN_KEY,val["uid"]).then(() => {
+              this.authenticationState.next(true);
+            });
+        }else{
+          console.log("not success");
+        }
       },
       response => {
           console.log("POST call in error", response);
@@ -74,7 +80,7 @@ export class AuthenticationService {
           console.log("The POST observable is now completed.");
       });
   }
-  
+
   logout() {
     return this.storage.remove(TOKEN_KEY).then(() => {
       this.authenticationState.next(false);

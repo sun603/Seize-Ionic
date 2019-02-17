@@ -36,7 +36,7 @@ export class LoginPage implements OnInit {
     }else if(this.password == ""){
       this.presentAlert("Plase enter your password");
     }else{
-      this.auth.login(data);
+      console.log(this.auth.login(data));
     }
   }
 
