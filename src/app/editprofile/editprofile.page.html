@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>edit my profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <div class="col-md-3">
+        <div class="text-center">
+          <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
+          <h6>Upload a different photo...</h6>
+          
+          <input type="file" class="form-control">
+        </div>
+      </div>
+<ion-list>
+
+    <ion-item>
+        <ion-label>First Name</ion-label>
+        <ion-input [(ngModel)]="firstname"></ion-input>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Last Name</ion-label>
+        <ion-input [(ngModel)]="lastname"></ion-input>
+      </ion-item>
+
+      <ion-item>
+          <ion-label>Username</ion-label>
+          <ion-input [(ngModel)]="username"></ion-input>
+        </ion-item>
+
+  <ion-item>
+    <ion-label>Email</ion-label>
+    <ion-input [(ngModel)]="email"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Univeristy</ion-label>
+    <ion-select placeholder="Select One" id="fullWidth">
+      <ion-select-option value="purdue">Purdue Univeristy (West Lafayette)</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+      <ion-label>Major</ion-label>
+      <ion-input [(ngModel)]="major"></ion-input>
+    </ion-item>
+</ion-list>
+  <div padding>
+    <ion-button block (click)="signUp()">
+        UPDATE
+      </ion-button>
+  </div>
+</ion-content>
