@@ -10,6 +10,8 @@ var multer = require('multer');
 router.post('/', function(req, res, next) {
     var email = req.body.email;
     var password = req.body.password;
+    var university = req.body.university;
+    var grad_year = req.body.year;
     //res.send('respond with a resource');
     console.log('email: ', email);
     console.log('password: ', password);
@@ -57,6 +59,7 @@ router.post('/', function(req, res, next) {
                         insert_con.connect(function(err){
                             if (err){}
                             else{
+                                var uid = 0;
                                 var insert_sql = "insert userlogin";
                                 insert_sql += " (email, password)";
                                 insert_sql += " values";
@@ -68,17 +71,35 @@ router.post('/', function(req, res, next) {
                                 insert_sql = "select * from userlogin where email = \"";
                                 insert_sql += email + "\"";
                                 insert_con.query(insert_sql, function(err, result){
-                                    res.json({"status": 200,
-                                              "uid":result[0].uid});
+                                    uid = result[0].uid;
+                                    var profile_sql;
+                                    profile_sql = "insert profile";
+                                    profile_sql += "(uid, university, grad_year)";
+                                    profile_sql += "values";
+                                    profile_sql += "(" + uid + ",\"" + university + "\",";
+                                    profile_sql += grad_year + ")";
+                                    console.log(profile_sql);
+
+                                    var profile_con = mysql.createConnection({
+                                        host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+                                        user: "shao44",
+                                        password: "ShaoZH0923?",
+                                        database: "cs307_sp19_team31"
+                                    });
+
+                                    profile_con.query(profile_sql, function(err, result){
+                                        res.json({
+                                            "status":200,
+                                            "uid":uid
+                                        })
+                                    });
+
                                 });
+
+
+
                             }
-                        });
-
-
-
-
-
-
+                        })
                     }
                     else{
                         console.log("email already exists.");
