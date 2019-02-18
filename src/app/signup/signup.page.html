@@ -1,7 +1,11 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="login"></ion-back-button>
+    </ion-buttons>
     <ion-title>signup</ion-title>
   </ion-toolbar>
+  
 </ion-header>
 
 <ion-content padding>
@@ -18,14 +22,20 @@
 
   <ion-item>
     <ion-label>univeristy</ion-label>
-    <ion-select placeholder="Select One" id="fullWidth">
+    <ion-select placeholder="Select One" id="fullWidth" [(ngModel)]="univeristy">
       <ion-select-option value="purdue">Purdue Univeristy (West Lafayette)</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>year</ion-label>
+    <ion-select list="years" name="year" placeholder="Choose graduate year" [(ngModel)]="year">
+      <ion-select-option *ngFor="let year of years" value="{{year}}">{{year}}</ion-select-option>
     </ion-select>
   </ion-item>
 </ion-list>
   <div padding>
     <ion-button block (click)="signUp()">
-        SIGN UP
-      </ion-button>
+      SIGN UP
+    </ion-button>
   </div>
 </ion-content>
