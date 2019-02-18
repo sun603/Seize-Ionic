@@ -4,12 +4,13 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var loginRouter = require('./routes/login');
-var email_loginRouter = require('./routes/login_email.js');
-var signup = require('./routes/signup.js');
-var profile = require('./routes/profile.js');
+let indexRouter = require('./routes/index');
+let usersRouter = require('./routes/users');
+let loginRouter = require('./routes/login');
+let email_loginRouter = require('./routes/login_email.js');
+let signup = require('./routes/signup.js');
+let profile = require('./routes/profile.js');
+let email_veri = require('./routes/email_veri.js');
 
 var app = express();
 var bodyParser = require('body-parser');
@@ -49,6 +50,7 @@ app.use('/login', loginRouter);
 app.use('/email_login', email_loginRouter);
 app.use('/signup', signup);
 app.use('/profile', profile);
+app.use('/email_veri', email_veri);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
