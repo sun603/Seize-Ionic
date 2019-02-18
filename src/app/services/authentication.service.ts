@@ -92,5 +92,11 @@ export class AuthenticationService {
   isAuthenticated() {
     return this.authenticationState.value;
   }
- 
+  
+  // this is for dev only
+  backdoor(){
+    this.storage.set(TOKEN_KEY,1).then(() => {
+      this.authenticationState.next(true);
+    });
+  }
 }

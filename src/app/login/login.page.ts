@@ -21,6 +21,7 @@ export class LoginPage implements OnInit {
   
   skip = function() {
     console.log("skip");
+    console.log(this.auth.backdoor());
     this.router.navigate(['/tabs/tab2']);
   }
 
