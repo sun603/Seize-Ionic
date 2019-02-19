@@ -21,7 +21,6 @@ router.post('/', function(req, res, next) {
                   "err_message": "password is empty"});
     }
     else {
-
         var con = mysql.createConnection({
             host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
             user: "shao44",

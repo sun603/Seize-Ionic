@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
+var auth_gen = require('./auth_create.js');
 
 /* POST users listing. */
 router.post('/', function(req, res, next) {
@@ -49,10 +50,11 @@ router.post('/', function(req, res, next) {
                         res.json({"status": 202});
                     } else {
                         var uid = result[0].uid;
+                        var u_auth = auth_gen(uid);
                         console.log("uid = " + uid);
                         res.json({
                             "status": 200,
-                            "uid": uid
+                            "auth": u_auth
                         });
                     }
                 }
