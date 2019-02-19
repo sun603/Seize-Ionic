@@ -7,10 +7,20 @@
 </ion-header>
 
 <ion-content>
-  <ion-button block (click)="logOut()">
-    logout
-  </ion-button>
-  <ion-button block (click)="editprofile()">
-    edit profile
-  </ion-button>
+    <div class="bar bar-header bar-danger">
+      </div>
+
+        <div id="profile-bg"></div>
+        <div id="content">
+          <div id="profile-info">
+            <img id="profile-image" src="http://chittagongit.com//images/user-png-icon/user-png-icon-15.jpg">
+            <h3 id="profile-name">Max</h3>
+              <ion-button block (click)="editprofile()">
+                edit profile
+              </ion-button>
+              <ion-button block (click)="logOut()">
+                  logout
+              </ion-button>
+          </div>
+        </div>
 </ion-content>
