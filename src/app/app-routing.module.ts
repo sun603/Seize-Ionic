@@ -6,7 +6,8 @@ const routes: Routes = [
   { path: 'tabs', canActivate: [AuthGuard],loadChildren: './tabs/tabs.module#TabsPageModule'},
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
-  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' }
+  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
+  { path: 'editprofile', loadChildren: './editprofile/editprofile.module#EditprofilePageModule' }
 ];
 @NgModule({
   imports: [
