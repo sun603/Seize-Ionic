@@ -31,16 +31,31 @@
           <ion-input [(ngModel)]="username"></ion-input>
         </ion-item>
 
+        <ion-item>
+            <ion-label>Gender</ion-label>
+            <ion-select placeholder="Select One" id="fullWidth" [(ngModel)]="gender">
+            <ion-select-option value="m">Male</ion-select-option>
+            <ion-select-option value="f">Female</ion-select-option>
+            <ion-select-option value="u">You guess it</ion-select-option>
+          </ion-select>
+          </ion-item>
+
+
   <ion-item>
     <ion-label>Email</ion-label>
     <ion-input [(ngModel)]="email"></ion-input>
   </ion-item>
-
+    
   <ion-item>
     <ion-label>Univeristy</ion-label>
-    <ion-select placeholder="Select One" id="fullWidth">
+    <ion-select placeholder="Select One" id="fullWidth" [(ngModel)]="university">
       <ion-select-option value="purdue">Purdue Univeristy (West Lafayette)</ion-select-option>
     </ion-select>
+  </ion-item>
+
+  <ion-item>
+      <ion-label>University ID</ion-label>
+      <ion-input [(ngModel)]="uid"></ion-input>
   </ion-item>
 
   <ion-item>
@@ -48,8 +63,19 @@
       <ion-input [(ngModel)]="major"></ion-input>
     </ion-item>
 </ion-list>
+
+<ion-item>
+    <ion-label>Class Standing</ion-label>
+    <ion-select placeholder="Select One" id="fullWidth" [(ngModel)]="class">
+    <ion-select-option value="1">Freshman</ion-select-option>
+    <ion-select-option value="2">Sophomore</ion-select-option>
+    <ion-select-option value="3">Junior</ion-select-option>
+    <ion-select-option value="4">Senior</ion-select-option> 
+  </ion-select>
+  </ion-item>
+
   <div padding>
-    <ion-button block (click)="signUp()">
+    <ion-button block (click)="update()">
         UPDATE
       </ion-button>
   </div>
