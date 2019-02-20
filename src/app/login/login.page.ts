@@ -46,6 +46,10 @@ export class LoginPage implements OnInit {
     this.router.navigate(['/signup']);
   }
 
+  forget(){
+    console.log("singup");
+    this.router.navigate(['/forgetpassword']);
+  }
   async presentAlert(msg) {
     const alert = await this.alertController.create({
       // header: 'Alert',
