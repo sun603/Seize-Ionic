@@ -1,31 +1,34 @@
 module.export = function(password){
 
-
+	var error = false;
 	var pass_veri = '';
 	for(i = 0; i < password.length; i++){
 			if(password.length < 6){
- 				alert("Your password needs a minimum of six characters.");
-				return -1;
+ 				pass_veri +="Your password needs a minimum of six characters.";
+				error = true;
 			}
 			else if(password.length > 30){
-				alert("Your password needs a maximum of thirty characters.");
-				return -1;
+				pass_veri +="Your password needs a maximum of thirty characters.";
+				error = true;
 			}
 			else if(password.search(/[a-z]/) < 0){
-				alert("Your password needs a lower case letter");
-				return -1;
+				pass_veri +="Your password needs a lower case letter";
+				error = true;
 			}
 			else if(password.search(/[A-Z]/) < 0){
-				alert("Your password needs a upper case letter");
-				return -1;
+				pass_veri +="Your password needs a upper case letter";
+				error = true;
 			}
 			else if (password.search(/[0-9]/) < 0) {
-   				alert("Your password needs a number");
-   				return -1;
+   				pass_veri +="Your password needs a number";
+   				error = true;
 			}else{
 				return 1;
 			}
-	}
-	
-	return pass_veri;
+			
+			if(error){
+				alert(pass_veri);
+				return -1;
+			}
+	}	
 }
