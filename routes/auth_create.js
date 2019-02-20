@@ -10,7 +10,7 @@ module.exports = function (uid) {
         }
         else{
             var temp = n - 26;
-            authcode = str + temp;
+            authcode = authcode + temp;
         }
     }
     return authcode;
