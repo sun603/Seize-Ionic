@@ -69,3 +69,13 @@ export class AuthenticationService {
     });
   }
 }
+
+
+class newProfile{
+  name:any;
+  email:any;
+  password:any;
+  univeristy:any;
+  class:any;
+  major:any;
+}
