@@ -7,10 +7,12 @@ var pass_veri = require('./pass_veri');
 
 /* POST users listing. */
 router.post('/', function(req, res, next) {
+    var name = req.body.name;
     var email = req.body.email;
     var password = req.body.password;
     var university = req.body.university;
-    var grad_year = req.body.year;
+    var major = req.body.major;
+    var year = req.body.class;
     //res.send('respond with a resource');
     console.log('email: ', email);
     console.log('password: ', password);
@@ -81,6 +83,7 @@ router.post('/', function(req, res, next) {
                                 insert_sql += " (\"" + email + "\",\"" + password + "\")";
                                 insert_con.query(insert_sql, function(err, result){
                                 });
+                                console.log(insert_sql);
                                 console.log("insert success");
 
                                 insert_sql = "select * from userlogin where email = \"";
@@ -89,10 +92,10 @@ router.post('/', function(req, res, next) {
                                     uid = result[0].uid;
                                     var profile_sql;
                                     profile_sql = "insert profile";
-                                    profile_sql += "(uid, university, grad_year)";
+                                    profile_sql += "(uid, school, class, name, major)";
                                     profile_sql += "values";
                                     profile_sql += "(" + uid + ",\"" + university + "\",";
-                                    profile_sql += grad_year + ")";
+                                    profile_sql += year + ", \"" + name + "\", \"" + major + "\")";
                                     console.log(profile_sql);
 
                                     var profile_con = mysql.createConnection({
