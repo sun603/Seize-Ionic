@@ -2,6 +2,7 @@ module.export = function(password){
 
 	var error = false;
 	var pass_veri = '';
+	var i = 0;
 	for(i = 0; i < password.length; i++){
 			if(password.length < 6){
  				pass_veri +="Your password needs a minimum of six characters.";
