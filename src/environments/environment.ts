@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl:"http://ec2-3-17-151-69.us-east-2.compute.amazonaws.com:3000"
+  TOKEN_KEY : 'auth-token',
+  apiUrl:"http://ec2-3-17-151-69.us-east-2.compute.amazonaws.com:3000",
 };
 
 /*

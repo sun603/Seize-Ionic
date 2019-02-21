@@ -7,9 +7,9 @@ import { Storage } from '@ionic/storage';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 
+
 import { environment } from '../../environments/environment'
 
-const TOKEN_KEY = 'auth-token';
 @Injectable({
   providedIn: 'root'
 })
@@ -26,16 +26,17 @@ export class AuthenticationService {
     })
   };
   apiUrl = ''; 
-
+  TOKEN_KEY = '';
   constructor(private http: HttpClient, private storage: Storage, private plt: Platform) {
     this.apiUrl = environment.apiUrl;
+    this.TOKEN_KEY = environment.TOKEN_KEY;
     this.plt.ready().then(() => {
       this.checkToken();
     });
   }
   
   checkToken() {
-    this.storage.get(TOKEN_KEY).then(res => {
+    this.storage.get(this.TOKEN_KEY).then(res => {
       if(res){
         console.log("checkToken: ",res);
         this.authenticationState.next(true);
@@ -44,23 +45,7 @@ export class AuthenticationService {
   }
 
   login(data){
-      return this.http.post(this.apiUrl+'/email_login', data).pipe(map(res => res)).subscribe(
-        (val) => {
-            console.log("POST call successful value returned in body", val);
-            if(val["status"]== 200){
-              this.storage.set(TOKEN_KEY,val["auth"]).then(() => {
-                this.authenticationState.next(true);
-              });
-            }else{
-              console.log("no pass for login");
-            }
-        },
-        response => {
-            console.log("POST call in error", response);
-        },
-        () => {
-            console.log("The POST observable is now completed.");
-        });
+      return this.http.post(this.apiUrl+'/email_login', data).pipe(map(res => res));
   }
 
   signup(data){
@@ -68,8 +53,8 @@ export class AuthenticationService {
       (val) => {
           console.log("POST call successful value returned in body", val);
           if(val["status"] == 200){
-            this.storage.set(TOKEN_KEY,val["auth"]).then(() => {
-              console.log("the auth token in storage"+this.storage.get(TOKEN_KEY));
+            this.storage.set(this.TOKEN_KEY,val["auth"]).then(() => {
+              console.log("the auth token in storage"+this.storage.get(this.TOKEN_KEY));
               this.authenticationState.next(true);
             });
         }else{
@@ -85,7 +70,7 @@ export class AuthenticationService {
   }
 
   logout() {
-    return this.storage.remove(TOKEN_KEY).then(() => {
+    return this.storage.remove(this.TOKEN_KEY).then(() => {
       this.authenticationState.next(false);
     });
   }
@@ -96,7 +81,7 @@ export class AuthenticationService {
   
   // this is for dev only
   backdoor(){
-    this.storage.set(TOKEN_KEY,1).then(() => {
+    this.storage.set(this.TOKEN_KEY,1).then(() => {
       this.authenticationState.next(true);
     });
   }
