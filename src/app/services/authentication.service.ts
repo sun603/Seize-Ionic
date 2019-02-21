@@ -45,28 +45,11 @@ export class AuthenticationService {
   }
 
   login(data){
-      return this.http.post(this.apiUrl+'/email_login', data).pipe(map(res => res));
+    return this.http.post(this.apiUrl+'/email_login', data).pipe(map(res => res));
   }
 
   signup(data){
-    return this.http.post(this.apiUrl+'/signup', data).subscribe(
-      (val) => {
-          console.log("POST call successful value returned in body", val);
-          if(val["status"] == 200){
-            this.storage.set(this.TOKEN_KEY,val["auth"]).then(() => {
-              console.log("the auth token in storage"+this.storage.get(this.TOKEN_KEY));
-              this.authenticationState.next(true);
-            });
-        }else{
-          console.log("not success");
-        }
-      },
-      response => {
-          console.log("POST call in error", response);
-      },
-      () => {
-          console.log("The POST observable is now completed.");
-      });
+    return this.http.post(this.apiUrl+'/signup', data).pipe(map(res => res));
   }
 
   logout() {

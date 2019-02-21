@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../services/authentication.service'
-
 import { AlertController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
+import { AuthenticationService } from '../services/authentication.service'
+import { environment } from '../../environments/environment'
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
@@ -16,9 +17,10 @@ export class SignupPage implements OnInit {
   private univeristy:any;
   private class:any;
   private major:any;
-
-  constructor(private auth: AuthenticationService, public alertController: AlertController) {
+  TOKEN_KEY = '';
+  constructor(private auth: AuthenticationService, public alertController: AlertController, private storage: Storage) {
     // for (var i = 2000; i < 2100; i++) this.years.push(i);
+    this.TOKEN_KEY = environment.TOKEN_KEY;
    }
 
   ngOnInit() {
@@ -49,7 +51,25 @@ export class SignupPage implements OnInit {
     }if(data.major == "" || data.major == undefined){
       this.presentAlert("Plase enter major");
     }else{
-      console.log(" signup ",this.auth.signup(data));
+      this.auth.signup(data).subscribe(
+        (val) => {
+            console.log("POST call successful value returned in body", val);
+            if(val["status"] == 200){
+              this.storage.set(this.TOKEN_KEY,val["auth"]).then(() => {
+                console.log("the auth token in storage"+this.storage.get(this.TOKEN_KEY));
+                this.auth.authenticationState.next(true);
+              });
+          }else{
+            this.presentAlert("Please check your input");
+            console.log("not success");
+          }
+        },
+        response => {
+            console.log("POST call in error", response);
+        },
+        () => {
+            console.log("The POST observable is now completed.");
+        });
     }
   }
 
