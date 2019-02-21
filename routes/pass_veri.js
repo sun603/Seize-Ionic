@@ -4,7 +4,7 @@ module.exports = function(password){
 	var pass_veri = '';
 	var i = 0;
 	for(i = 0; i < password.length; i++){
-			if(password.length <= 0){
+			if(password == NULL){
 				pass_veri +="Your password needs contents.";
 				error = true;
 			}
