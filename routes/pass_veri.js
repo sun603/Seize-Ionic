@@ -4,11 +4,11 @@ module.exports = function(password){
 	var pass_veri = '';
 	var i = 0;
 	for(i = 0; i < password.length; i++){
-			if(password == NULL){
+			if(password.length <= 0){
 				pass_veri +="Your password needs contents.";
 				error = true;
 			}
-			else if(password.length < 6){
+			else if(password.length < 6 && password.length > 0){
  				pass_veri +="Your password needs a minimum of six characters.";
 				error = true;
 			}
