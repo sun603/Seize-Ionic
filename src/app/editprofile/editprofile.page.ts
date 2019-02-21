@@ -8,13 +8,12 @@ import { Component, OnInit } from '@angular/core';
 export class EditprofilePage implements OnInit {
 
 
-  private firstname:any;
-  private lastname:any;
-  private username:any;
+  private name:any;
+  // private username:any;
   private gender:any;
   private email:any;
   private university:any;
-  private uid:any;
+  // private uid:any;
   private major:any;
   private class:any;
 
@@ -25,13 +24,11 @@ export class EditprofilePage implements OnInit {
 
   update(){
     let data ={
-      firstname: this.firstname,
-      lastname: this.lastname,
-      username: this.username,
+      name: this.name,
       gender: this.gender,
       email: this.email,
       university: this.university,
-      uid: this.uid,
+      // uid: this.uid,
       major: this.major,
       class: this.class
     }
