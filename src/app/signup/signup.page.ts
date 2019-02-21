@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
@@ -6,7 +8,7 @@ import { AuthenticationService } from '../services/authentication.service'
 import { environment } from '../../environments/environment'
 @Component({
   selector: 'app-signup',
-  templateUrl: './signup.page.html',
+templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage implements OnInit {
@@ -18,7 +20,7 @@ export class SignupPage implements OnInit {
   private class:any;
   private major:any;
   TOKEN_KEY = '';
-  constructor(private auth: AuthenticationService, public alertController: AlertController, private storage: Storage) {
+  constructor(private auth: AuthenticationService, public alertController: AlertController, private storage: Storage, private router: Router) {
     // for (var i = 2000; i < 2100; i++) this.years.push(i);
     this.TOKEN_KEY = environment.TOKEN_KEY;
    }
@@ -55,16 +57,25 @@ export class SignupPage implements OnInit {
         (val) => {
             console.log("POST call successful value returned in body", val);
             if(val["status"] == 200){
-              this.storage.set(this.TOKEN_KEY,val["auth"]).then(() => {
-                console.log("the auth token in storage"+this.storage.get(this.TOKEN_KEY));
-                this.auth.authenticationState.next(true);
-              });
+              // this.storage.set(this.TOKEN_KEY,val["auth"]).then(() => {
+              //   console.log("the auth token in storage"+this.storage.get(this.TOKEN_KEY));
+              //   this.auth.authenticationState.next(true);
+              // });
+              this.presentAlert("Please login");
+              this.router.navigate(['/login']);
+          }else if(val["status"] == 201){
+            this.presentAlert("invalid password");
+            console.log("invalid password");
+          }else if(val["status"] == 202){
+            this.presentAlert("email exist, please login");
+            console.log("invalid password");
           }else{
             this.presentAlert("Please check your input");
-            console.log("not success");
           }
+          console.log("not success");
         },
         response => {
+            this.presentAlert("connect err; check network");
             console.log("POST call in error", response);
         },
         () => {
