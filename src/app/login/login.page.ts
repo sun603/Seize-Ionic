@@ -48,12 +48,15 @@ export class LoginPage implements OnInit {
               this.storage.set(this.TOKEN_KEY,val["auth"]).then(() => {
                 this.auth.authenticationState.next(true);
               });
+            }else if (val["status"]== 404){
+              this.presentAlert("server in maintain, try again later");
             }else{
               this.faillogin();
               console.log("no pass for login");
             }
         },
         response => {
+            this.presentAlert("connect err; check network");
             console.log("POST call in error", response);
         },
         () => {
