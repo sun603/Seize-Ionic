@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
+var pass_veri = require('./pass_veri');
 
 /* POST users listing. */
 router.post('/', function(req, res, next) {
@@ -15,10 +16,11 @@ router.post('/', function(req, res, next) {
     console.log('password: ', password);
     console.log('body: ', req.body);
 
-    if (password === null){
-        //password is empty
+    var pass_vali = pass_veri(password);
+    if (pass_vali === -1){
+        //password is invalid
         res.json({"status": 201,
-                  "err_message": "password is empty"});
+                  "err_message": "invalid password"});
     }
     else {
         var con = mysql.createConnection({
@@ -86,8 +88,7 @@ router.post('/', function(req, res, next) {
 
                                     profile_con.query(profile_sql, function(err, result){
                                         res.json({
-                                            "status":200,
-                                            "uid":uid
+                                            "status":200
                                         })
                                     });
 

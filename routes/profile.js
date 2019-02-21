@@ -5,6 +5,7 @@ var router = express.Router();
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
 var multer = require('multer');
+var auth_decryp = require('./auth_decryp');
 
 /* ===== POST for update profile ===== */
 /*
@@ -136,56 +137,67 @@ router.post('/', function(req, res, next) {
 /*
 * take:
 * {
-*   uid: uid
+*   auth_token: auth
 * }
 *
 * response:
 * {
-*   status: 200 (success), 201: (uid not exist)
-*   uid: uid
-*   year: grad_year
-*   university: university
+*   status: 200 (success), 201: (invalid auth_token), 202: (user does not exist)
+*   name: varchar(45)
+*   gender: m/f/n
+*   school: "Purdue University"
+*   major: varchar(45)
+*   class: 1/2/3/4/5
+*   description: varchar(200)
 * }
 * */
 router.get('/', function(req, res, next){
-    let uid = req.body.uid;
-    let select_sql = "select * from profile where uid = " + uid;
-
-    let select_con = mysql.createConnection({
-        host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
-        user: "shao44",
-        password: "ShaoZH0923?",
-        database: "cs307_sp19_team31"
-    });
-
-    select_con.connect(function(err){
-        select_con.query(select_sql, function(err, result){
-            if (result[0] === null){
-                res.json({
-                    "status": 201,
-                    "err_message": "uid does not exist"
-                });
-            }
-            else{
-                let year = result[0].grad_year;
-                let university = result[0].university;
-                console.log(year);
-                console.log(university);
-                if (year === undefined){
-                    year = null;
-                }
-                if (university === undefined){
-                    university = null;
-                }
-                res.json({
-                    "status": 200,
-                    "uid": uid,
-                    "year": year,
-                    "university": university
-                });
-            }
+    let auth = req.body.auth_token;
+    let uid = auth_decryp(auth);
+    if (uid <= 0){
+        // invalid auth_token
+        res.json({
+            "status": 201
         });
-    });
+    }
+    else {
+        let select_sql = "select * from profile where uid = " + uid;
+
+        let select_con = mysql.createConnection({
+            host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+            user: "shao44",
+            password: "ShaoZH0923?",
+            database: "cs307_sp19_team31"
+        });
+
+        select_con.connect(function (err) {
+            select_con.query(select_sql, function (err, result) {
+                if (result[0] === null) {
+                    res.json({
+                        "status": 202,
+                        "err_message": "user does not exist"
+                    });
+                } else {
+                    let year = result[0].grad_year;
+                    let university = result[0].university;
+                    console.log(year);
+                    console.log(university);
+                    if (year === undefined) {
+                        year = null;
+                    }
+                    if (university === undefined) {
+                        university = null;
+                    }
+                    res.json({
+                        "status": 200,
+                        "uid": uid,
+                        "year": year,
+                        "university": university
+                    });
+                }
+            });
+        });
+    }
 });
 
 module.exports = router;

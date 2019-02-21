@@ -1,4 +1,4 @@
-module.export = function(password){
+module.exports = function(password){
 
 	var error = false;
 	var pass_veri = '';
