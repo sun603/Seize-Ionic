@@ -16,20 +16,22 @@ router.post('/', function(req, res, next) {
     console.log('password: ', password);
     console.log('body: ', req.body);
 
-    var pass_vali;
+    var pass_vali = 1;
     if(password.length < 6){
-        pass_veri +="Your password needs a minimum of six characters.";
-        error = true;
+        pass_vali = -1;
     }
     else if(password.length > 30){
-        pass_veri +="Your password needs a maximum of thirty characters.";
-        error = true;
+        pass_vali = -1;
     }
-
-
-
-
-
+    else if(password.search(/[a-z]/) < 0){
+        pass_vali = -1;
+    }
+    else if(password.search(/[A-Z]/) < 0){
+        pass_vali = -1;
+    }
+    else if (password.search(/[0-9]/) < 0) {
+        pass_vali = -1;
+    }
 
     if (pass_vali === -1){
         //password is invalid
@@ -101,14 +103,13 @@ router.post('/', function(req, res, next) {
                                     });
 
                                     profile_con.query(profile_sql, function(err, result){
+
                                         res.json({
                                             "status":200
                                         })
                                     });
 
                                 });
-
-
 
                             }
                         })
