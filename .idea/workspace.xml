@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="74564969-769b-45c7-9113-63c8c1fad200" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/routes/pass_veri.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/pass_veri.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/signup.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -46,8 +44,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/routes/profile.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1868">
-                  <caret line="144" column="80" selection-start-line="144" selection-start-column="80" selection-end-line="144" selection-end-column="80" />
+                <state relative-caret-position="517">
+                  <caret line="204" column="31" selection-start-line="204" selection-start-column="31" selection-end-line="204" selection-end-column="31" />
                   <folding>
                     <element signature="n#!!doc" expanded="true" />
                   </folding>
@@ -208,15 +206,16 @@
       <workItem from="1549844478951" duration="991000" />
       <workItem from="1549845854542" duration="10000" />
       <workItem from="1549845915435" duration="19650000" />
-      <workItem from="1550436694857" duration="31982000" />
+      <workItem from="1550436694857" duration="33082000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="52633000" />
+    <option name="totallyTimeSpent" value="53733000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49851632" visible="true" weight="0.20735383" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -348,6 +347,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/routes/auth_decryp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="42" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/routes/login_email.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -358,17 +364,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/auth_decryp.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="42" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/profile.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1868">
-          <caret line="144" column="80" selection-start-line="144" selection-start-column="80" selection-end-line="144" selection-end-column="80" />
+        <state relative-caret-position="517">
+          <caret line="204" column="31" selection-start-line="204" selection-start-column="31" selection-end-line="204" selection-end-column="31" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

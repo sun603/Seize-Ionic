@@ -178,21 +178,40 @@ router.get('/', function(req, res, next){
                         "err_message": "user does not exist"
                     });
                 } else {
-                    let year = result[0].grad_year;
-                    let university = result[0].university;
+                    let name = result[0].name;
+                    let gender = result[0].gender;
+                    let school = resuilt[0].school;
+                    let year = result[0].class;
+                    let major = result[0].major;
+                    let descrip = result[0].description;
                     console.log(year);
                     console.log(university);
+                    if (name === undefined) {
+                        name = null;
+                    }
+                    if (gender === undefined) {
+                        gender = null;
+                    }
+                    if (school === undefined) {
+                        school = null;
+                    }
                     if (year === undefined) {
                         year = null;
                     }
-                    if (university === undefined) {
-                        university = null;
+                    if (major === undefined) {
+                        major = null;
+                    }
+                    if (descrip === undefined) {
+                        descrip = null;
                     }
                     res.json({
                         "status": 200,
-                        "uid": uid,
-                        "year": year,
-                        "university": university
+                        "name":name,
+                        "gender":gender,
+                        "school":school,
+                        "major":major,
+                        "year":year,
+                        "description": descrip
                     });
                 }
             });
