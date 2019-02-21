@@ -70,15 +70,15 @@ router.post('/', function(req, res, next) {
                             else{
                                 auth_con.query(auth_sql, function(err, result){
 
+                                    res.json({
+                                        "status": 200,
+                                        "auth": u_auth
+                                    });
                                 });
                             }
                         });
 
 
-                        res.json({
-                            "status": 200,
-                            "auth": u_auth
-                        });
                     }
                 }
             });
