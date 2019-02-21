@@ -15,6 +15,7 @@ export class SignupPage implements OnInit {
   private password:any;
   private univeristy:any;
   private year:any;
+  private major:any;
 
   constructor(private auth: AuthenticationService, public alertController: AlertController) {
     for (var i = 2000; i < 2100; i++) this.years.push(i);
@@ -28,7 +29,8 @@ export class SignupPage implements OnInit {
       email: this.email,
       password: this.password,
       univeristy: this.univeristy,
-      year: this.year
+      year: this.year,
+      major: this.major
     };
 
     console.log(data);
@@ -39,7 +41,9 @@ export class SignupPage implements OnInit {
     }else if(data.univeristy == "" || data.univeristy == undefined){
       this.presentAlert("Plase enter your univeristy");
     }else if(data.year == "" || data.year == undefined){
-      this.presentAlert("Plase enter your graduate year");
+      this.presentAlert("Plase enter your class year");
+    }if(data.major == "" || data.major == undefined){
+      this.presentAlert("Plase enter major");
     }else{
       console.log(" signup ",this.auth.signup(data));
     }

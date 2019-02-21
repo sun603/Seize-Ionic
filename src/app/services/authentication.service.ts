@@ -21,7 +21,7 @@ export class AuthenticationService {
   readonly httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
-      'Authorization': 'my-auth-token',
+      // 'Authorization': 'my-auth-token',
       // 'Access-Control-Allow-Origin' : '*',
     })
   };
@@ -48,7 +48,7 @@ export class AuthenticationService {
         (val) => {
             console.log("POST call successful value returned in body", val);
             if(val["status"]== 200){
-              this.storage.set(TOKEN_KEY,val["uid"]).then(() => {
+              this.storage.set(TOKEN_KEY,val["auth"]).then(() => {
                 this.authenticationState.next(true);
               });
             }else{
@@ -68,7 +68,8 @@ export class AuthenticationService {
       (val) => {
           console.log("POST call successful value returned in body", val);
           if(val["status"] == 200){
-            this.storage.set(TOKEN_KEY,val["uid"]).then(() => {
+            this.storage.set(TOKEN_KEY,val["auth"]).then(() => {
+              console.log("the auth token in storage"+this.storage.get(TOKEN_KEY));
               this.authenticationState.next(true);
             });
         }else{

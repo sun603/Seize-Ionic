@@ -27,10 +27,18 @@
     </ion-select>
   </ion-item>
   <ion-item>
-    <ion-label>year</ion-label>
-    <ion-select list="years" name="year" placeholder="Choose graduate year" [(ngModel)]="year">
-      <ion-select-option *ngFor="let year of years" value="{{year}}">{{year}}</ion-select-option>
+    <ion-label>class year</ion-label>
+    <ion-select list="years" name="year" placeholder="Choose year of class" [(ngModel)]="year">
+      <ion-select-option value="1">Freshman</ion-select-option>
+      <ion-select-option value="2">Sophmore</ion-select-option>
+      <ion-select-option value="3">Junior</ion-select-option>
+      <ion-select-option value="4">Senior</ion-select-option>
+      <ion-select-option value="5">Graduate</ion-select-option>
     </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>major</ion-label>
+    <ion-input type="major" [(ngModel)]="major"></ion-input>
   </ion-item>
 </ion-list>
   <div padding>
