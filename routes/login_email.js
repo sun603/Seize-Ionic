@@ -61,19 +61,39 @@ router.post('/', function(req, res, next) {
                         });
 
                         var auth_sql = "DELETE FROM user_auth WHERE uid = " + uid + ";";
-                        auth_sql += "INSERT user_auth (uid, auth_code)";
-                        auth_sql += " values ";
-                        auth_sql += "(" + uid + ",\"" + u_auth + "\")";
+                        // auth_sql += "INSERT user_auth (uid, auth_code)";
+                        // auth_sql += " values ";
+                        // auth_sql += "(" + uid + ",\"" + u_auth + "\")";
+                        console.log(auth_sql);
 
                         auth_con.connect(function(err){
                             if (err){}
                             else{
                                 auth_con.query(auth_sql, function(err, result){
+                                    // old auth code deleted.
 
-                                    res.json({
-                                        "status": 200,
-                                        "auth": u_auth
+                                    let add_sql = "INSERT user_auth (uid, auth_code)";
+                                    add_sql += " values ";
+                                    add_sql += "(" + uid + ",\"" + u_auth + "\")";
+
+                                    var add_con = mysql.createConnection({
+                                        host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+                                        user: "shao44",
+                                        password: "ShaoZH0923?",
+                                        database: "cs307_sp19_team31"
                                     });
+
+                                    add_con.query(add_sql, function(err, result){
+                                        res.json({
+                                                "status": 200,
+                                                "auth": u_auth
+                                            });
+                                    });
+
+                                    // res.json({
+                                    //     "status": 200,
+                                    //     "auth": u_auth
+                                    // });
                                 });
                             }
                         });

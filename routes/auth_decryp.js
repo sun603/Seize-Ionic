@@ -25,20 +25,21 @@ module.exports = function (auth_code) {
     con.connect(function(err){
         if (err){
             // db connection error
+            console.log("error");
             return -1; // -1 for error
         }
         else{
             con.query(sql, function(err, result){
-                if (result[0] == null){
+                if (result[0] === null){
+                    console.log("invalid authcode");
                     return 0; // 0 for invalid authentication code.
                 }
                 else{
                     uid = result[0].uid;
+                    console.log("user exists. uid = ", uid);
                     return uid;
                 }
             });
         }
     });
-
-    return -1; // unknown error
 }

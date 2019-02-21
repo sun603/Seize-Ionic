@@ -16,7 +16,21 @@ router.post('/', function(req, res, next) {
     console.log('password: ', password);
     console.log('body: ', req.body);
 
-    var pass_vali = pass_veri(password);
+    var pass_vali;
+    if(password.length < 6){
+        pass_veri +="Your password needs a minimum of six characters.";
+        error = true;
+    }
+    else if(password.length > 30){
+        pass_veri +="Your password needs a maximum of thirty characters.";
+        error = true;
+    }
+
+
+
+
+
+
     if (pass_vali === -1){
         //password is invalid
         res.json({"status": 201,
