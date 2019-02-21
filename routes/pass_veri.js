@@ -28,7 +28,6 @@ module.exports = function(password){
 			}
 			
 			if(error){
-				alert(pass_veri);
 				return -1;
 			}
 	}	

@@ -11,22 +11,40 @@ var auth_decryp = require('./auth_decryp');
 /*
 * take:
 * {
-*   uid: uid
-*   year: grad_year
-*   university: 'Purdue University'
+*   auth_token: <String>
+*   name: <String> (45 character max)
+    gender: m/f/n
+    school: <String> “Purdue University”
+    major: <String> (User input, 45 char max)
+    class: 1/2/3/4/5
+    description: <String> (200 char max)
+}
 * }
 *
 * respose:
 * {
 *   status: 200(for success)
-*           201(profile uid does not exist)
+*           201(auth_code incorrect)
+*           202(uid does not exist)
+*           404(db connection error)
 *   (optional)err_message: String
 * }
 * */
 router.post('/', function(req, res, next) {
-    var uid = req.body.uid;
-    var year = req.body.year;
-    var university = req.body.university;
+    let auth_code = req.body.auth_token;
+    var uid = auth_decryp(auth_code);
+    if (uid <= 0){
+        // invalid auth_code
+        res.json({
+            "status": 201
+        });
+    }
+    let name = req.body.name;
+    let gender = req.body.gender;
+    let school = req.body.school;
+    let major = req.body.major;
+    let year = req.body.class;
+    let descrip = req.body.description;
 
     console.log('uid: ', uid);
     console.log('year: ', year);
@@ -52,80 +70,44 @@ router.post('/', function(req, res, next) {
                 if (result[0] == null){
                     //no profile found
                     res.json({
-                        "status":201,
+                        "status":202,
                         "err_message": "profile for uid does not exist."
-                    })
+                    });
                 }
                 else{
-                    // profile found, need to update
-                    if (year === undefined && university === undefined){
-                        // do nothing.
-                        console.log("update nothing");
-                        res.json({"status":200});
+                    // profile found.
+                    //let sql_header = "let update_sql = \"UPDATE profile SET grad_year = \";\n" +
+                    //   update_sql += year + \" WHERE uid = \" + uid;"
+
+                    let sql_head = "UPDATE profile SET ";
+                    let sql_tail = "WHERE uid = " + uid;
+
+                    /*
+                    * name
+                    * gender
+                    * school
+                    * major
+                    * year
+                    * descrip
+                    * */
+
+                    if (name !== undefined){
+                        let update_sql = sql_head + "name = \"" + name + "\"";
                     }
-                    else if (year === undefined && university !== undefined){
-                        //only need to update university
-                        console.log("update university");
-                        let update_sql = "UPDATE profile SET university = \"";
-                        update_sql += university + "\" WHERE uid = " + uid;
+                    if (gender !== undefined){
 
-                        let update_con = mysql.createConnection({
-                            host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
-                            user: "shao44",
-                            password: "ShaoZH0923?",
-                            database: "cs307_sp19_team31"
-                        });
-
-                        console.log(update_sql);
-
-                        update_con.connect(function(err){
-                            update_con.query(update_sql, function(err, result){
-                                res.json({"status":200});
-                            });
-                        });
                     }
-                    else if (year !== undefined && university === undefined){
-                        //only need to update year
-                        console.log("update year");
-                        let update_sql = "UPDATE profile SET grad_year = ";
-                        update_sql += year + " WHERE uid = " + uid;
+                    if (school !== undefined){
 
-                        let update_con = mysql.createConnection({
-                            host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
-                            user: "shao44",
-                            password: "ShaoZH0923?",
-                            database: "cs307_sp19_team31"
-                        });
-
-                        console.log(update_sql);
-
-                        update_con.connect(function(err){
-                            update_con.query(update_sql, function(err, result){
-                                res.json({"status":200});
-                            });
-                        });
                     }
-                    else{
-                        // need to update both
-                        console.log("update university and year");
-                        let update_sql = "UPDATE profile SET grad_year = ";
-                        update_sql += year + ", university = \"";
-                        update_sql += university + "\" WHERE uid = " + uid;
+                    if (major !== undefined){
 
-                        let update_con = mysql.createConnection({
-                            host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
-                            user: "shao44",
-                            password: "ShaoZH0923?",
-                            database: "cs307_sp19_team31"
-                        });
+                    }
+                    if (year !== undefined){
 
-                        console.log(update_sql);
+                    }
+                    if (descrip !== undefined){
 
-                        update_con.connect(function(err){
-                            update_con.query(update_sql, function(err, result){
-                                res.json({"status":200});
-                            });
-                        });
                     }
                 }
             });
