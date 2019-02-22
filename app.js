@@ -11,6 +11,7 @@ let email_loginRouter = require('./routes/login_email.js');
 let signup = require('./routes/signup.js');
 let profile = require('./routes/profile.js');
 let email_veri = require('./routes/email_veri.js');
+let forget = require('./routes/forget_password.js');
 
 var app = express();
 var bodyParser = require('body-parser');
@@ -51,6 +52,7 @@ app.use('/email_login', email_loginRouter);
 app.use('/signup', signup);
 app.use('/profile', profile);
 app.use('/email_veri', email_veri);
+app.use('/forget', forget);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
