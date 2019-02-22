@@ -285,6 +285,7 @@ router.get('/', function(req, res, next){
                         "status": 201
                     });
                 } else {
+                    console.log(result);
                     uid = result[0].uid;
                     console.log("uid = ", uid);
                     if (uid <= 0) {
