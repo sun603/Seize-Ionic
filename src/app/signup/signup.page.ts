@@ -16,7 +16,7 @@ export class SignupPage implements OnInit {
   private name:any;
   private email:any;
   private password:any;
-  private univeristy:any;
+  private university:any;
   private class:any;
   private major:any;
   TOKEN_KEY = '';
@@ -33,7 +33,7 @@ export class SignupPage implements OnInit {
       name: this.name,
       email: this.email,
       password: this.password,
-      univeristy: this.univeristy,
+      university: this.university,
       class: this.class,
       major: this.major
     };
@@ -46,8 +46,8 @@ export class SignupPage implements OnInit {
       this.presentAlert("Plase enter your name");
     }else if(data.password == "" || data.password == undefined){
       this.presentAlert("Plase enter your password");
-    }else if(data.univeristy == "" || data.univeristy == undefined){
-      this.presentAlert("Plase enter your univeristy");
+    }else if(data.university == "" || data.university == undefined){
+      this.presentAlert("Plase enter your university");
     }else if(data.class == "" || data.class == undefined){
       this.presentAlert("Plase enter your class ");
     }if(data.major == "" || data.major == undefined){

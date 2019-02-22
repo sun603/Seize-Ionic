@@ -79,7 +79,7 @@ class newProfile{
   name:any;
   email:any;
   password:any;
-  univeristy:any;
+  university:any;
   class:any;
   major:any;
 }
