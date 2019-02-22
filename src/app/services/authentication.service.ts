@@ -58,6 +58,10 @@ export class AuthenticationService {
     });
   }
  
+  forget(data,api) {
+    return this.http.post(this.apiUrl+api, data).pipe(map(res => res));
+  }
+  
   isAuthenticated() {
     return this.authenticationState.value;
   }
