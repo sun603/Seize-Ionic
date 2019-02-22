@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="74564969-769b-45c7-9113-63c8c1fad200" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/routes/email_code_check.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/password_reset.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/forget_password.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/forget_password.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -33,20 +29,20 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/routes/forget_password.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="524">
-                  <caret line="81" selection-start-line="81" selection-end-line="81" />
+                <state relative-caret-position="441">
+                  <caret line="83" column="20" selection-start-line="83" selection-start-column="20" selection-end-line="83" selection-end-column="20" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/routes/password_reset.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="554">
-                  <caret line="55" column="24" selection-start-line="55" selection-start-column="24" selection-end-line="55" selection-end-column="24" />
+                <state relative-caret-position="434">
+                  <caret line="47" column="26" lean-forward="true" selection-start-line="47" selection-start-column="26" selection-end-line="47" selection-end-column="26" />
                 </state>
               </provider>
             </entry>
@@ -67,7 +63,7 @@
             <entry file="file://$PROJECT_DIR$/routes/signup.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="277">
-                  <caret line="28" column="23" lean-forward="true" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="23" />
+                  <caret line="28" column="23" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="23" />
                   <folding>
                     <element signature="n#!!doc" expanded="true" />
                   </folding>
@@ -95,7 +91,7 @@
             <entry file="file://$PROJECT_DIR$/routes/email_veri.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="435">
-                  <caret line="29" column="35" lean-forward="true" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
+                  <caret line="29" column="35" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
                   <folding>
                     <element signature="n#!!doc" expanded="true" />
                   </folding>
@@ -141,10 +137,10 @@
         <option value="$PROJECT_DIR$/routes/logout.js" />
         <option value="$PROJECT_DIR$/routes/profile.js" />
         <option value="$PROJECT_DIR$/routes/signup.js" />
-        <option value="$PROJECT_DIR$/routes/forget_password.js" />
         <option value="$PROJECT_DIR$/routes/email_code_check.js" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/routes/password_reset.js" />
+        <option value="$PROJECT_DIR$/routes/forget_password.js" />
       </list>
     </option>
   </component>
@@ -238,18 +234,18 @@
       <workItem from="1549844478951" duration="991000" />
       <workItem from="1549845854542" duration="10000" />
       <workItem from="1549845915435" duration="19650000" />
-      <workItem from="1550436694857" duration="49449000" />
+      <workItem from="1550436694857" duration="49763000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="70100000" />
+    <option name="totallyTimeSpent" value="70414000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49851632" visible="true" weight="0.20735383" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49851632" visible="true" weight="0.20735383" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" sideWeight="0.5014837" side_tool="true" weight="0.20735383" />
@@ -263,7 +259,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32987553" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.3008299" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.3008299" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -372,7 +368,7 @@
     <entry file="file://$PROJECT_DIR$/routes/email_veri.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
-          <caret line="29" column="35" lean-forward="true" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
+          <caret line="29" column="35" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -409,7 +405,7 @@
     <entry file="file://$PROJECT_DIR$/routes/signup.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="277">
-          <caret line="28" column="23" lean-forward="true" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="23" />
+          <caret line="28" column="23" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="23" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -430,17 +426,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/forget_password.js">
+    <entry file="file://$PROJECT_DIR$/routes/password_reset.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="524">
-          <caret line="81" selection-start-line="81" selection-end-line="81" />
+        <state relative-caret-position="434">
+          <caret line="47" column="26" lean-forward="true" selection-start-line="47" selection-start-column="26" selection-end-line="47" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/password_reset.js">
+    <entry file="file://$PROJECT_DIR$/routes/forget_password.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="554">
-          <caret line="55" column="24" selection-start-line="55" selection-start-column="24" selection-end-line="55" selection-end-column="24" />
+        <state relative-caret-position="441">
+          <caret line="83" column="20" selection-start-line="83" selection-start-column="20" selection-end-line="83" selection-end-column="20" />
         </state>
       </provider>
     </entry>

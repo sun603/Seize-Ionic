@@ -54,6 +54,15 @@ router.post('/', function(req, res, next){
 
                     send(mail);
 
+                    var delete_sql = "DELETE FROM email_code WHERE email = \"" + email + "\"";
+
+                    var delete_con = mysql.createConnection({
+                        host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+                        user: "shao44",
+                        password: "ShaoZH0923?",
+                        database: "cs307_sp19_team31"
+                    });
+
                     var insert_sql = "INSERT email_code (email, code) VALUES (\"";
                     insert_sql += email + "\", \"" + v + "\")";
 
@@ -63,10 +72,13 @@ router.post('/', function(req, res, next){
                         password: "ShaoZH0923?",
                         database: "cs307_sp19_team31"
                     });
+                    delete_con.connect(function(err){
+                        delete_con.query(delete_sql, function(err, result){
+                            insert_con.connect(function(err){
+                                insert_con.query(insert_sql, function(err, result){
 
-                    insert_con.connect(function(err){
-                        insert_con.query(insert_sql, function(err, result){
-
+                                });
+                            });
                         });
                     });
 
