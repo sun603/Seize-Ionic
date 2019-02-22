@@ -62,7 +62,7 @@ router.post('/', function(req, res, next) {
         }
         else{
             auth_con.query(auth_sql, function(err, result){
-                if (result[0] === null){
+                if (result.length === 0){
                     console.log("invalid authcode");
                     res.json({
                         "status": 201
@@ -89,7 +89,7 @@ router.post('/', function(req, res, next) {
                         }
                         else {
                             con.query(sql, function(err, result){
-                                if (result[0] == null){
+                                if (result.length === 0){
                                     //no profile found
                                     res.json({
                                         "status":202,
@@ -279,13 +279,12 @@ router.get('/', function(req, res, next){
             return -1; // -1 for error
         } else {
             auth_con.query(auth_sql, function (err, result) {
-                if (result[0] === null) {
+                if (result.length === 0) {
                     console.log("invalid authcode");
                     res.json({
                         "status": 201
                     });
                 } else {
-                    console.log(result);
                     uid = result[0].uid;
                     console.log("uid = ", uid);
                     if (uid <= 0) {
@@ -304,7 +303,7 @@ router.get('/', function(req, res, next){
                         console.log(select_sql);
                         select_con.connect(function (err) {
                             select_con.query(select_sql, function (err, result) {
-                                if (result[0] === null) {
+                                if (result.length === 0) {
                                     res.json({
                                         "status": 202,
                                         "err_message": "user does not exist"

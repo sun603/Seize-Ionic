@@ -62,7 +62,7 @@ router.post('/', function(req, res, next) {
                 console.log(sql);
 
                 con.query(sql, function(err, result) {
-                    if (result[0] == null){
+                    if (result.length === 0){
                         console.log("email not exist, valid for sign up");
 
                         /* insert communication */
