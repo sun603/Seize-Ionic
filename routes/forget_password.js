@@ -54,6 +54,22 @@ router.post('/', function(req, res, next){
 
                     send(mail);
 
+                    var insert_sql = "INSERT email_code (email, code) VALUES (\"";
+                    insert_sql += email + "\", \"" + v + "\")";
+
+                    var insert_con = mysql.createConnection({
+                        host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+                        user: "shao44",
+                        password: "ShaoZH0923?",
+                        database: "cs307_sp19_team31"
+                    });
+
+                    insert_con.connect(function(err){
+                        insert_con.query(insert_sql, function(err, result){
+
+                        });
+                    });
+
                     res.json({
                         "status": 200
                     });
