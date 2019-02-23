@@ -14,6 +14,20 @@ router.post('/', function(req, res, next) {
     console.log('password: ', password);
     console.log('body: ', req.body);
 
+    //console.log("req: ",req);
+    console.log("req.ip: ", req.ip);
+    console.log("req.connection.remoteAddress: ", req.connection.remoteAddress);
+    var ip = req.headers['x-forwarded-for'] ||
+        req.ip ||
+        req.connection.remoteAddress ||
+        req.socket.remoteAddress ||
+        req.connection.socket.remoteAddress || '';
+    if(ip.split(',').length>0) {
+        ip = ip.split(',')[0]
+    }
+
+    console.log("ip: ", ip);
+
     var con = mysql.createConnection({
         host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
         user: "shao44",
