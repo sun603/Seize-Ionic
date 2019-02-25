@@ -41,6 +41,9 @@ export class AuthenticationService {
         console.log("checkToken: ",res);
         this.authenticationState.next(true);
       }
+    },
+    (reason) => {
+      console.log("checkToken: no checkToken",reason);
     });
   }
 

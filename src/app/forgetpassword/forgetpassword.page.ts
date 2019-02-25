@@ -6,7 +6,7 @@ import { Storage } from '@ionic/storage';
 
 import { AuthenticationService } from '../services/authentication.service'
 import { environment } from '../../environments/environment'
-import { assertNotNull } from '@angular/compiler/src/output/output_ast';
+
 @Component({
   selector: 'app-forgetpassword',
   templateUrl: './forgetpassword.page.html',
@@ -34,6 +34,8 @@ export class ForgetpasswordPage implements OnInit {
       this.sendemail();
     }else if(this.steps == 1){
       this.sendcode();
+    }else{
+      this.sendnewpass();
     }
   }
   sendemail(){
@@ -110,8 +112,9 @@ export class ForgetpasswordPage implements OnInit {
         (val) => {
             // console.log("POST call successful value returned in body", val);
             if(val["status"]== 200){
-              this.presentAlert("Please login");
+              console.log("success new pass",val);
               this.router.navigate(['/login']);
+              this.presentAlert("Please login");
             // }else if (val["status"]== 404){
             //   this.presentAlert("server in maintain, try again later");
             }else{
