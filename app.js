@@ -14,6 +14,7 @@ let email_veri = require('./routes/email_veri.js');
 let forget = require('./routes/forget_password.js');
 let forgetcode = require('./routes/email_code_check.js');
 let forgetpass = require('./routes/password_reset.js');
+let get_pic = require('./routes/get_pic.js');
 
 var app = express();
 var bodyParser = require('body-parser');
@@ -57,6 +58,7 @@ app.use('/email_veri', email_veri);
 app.use('/forget', forget);
 app.use('/forgetcode', forgetcode);
 app.use('/forgetpass', forgetpass);
+app.use('/get_pic', get_pic);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
