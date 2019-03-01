@@ -2,12 +2,11 @@ var request = require("supertest");
 var server = require("../app.js");
 var assert = require("assert");
 
-var token;
 
 it('should return {"status":201}', function(done)
 {
     request(server)
-        .post("/email_login")
+        .post("/profile")
         .expect(200)
         .expect(function(res)
         {
@@ -19,8 +18,7 @@ it('should return {"status":201}', function(done)
 it('should return 200 with authentication token', function(done)
 {
     let data = {
-        "email": "shao44@purdue.edu",
-        "password": "ShaoZH0923?"
+        "auth_token": "QE0B2E8KXO"
     }
     request(server)
         .post("/email_login")
@@ -31,9 +29,6 @@ it('should return 200 with authentication token', function(done)
         .expect(function(res)
         {
             assert.equal(res.body.status, 200);
-            token = res.body.auth;
-            console.log("token = ", token);
         })
         .end(done);
 });
-
