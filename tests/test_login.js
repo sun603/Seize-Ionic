@@ -2,6 +2,7 @@ var request = require("supertest");
 var server = require("../app.js");
 var assert = require("assert");
 
+var token;
 
 it('should return {"status":201}', function(done)
 {
@@ -30,6 +31,9 @@ it('should return 200 with authentication token', function(done)
         .expect(function(res)
         {
             assert.equal(res.body.status, 200);
+            token = res.body.auth;
+            console.log("token = ", token);
         })
         .end(done);
 });
+
