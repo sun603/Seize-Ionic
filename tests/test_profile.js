@@ -2,25 +2,18 @@ var request = require("supertest");
 var server = require("../app.js");
 var assert = require("assert");
 
+var token;
 
-it('should return {"status":201}', function(done)
-{
-    request(server)
-        .post("/profile")
-        .expect(200)
-        .expect(function(res)
-        {
-            assert.equal(res.text, '{"status":201}');
-        })
-        .end(done);
-});
-
-it('should return 200', function(done)
+/*
+* testing getprofile for user:
+* email: shao44@purdue.edu
+* password: ShaoZH0923?
+* */
+it('acquiring token from login', function(done)
 {
     let data = {
         "email": "shao44@purdue.edu",
         "password": "ShaoZH0923?"
-        "auth_token": token
     }
     request(server)
         .post("/email_login")
@@ -32,6 +25,26 @@ it('should return 200', function(done)
         {
             assert.equal(res.body.status, 200);
             token = res.body.auth;
+            console.log("token = ", token);
+        })
+        .end(done);
+});
+
+it('checking if getting profiles correctly', function(done)
+{
+    let data = {
+        "auth_token": token
+    }
+
+    request(server)
+        .post("/getprofile")
+        .send(data)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .expect(function(res)
+        {
+            assert.equal(res.body.status, 200);
         })
         .end(done);
 });
