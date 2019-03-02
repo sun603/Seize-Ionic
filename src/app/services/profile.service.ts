@@ -13,7 +13,7 @@ import { ProfileModel } from '../models/profile.model';
 export class ProfileService {
   authcode:any;
   constructor(private http: HttpClient, private storage: Storage) { 
-    this.storage.get(environment.TOKEN_KEY).then(res => { this.authcode = res;});
+    // this.storage.get(environment.TOKEN_KEY).then(res => { this.authcode = res;});
   }
 
 // getname(){
@@ -27,36 +27,51 @@ export class ProfileService {
   getLocalProfile(): Promise<any>{
     let me:object;
     return this.storage.get("me")
-    .then(data => {me = data; return me;})
-    .then( (me) => {
+    .then((me) => {
       console.log("get local profile",me);
-      if(me){
-        return me;
-      }else{
-        this.getProfile().subscribe(
-          (val) =>{
-            console.log("get http profile success",val);
-            if(val["status"]== 200){
-              this.storage.set("me",val);
-              me = val;
-              return me;
-            }else{
-              console.log("not sccuess in get http profile, but server on");
-            }
-          },
-          err => {
-            console.log("a connection err in get http profile");
+      if(!me){
+        this.storage.get(environment.TOKEN_KEY).then( (autht) =>{
+          let data ={
+            "auth_token" : autht,
           }
-        )
+          this.getProfile(data).subscribe(
+            (val) =>{
+              console.log("get http profile success",val);
+              if(val["status"]== 200){
+                this.storage.set("me",val);
+                me = val;
+                return me;
+              }else{
+                console.log("not sccuess in get http profile, but server on");
+              }
+            },
+            err => {
+              console.log("a connection err in get http profile");
+            }
+          )
+        })
+        
       }
     });
     
   }
-  getProfile(){
-    let data ={
-      auth_token: this.authcode,
-    }
-    return this.http.post(environment.apiUrl+"/profile", data).pipe(map(res => res));
+  getwebProfile(data){
+    this.getProfile(data).subscribe(
+      (val) =>{
+        console.log("get http profile success",val);
+        if(val["status"]== 200){
+          this.storage.set("me",val);
+        }else{
+          console.log("not sccuess in get http profile, but server on");
+        }
+      },
+      err => {
+        console.log("a connection err in get http profile");
+      }
+    );
+  }
+  getProfile(data){
+      return this.http.post(environment.apiUrl+"/getprofile", data).pipe(map(res => res));
   }
 }
 
