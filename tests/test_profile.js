@@ -15,10 +15,12 @@ it('should return {"status":201}', function(done)
         .end(done);
 });
 
-it('should return 200 with authentication token', function(done)
+it('should return 200', function(done)
 {
     let data = {
-        "auth_token": "QE0B2E8KXO"
+        "email": "shao44@purdue.edu",
+        "password": "ShaoZH0923?"
+        "auth_token": token
     }
     request(server)
         .post("/email_login")
@@ -29,6 +31,7 @@ it('should return 200 with authentication token', function(done)
         .expect(function(res)
         {
             assert.equal(res.body.status, 200);
+            token = res.body.auth;
         })
         .end(done);
 });
