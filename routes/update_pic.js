@@ -9,10 +9,11 @@ var fs = require('fs');
 * RESPONSE: status:
 * */
 router.post('/', function(req, res, next){
-    var auth_code = req.body.auth_token;
-    var uid;
-    var pic_id;
-    var pic_dir = './profile_pic/';
+    var auth_code = req.body.auth_token;    // user authentication token
+    var uid;                                // user id
+    var pic_id;                             // picture id
+    var pic_dir = './profile_pic/';         // file path of the profile picture
+    var pic_stream = req.body.pic;          // picture file stream
 
     var auth_sql = "SELECT * FROM user_auth WHERE auth_code = \"" + auth_code + "\"";
     console.log(auth_sql);
@@ -68,19 +69,69 @@ router.post('/', function(req, res, next){
                                     // user profile found
                                     let picId = result[0].pic_id;
                                     if (picId === null){
-                                        pic_dir = pic_dir + "unknown.jpg";
+                                        // no picture found yet
+                                        /*
+                                        * TODO: 1. insert pic_file_name into profile_pic table
+                                        *       2. get the pic_id of the newly inserted picture.
+                                        *       3. add the new pic_id into the user profile.
+                                        * */
+                                        pic_dir = pic_dir + "user_id_" + uid + ".jpg";
+                                        base64_decode(pic_stream, pic_dir);
+                                        let pic_sql = "insert profile_pic (pic_file_name)\n" +
+                                            "values\n" +
+                                            "(\"" + "user_id_" + uid + ".jpg" +
+                                            "\");"
+                                        let pic_con = mysql.createConnection({
+                                            host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+                                            user: "shao44",
+                                            password: "ShaoZH0923?",
+                                            database: "cs307_sp19_team31"
+                                        });
+
+                                        // TODO 1. insert new pic
+                                        pic_con.connect(function(err){
+                                            pic_con.query(pic_sql, function(err, result){
+                                                // picture inserted.
+                                                // TODO 2. get pic_id
+                                                let pic_id_sql = "select * from profile_pic where pic_file_name = ";
+                                                pic_id_sql = pic_id_sql + "\"" +
+                                                    "user_id_" + uid + ".jpg" + "\"";
+                                                pic_con.query(pic_id_sql, function(err2, result2){
+                                                    pic_id = result2[0].pic_id;
+
+                                                    // TODO 3. update profile's pic_id
+
+                                                    let update_sql = "update profile set pic_id = " +
+                                                        pic_id + " where uid = " + uid;
+                                                    pic_con.query(update_sql, function(err3, result3){
+                                                        res.json({
+                                                            "status": 200
+                                                        });
+                                                    });
+                                                });
+                                            });
+                                        });
                                     }
                                     else{
-                                        pic_dir = pic_dir + picId;
-                                    }
+                                        let pic_sql = "select * from profile_pic where pic_id = " + pic_id;
+                                        let pic_con = mysql.createConnection({
+                                            host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+                                            user: "shao44",
+                                            password: "ShaoZH0923?",
+                                            database: "cs307_sp19_team31"
+                                        });
 
-                                    var pic_stream = base64_encode(pic_dir);
-                                    //console.log(pic_stream);
-                                    //base64_decode(pic_stream, 'test.jpg');
-                                    res.json({
-                                        "status":200,
-                                        "pic":pic_stream
-                                    });
+                                        pic_con.connect(function(err){
+                                            pic_con.query(pic_sql, function(err, result){
+                                                // update user's existing profile picture.
+                                                pic_dir = pic_dir + result[0].pic_file_name;
+                                                base64_decode(pic_stream, pic_dir);
+                                                res.json({
+                                                    "status": 200
+                                                });
+                                            });
+                                        });
+                                    }
                                 }
                             });
                         });

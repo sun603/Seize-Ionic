@@ -88,7 +88,7 @@ router.post('/', function(req, res, next){
                                         });
 
                                         pic_con.connect(function(err){
-                                            select_con.query(pic_sql, function(err, result){
+                                            pic_con.query(pic_sql, function(err, result){
                                                 pic_dir = pic_dir + result[0].pic_file_name;
                                                 let pic_stream = base64_encode(pic_dir);
                                                 res.json({
