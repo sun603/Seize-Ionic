@@ -14,7 +14,7 @@
     "express": "^4.16.4",
     "fs": "0.0.1-security",
     "gulp-cli": "^2.0.1",
-    "http-errors": "~1.6.2",
+    "http-errors": "^1.6.3",
     "jasmine": "^3.3.1",
     "mocha": "^6.0.2",
     "morgan": "~1.9.0",
