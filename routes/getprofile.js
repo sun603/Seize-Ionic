@@ -17,9 +17,9 @@ router.post('/', function(req, res, next){
     auth_con.connect(function(err) {
         if (err) {
             // db connection error
-            console.log("error");
-            throw(err);
-            return -1; // -1 for error
+            res.json({
+                "status": 404
+            })
         } else {
             auth_con.query(auth_sql, function (err, result) {
                 if (result.length === 0) {
