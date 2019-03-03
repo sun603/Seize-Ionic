@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var fs = require('fs');
+var path = require('path');
 
 /*
 * TODO: RECEIVE FILE STREAM OF THE PICTURE AND UPDATE IT ON THE SERVER.
@@ -76,6 +77,7 @@ router.post('/', function(req, res, next){
                                         *       3. add the new pic_id into the user profile.
                                         * */
                                         pic_dir = pic_dir + "user_id_" + uid + ".jpg";
+                                        console.log("pic_dir: ", pic_dir);
                                         base64_decode(pic_stream, pic_dir);
                                         let pic_sql = "insert profile_pic (pic_file_name)\n" +
                                             "values\n" +
@@ -113,7 +115,7 @@ router.post('/', function(req, res, next){
                                         });
                                     }
                                     else{
-                                        let pic_sql = "select * from profile_pic where pic_id = " + pic_id;
+                                        let pic_sql = "select * from profile_pic where pic_id = " + picId;
                                         let pic_con = mysql.createConnection({
                                             host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
                                             user: "shao44",
@@ -125,6 +127,7 @@ router.post('/', function(req, res, next){
                                             pic_con.query(pic_sql, function(err, result){
                                                 // update user's existing profile picture.
                                                 pic_dir = pic_dir + result[0].pic_file_name;
+                                                console.log("pic_dir: ", pic_dir);
                                                 base64_decode(pic_stream, pic_dir);
                                                 res.json({
                                                     "status": 200
@@ -141,19 +144,12 @@ router.post('/', function(req, res, next){
         }
     });
 
-    function base64_encode(file) {
-        var bitmap = fs.readFileSync(file);
-        return new Buffer(bitmap).toString('base64');
-    }
-
     function base64_decode(base64str, file) {
         var bitmap = new Buffer(base64str, 'base64');
-        fs.writeFileSync(file, bitmap);
-        console.log('******** picture decoded ********');
+        fs.writeFileSync(path.join(__dirname, file), bitmap);
+        //fs.writeFileSync(file, bitmap);
+        console.log('******** decoding complete ********');
     }
-
-    var pic_stream = base64_encode(pic_dir);
-    console.log(pic_stream);
 });
 
 module.exports = router;

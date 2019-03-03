@@ -12,7 +12,6 @@ var path = require('path');
 router.post('/', function(req, res, next){
     var auth_code = req.body.auth_token;
     var uid;
-    var pic_id;
     var pic_dir = './profile_pic/';
 
     var auth_sql = "SELECT * FROM user_auth WHERE auth_code = \"" + auth_code + "\"";
@@ -66,6 +65,8 @@ router.post('/', function(req, res, next){
                                     });
                                 } else {
                                     let picId = result[0].pic_id;
+                                    //console.log("result: ", result);
+
                                     if (picId === null){
                                         pic_dir = pic_dir + "unknown.jpg";
                                         let pic_stream = base64_encode(pic_dir);
@@ -79,7 +80,8 @@ router.post('/', function(req, res, next){
                                         //pic_dir = pic_dir + picId;
 
 
-                                        let pic_sql = "select * from profile_pic where pic_id = " + pic_id;
+                                        let pic_sql = "select * from profile_pic where pic_id = " + picId;
+                                        console.log("pic_sql: ", pic_sql);
                                         let pic_con = mysql.createConnection({
                                             host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
                                             user: "shao44",
@@ -111,12 +113,6 @@ router.post('/', function(req, res, next){
         //var bitmap = fs.readFileSync(file);
         var bitmap = fs.readFileSync(path.join(__dirname, file));
         return new Buffer(bitmap).toString('base64');
-    }
-
-    function base64_decode(base64str, file) {
-        var bitmap = new Buffer(base64str, 'base64');
-        fs.writeFileSync(path.join(__dirname, file), bitmap);
-        console.log('******** decoding complete ********');
     }
 });
 
