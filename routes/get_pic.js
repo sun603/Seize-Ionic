@@ -4,6 +4,11 @@ var mysql = require('mysql');
 var fs = require('fs');
 var path = require('path');
 
+/*
+* TODO: GET THE PICTURE THAT BELONGS TO THE AUTHENTICATION TOKEN USER
+* GET: auth_token
+* RESPONSE: picture file stream
+* */
 router.post('/', function(req, res, next){
     var auth_code = req.body.auth_token;
     var uid;
@@ -63,18 +68,36 @@ router.post('/', function(req, res, next){
                                     let picId = result[0].pic_id;
                                     if (picId === null){
                                         pic_dir = pic_dir + "unknown.jpg";
+                                        let pic_stream = base64_encode(pic_dir);
+                                        res.json({
+                                            "status":200,
+                                            "pic":pic_stream
+                                        });
                                     }
                                     else{
-                                        pic_dir = pic_dir + picId;
-                                    }
+                                        // pic_id found, need to find picture name
+                                        //pic_dir = pic_dir + picId;
 
-                                    var pic_stream = base64_encode(pic_dir);
-                                    //console.log(pic_stream);
-                                    //base64_decode(pic_stream, 'test.jpg');
-                                    res.json({
-                                        "status":200,
-                                        "pic":pic_stream
-                                    });
+
+                                        let pic_sql = "select * from profile_pic where pic_id = " + pic_id;
+                                        let pic_con = mysql.createConnection({
+                                            host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+                                            user: "shao44",
+                                            password: "ShaoZH0923?",
+                                            database: "cs307_sp19_team31"
+                                        });
+
+                                        pic_con.connect(function(err){
+                                            select_con.query(pic_sql, function(err, result){
+                                                pic_dir = pic_dir + result[0].pic_file_name;
+                                                let pic_stream = base64_encode(pic_dir);
+                                                res.json({
+                                                    "status":200,
+                                                    "pic":pic_stream
+                                                });
+                                            });
+                                        });
+                                    }
                                 }
                             });
                         });
