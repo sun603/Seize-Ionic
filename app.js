@@ -18,6 +18,7 @@ let forgetpass = require('./routes/password_reset.js');
 let get_pic = require('./routes/get_pic.js');
 let update_pic = require('./routes/update_pic.js');
 let post_seat = require('./routes/post_seat.js');
+let cancel_post = require('./routes/cancel_post.js');
 
 var app = express();
 var bodyParser = require('body-parser');
@@ -65,6 +66,7 @@ app.use('/forgetpass', forgetpass);
 app.use('/get_pic', get_pic);
 app.use('/update_pic', update_pic);
 app.use('/post_seat', post_seat);
+app.use('/cancel_post', cancel_post);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

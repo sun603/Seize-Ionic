@@ -5,7 +5,7 @@ var uid;
 
 /*
 * TODO: STORE USER'S POST SEAT INFORMATION AND STORE IT INTO DEDICATED MYSQL TABLE
-*       Information includeing:
+*       Information including:
 *           uid
 *           school
 *           class
