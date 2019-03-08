@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Tab Three
+      Contact
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -16,15 +16,15 @@
             <img id="profile-image" src="http://chittagongit.com//images/user-png-icon/user-png-icon-15.jpg"> -->
             
   <ion-item>
-    <ion-label>{{me.name}}</ion-label>
+    <ion-label (click)="editprofile()">{{me.name}}</ion-label>
   </ion-item>
                 <!-- <button ion-button icon-only clear block (click)="profile()">
                     <ion-icon name="arrow-dropright-circle"></ion-icon>
                  </button>  -->
 
-  <ion-button block (click)="editprofile()">
+  <!-- <ion-button block (click)="editprofile()">
     edit profile
-  </ion-button>
+  </ion-button> -->
   <ion-button block (click)="logOut()">
       logout
   </ion-button>
