@@ -25,42 +25,41 @@ export class ProfileService {
   // }
   // // this.storage.get('name').then((data)=>{this.var=data;});
   getLocalProfile(): Promise<any>{
-    let me:object;
-    return this.storage.get("me")
-    .then((me) => {
-      console.log("get local profile",me);
-      if(!me){
-        this.storage.get(environment.TOKEN_KEY).then( (autht) =>{
-          let data ={
-            "auth_token" : autht,
-          }
-          this.getProfile(data).subscribe(
-            (val) =>{
-              console.log("get http profile success",val);
-              if(val["status"]== 200){
-                this.storage.set("me",val);
-                me = val;
-                return me;
-              }else{
-                console.log("not sccuess in get http profile, but server on");
-              }
+    return new Promise((resolve,reject) => {
+      this.storage.get("me").then((res) => {
+        if(res == null || res == undefined){
+          this.storage.get(environment.TOKEN_KEY).then(
+            res => {
+              let data = {
+                "auth_token": res,
+              };
+              this.getwebProfile(data, res =>{
+                resolve(res);
+              })
             },
-            err => {
-              console.log("a connection err in get http profile");
+            error =>{
+              reject(error);
             }
-          )
-        })
-        
-      }
+          );
+        }else{
+          resolve(res);
+        }
+      },
+      error => {
+        reject(error);
+      });
     });
     
   }
-  getwebProfile(data){
+  getwebProfile(data,res?){
     this.getProfile(data).subscribe(
       (val) =>{
         console.log("get http profile success",val);
         if(val["status"]== 200){
           this.storage.set("me",val);
+          if(res){
+            res(val);
+          }
         }else{
           console.log("not sccuess in get http profile, but server on");
         }
