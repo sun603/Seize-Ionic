@@ -12,18 +12,7 @@ import { ProfileModel } from '../models/profile.model';
 })
 export class ProfileService {
   authcode:any;
-  constructor(private http: HttpClient, private storage: Storage) { 
-    // this.storage.get(environment.TOKEN_KEY).then(res => { this.authcode = res;});
-  }
-
-// getname(){
-  //   return "Max";
-  // }
-  // getpic(){
-  //   return this.http.get("../../assets/default-user-image.png",{ responseType: 'blob' });
-  //   // return this.http.get("http://deafhhcenter.org/wp-content/uploads/2017/12/profile-default.jpg",{ responseType: 'blob'})
-  // }
-  // // this.storage.get('name').then((data)=>{this.var=data;});
+  constructor(private http: HttpClient, private storage: Storage) {}
   getLocalProfile(): Promise<any>{
     return new Promise((resolve,reject) => {
       this.storage.get("me").then((res) => {
@@ -73,11 +62,3 @@ export class ProfileService {
       return this.http.post(environment.apiUrl+"/getprofile", data).pipe(map(res => res));
   }
 }
-
-// class Profile{
-//   status:any;
-//   name:any;
-//   university:any;
-//   class:any;
-//   major:any;
-// }
