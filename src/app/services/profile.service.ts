@@ -15,7 +15,7 @@ export class ProfileService {
   constructor(private http: HttpClient, private storage: Storage) {}
   getLocalProfile(): Promise<any>{
     return new Promise((resolve,reject) => {
-      this.storage.get("me").then((res) => {
+      this.storage.get("myAvatar").then((res) => {
         if(res == null || res == undefined){
           this.storage.get(environment.TOKEN_KEY).then(
             res => {
@@ -43,7 +43,7 @@ export class ProfileService {
   getwebProfile(data,res?){
     this.getProfile(data).subscribe(
       (val) =>{
-        console.log("get http profile success",val);
+        // console.log("get http profile success",val);
         if(val["status"]== 200){
           this.storage.set("me",val);
           if(res){
@@ -60,5 +60,58 @@ export class ProfileService {
   }
   getProfile(data){
       return this.http.post(environment.apiUrl+"/getprofile", data).pipe(map(res => res));
+  }
+  getLocalAvatar(){
+    return new Promise((resolve,reject) => {
+      this.storage.get("myAvatar").then((res) => {
+        if(res == null || res == undefined){
+          this.storage.get(environment.TOKEN_KEY).then(
+            res => {
+              let data = {
+                "auth_token": res,
+              };
+              this.getwebAvatar(data, res =>{
+                console.log("from web pic",res);
+                resolve(res);
+              })
+            },
+            error =>{
+              reject(error);
+            }
+          );
+        }else{
+          console.log("from local pic",res);
+          resolve(res);
+        }
+      },
+      error => {
+        reject(error);
+      });
+    });
+  }
+  getwebAvatar(data,res?){
+    this.getAvatar(data).subscribe(
+      (val) =>{
+        console.log("get http myAvatar success",val);
+        if(val["status"]== 200){
+          if(val["pic"]){
+            this.storage.set("myAvatar",val["pic"]);
+          }else{
+            console.log("json pic err",val);
+          }
+          if(res){
+            res(val);
+          }
+        }else{
+          console.log("not sccuess in get http avatar, but server on");
+        }
+      },
+      err => {
+        console.log("a connection err in get http avatar");
+      }
+    );
+  }
+  getAvatar(data){
+    return this.http.post(environment.apiUrl+"/get_pic", data).pipe(map(res => res));
   }
 }
