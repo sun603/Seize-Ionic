@@ -6,13 +6,15 @@ import { FormsModule } from '@angular/forms';
 
 import { Tab2Page } from './tab2.page';
 import { chooseseatComponentModule } from '../chooseseat/chooseseat.component.module';
+import { chooselibraryComponentModule } from '../chooselibrary/chooselibrary.component.module';
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
     RouterModule.forChild([{ path: '', component: Tab2Page }]),
-    chooseseatComponentModule
+    chooseseatComponentModule,
+    chooselibraryComponentModule
   ],
   declarations: [Tab2Page]
 })
