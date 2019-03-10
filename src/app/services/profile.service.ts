@@ -63,7 +63,7 @@ export class ProfileService {
   }
   getLocalAvatar(){
     return new Promise((resolve,reject) => {
-      this.storage.get("me").then((res) => {
+      this.storage.get("myAvatar").then((res) => {
         if(res == null || res == undefined){
           this.storage.get(environment.TOKEN_KEY).then(
             res => {
@@ -71,6 +71,7 @@ export class ProfileService {
                 "auth_token": res,
               };
               this.getwebAvatar(data, res =>{
+                console.log("from web pic",res);
                 resolve(res);
               })
             },
@@ -79,6 +80,7 @@ export class ProfileService {
             }
           );
         }else{
+          console.log("from local pic",res);
           resolve(res);
         }
       },
