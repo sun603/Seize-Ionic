@@ -10,12 +10,12 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IonicStorageModule } from '@ionic/storage';
-import { ChooselibraryComponent } from './chooselibrary/chooselibrary.component';
+
 
 
 
 @NgModule({
-  declarations: [AppComponent, ChooselibraryComponent],
+  declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule, 
