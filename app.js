@@ -84,4 +84,9 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+var oneHour = 60 * 60 * 1000;
+var clear_timeout = require('./routes/clear_timeout.js');
+
+clear_timeout();
+
 module.exports = app;
