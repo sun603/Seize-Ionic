@@ -10,10 +10,11 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IonicStorageModule } from '@ionic/storage';
-import { ChooeseseatComponent } from './chooeseseat/chooeseseat.component';
+
+
 
 @NgModule({
-  declarations: [AppComponent, ChooeseseatComponent],
+  declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule, 
