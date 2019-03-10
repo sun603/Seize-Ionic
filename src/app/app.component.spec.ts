@@ -8,6 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {IonicStorageModule} from '@ionic/storage';
 import { AppComponent } from './app.component';
 import { Storage } from '@ionic/storage';
+import { ChooseseatComponent } from './chooseseat/chooseseat.component';
 
 describe('AppComponent', () => {
 
@@ -21,7 +22,7 @@ describe('AppComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule,HttpClientTestingModule,IonicStorageModule.forRoot()],
-      declarations: [AppComponent],
+      declarations: [AppComponent,ChooseseatComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         { provide: StatusBar, useValue: statusBarSpy },
