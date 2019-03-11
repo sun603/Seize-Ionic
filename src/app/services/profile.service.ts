@@ -15,7 +15,7 @@ export class ProfileService {
   constructor(private http: HttpClient, private storage: Storage) {}
   getLocalProfile(): Promise<any>{
     return new Promise((resolve,reject) => {
-      this.storage.get("myAvatar").then((res) => {
+      this.storage.get("me").then((res) => {
         if(res == null || res == undefined){
           this.storage.get(environment.TOKEN_KEY).then(
             res => {
@@ -80,7 +80,7 @@ export class ProfileService {
             }
           );
         }else{
-          console.log("from local pic",res);
+          // console.log("from local pic",res);
           resolve(res);
         }
       },

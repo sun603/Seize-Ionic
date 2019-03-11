@@ -23,15 +23,15 @@ export class Tab3Page {
       if(data){
         this.me.name = data.name;
       }else{
-        console.log("tab3 data about name do not exist???");
+        // console.log("tab3 data about name do not exist???");
         this.prof.getLocalProfile().then(data => {
           this.me.name = data.name;
         });
       }
     });
     this.prof.getLocalAvatar().then((data) =>{
-      console.log("tab3: avatar",data);
-      this.profileImgUrl = "data:image/jpg;base64,data"+data;
+      // console.log("tab3: avatar",data);
+      this.profileImgUrl = "data:image/jpg;base64,"+data;
     });
   }
 
