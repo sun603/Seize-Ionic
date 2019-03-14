@@ -19,7 +19,7 @@ export class Tab3Page {
   }
   ngOnInit() {
     this.prof.getLocalProfile().then(data => {
-      // console.log("tab3: data",data);
+      console.log("tab3: data",data);
       if(data){
         this.me.name = data.name;
       }else{

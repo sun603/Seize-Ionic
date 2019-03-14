@@ -100,7 +100,7 @@ export class ProfileService {
             console.log("json pic err",val);
           }
           if(res){
-            res(val);
+            res(val["pic"]);
           }
         }else{
           console.log("not sccuess in get http avatar, but server on");
