@@ -8,41 +8,41 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
+  <ion-card *ngIf="me.name">
       <ion-card-header>
-        <ion-card-title>Full Name</ion-card-title>
+        <ion-card-title>Name</ion-card-title>
       </ion-card-header>
-    
+
       <ion-card-content>
         {{me.name}}
       </ion-card-content>
   </ion-card>
 
-  <ion-card>
+  <ion-card *ngIf="me.gender">
       <ion-card-header>
         <ion-card-title>Gender</ion-card-title>
       </ion-card-header>
-    
+
       <ion-card-content>
         {{me.gender}}
       </ion-card-content>
   </ion-card>
 
-  <ion-card>
+  <ion-card *ngIf="me.email">
       <ion-card-header>
         <ion-card-title>Email</ion-card-title>
       </ion-card-header>
-    
+
       <ion-card-content>
         {{me.email}}
       </ion-card-content>
   </ion-card>
 
-  <ion-card>
+  <ion-card *ngIf="me.university">
       <ion-card-header>
         <ion-card-title>University</ion-card-title>
       </ion-card-header>
-    
+
       <ion-card-content>
         {{me.university}}
       </ion-card-content>
@@ -52,30 +52,41 @@
       <ion-card-header>
         <ion-card-title>University ID</ion-card-title>
       </ion-card-header>
-    
+
       <ion-card-content>
         000000
       </ion-card-content>
   </ion-card> -->
 
-  <ion-card>
+  <ion-card *ngIf="me.major">
       <ion-card-header>
         <ion-card-title>Major</ion-card-title>
       </ion-card-header>
-    
+
       <ion-card-content>
         {{me.major}}
       </ion-card-content>
   </ion-card>
 
-  <ion-card>
+  <ion-card *ngIf="me.class">
       <ion-card-header>
         <ion-card-title>Class Standing</ion-card-title>
       </ion-card-header>
-    
+
       <ion-card-content>
         {{me.class}}
       </ion-card-content>
   </ion-card>
-</ion-content>
 
+
+
+  <ion-card (click)="editprofile()">
+    <ion-card-header>
+      <ion-card-title>Other</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Here, edit all
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

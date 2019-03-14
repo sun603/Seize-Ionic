@@ -42,4 +42,8 @@ export class ProfilePage implements OnInit {
     });
   }
 
+  editprofile(){
+    console.log("editprofile");
+    this.router.navigate(['/editprofile']);
+  }
 }

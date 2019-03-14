@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+        <ion-back-button defaultHref="/profile"></ion-back-button>
+    </ion-buttons>
     <ion-title>edit my profile</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -10,7 +13,7 @@
         <div class="text-center">
           <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
           <h6>Upload a different photo...</h6>
-          
+
           <input type="file" class="form-control">
         </div>
       </div>
@@ -45,11 +48,11 @@
     <ion-label>Email</ion-label>
     <ion-input [(ngModel)]="email"></ion-input>
   </ion-item>
-    
+
   <ion-item>
     <ion-label>University</ion-label>
     <ion-select placeholder="Select One" id="fullWidth" [(ngModel)]="university">
-      <ion-select-option value="purdue">Purdue University (West Lafayette)</ion-select-option>
+      <ion-select-option value="Purdue University (West Lafayette)">Purdue University (West Lafayette)</ion-select-option>
     </ion-select>
   </ion-item>
 
@@ -67,11 +70,11 @@
 <ion-item>
     <ion-label>Class Standing</ion-label>
     <ion-select placeholder="Select One" id="fullWidth" [(ngModel)]="class">
-    <ion-select-option value="1">Freshman</ion-select-option>
-    <ion-select-option value="2">Sophomore</ion-select-option>
-    <ion-select-option value="3">Junior</ion-select-option>
-    <ion-select-option value="4">Senior</ion-select-option> 
-    <ion-select-option value="5">Graduate</ion-select-option>
+    <ion-select-option value="Freshman">Freshman</ion-select-option>
+    <ion-select-option value="Sophomore">Sophomore</ion-select-option>
+    <ion-select-option value="Junior">Junior</ion-select-option>
+    <ion-select-option value="Senior">Senior</ion-select-option>
+    <ion-select-option value="Graduate">Graduate</ion-select-option>
   </ion-select>
   </ion-item>
 
