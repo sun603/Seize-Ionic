@@ -5,7 +5,8 @@ import { Storage } from '@ionic/storage';
 
 import { map, retry } from 'rxjs/operators';
 
-import { environment } from '../../environments/environment'
+import { environment } from '../../environments/environment';
+import { apisettings } from '../settings/apisettings'
 import { ProfileModel } from '../models/profile.model';
 @Injectable({
   providedIn: 'root'
@@ -38,7 +39,7 @@ export class ProfileService {
         reject(error);
       });
     });
-    
+
   }
   getwebProfile(data,res?){
     this.getProfile(data).subscribe(
@@ -59,7 +60,7 @@ export class ProfileService {
     );
   }
   getProfile(data){
-      return this.http.post(environment.apiUrl+"/getprofile", data).pipe(map(res => res));
+      return this.http.post(environment.apiUrl+apisettings.getprofile, data).pipe(map(res => res));
   }
   getLocalAvatar(){
     return new Promise((resolve,reject) => {
@@ -112,6 +113,6 @@ export class ProfileService {
     );
   }
   getAvatar(data){
-    return this.http.post(environment.apiUrl+"/get_pic", data).pipe(map(res => res));
+    return this.http.post(environment.apiUrl+apisettings.getavatar, data).pipe(map(res => res));
   }
 }

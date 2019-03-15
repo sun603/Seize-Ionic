@@ -9,7 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 
 
 import { environment } from '../../environments/environment'
-
+import { apisettings } from '../settings/apisettings'
 @Injectable({
   providedIn: 'root'
 })
@@ -25,7 +25,7 @@ export class AuthenticationService {
       // 'Access-Control-Allow-Origin' : '*',
     })
   };
-  apiUrl = ''; 
+  apiUrl = '';
   TOKEN_KEY = '';
   constructor(private http: HttpClient, private storage: Storage, private plt: Platform) {
     this.apiUrl = environment.apiUrl;
@@ -34,7 +34,7 @@ export class AuthenticationService {
       this.checkToken();
     });
   }
-  
+
   checkToken() {
     this.storage.get(this.TOKEN_KEY).then(res => {
       if(res){
@@ -48,11 +48,11 @@ export class AuthenticationService {
   }
 
   login(data){
-    return this.http.post(this.apiUrl+'/email_login', data).pipe(map(res => res));
+    return this.http.post(this.apiUrl+apisettings.login, data).pipe(map(res => res));
   }
 
   signup(data){
-    return this.http.post(this.apiUrl+'/signup', data).pipe(map(res => res));
+    return this.http.post(this.apiUrl+apisettings.signup, data).pipe(map(res => res));
   }
 
   logout() {
@@ -63,15 +63,15 @@ export class AuthenticationService {
       this.authenticationState.next(false);
     });
   }
- 
+
   forget(data,api) {
     return this.http.post(this.apiUrl+api, data).pipe(map(res => res));
   }
-  
+
   isAuthenticated() {
     return this.authenticationState.value;
   }
-  
+
   // this is for dev only
   backdoor(){
     this.storage.set(this.TOKEN_KEY,1).then(() => {
