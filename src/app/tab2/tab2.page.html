@@ -1,12 +1,32 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Tab Two
+      Find
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <app-chooseseat></app-chooseseat>
-  <app-chooselibrary></app-chooselibrary>
+  <!-- <app-chooseseat></app-chooseseat>
+  <app-chooselibrary></app-chooselibrary> -->
+  <ion-item>
+    <ion-label>Library</ion-label>
+    <ion-select placeholder="which library?">
+    </ion-select>
+  </ion-item>
+  <ion-item>
+      <ion-label>Seat Type</ion-label>
+      <ion-select placeholder="Select One">
+        <ion-select-option value="s1">Chair</ion-select-option>
+        <ion-select-option value="s2">Sofa</ion-select-option>
+      </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Sound Level</ion-label>
+    <ion-range min="1" max="10" pin="true">
+      <ion-icon slot="start" name="volume-low"></ion-icon>
+      <ion-icon slot="end" name="volume-high"></ion-icon>
+    </ion-range>
+  </ion-item>
+
 </ion-content>
