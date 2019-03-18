@@ -12,11 +12,13 @@ var uid;
 *           major
 *           seat_type
 *           noise_level
+*           library
 * */
 router.post('/', function(req, res, next){
     var auth_code = req.body.auth_token;
     var seat_type = req.body.seat_type;
     var noise_level = req.body.noise_level;
+    let library = req.body.library;
 
     // TODO: grab user profile from auth_token
     var auth_sql = "SELECT * FROM user_auth WHERE auth_code = \"" + auth_code + "\"";
@@ -72,7 +74,7 @@ router.post('/', function(req, res, next){
                                     " values " +
                                     "(" + uid + ", " +
                                     "\"" + school + "\", " +
-                                    class_standing + ", " +
+                                    "\"" + class_standing + "\", " +
                                     "\"" + major + "\", " +
                                     "\"" + seat_type + "\", " +
                                     noise_level + ")";
