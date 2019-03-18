@@ -19,6 +19,9 @@ let get_pic = require('./routes/get_pic.js');
 let update_pic = require('./routes/update_pic.js');
 let post_seat = require('./routes/post_seat.js');
 let cancel_post = require('./routes/cancel_post.js');
+let search_seat = require('./routes/search_seat.js');
+let logout = require('./routes/logout.js');
+let resume = require('./routes/resume.js');
 
 var app = express();
 var bodyParser = require('body-parser');
@@ -67,6 +70,9 @@ app.use('/get_pic', get_pic);
 app.use('/update_pic', update_pic);
 app.use('/post_seat', post_seat);
 app.use('/cancel_post', cancel_post);
+app.use('/search_seat', search_seat);
+app.use('/logout', logout);
+app.use('/resume', resume);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

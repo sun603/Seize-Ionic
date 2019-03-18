@@ -40,7 +40,7 @@ router.post('/', function(req, res, next) {
 
     let name = req.body.name;
     let gender = req.body.gender;
-    let school = req.body.school;
+    let school = req.body.university;
     let major = req.body.major;
     let year = req.body.class;
     let descrip = req.body.description;
@@ -101,8 +101,9 @@ router.post('/', function(req, res, next) {
                                     //let sql_header = "let update_sql = \"UPDATE profile SET grad_year = \";\n" +
                                     //   update_sql += year + \" WHERE uid = \" + uid;"
 
-                                    let sql_head = "UPDATE profile SET ";
+                                    let update_sql = "UPDATE profile SET ";
                                     let sql_tail = " WHERE uid = " + uid;
+                                    var t = 1;
 
                                     /*
                                     * name
@@ -114,119 +115,66 @@ router.post('/', function(req, res, next) {
                                     * */
 
                                     if (name !== undefined){
-                                        let update_sql = sql_head + "name = \"" + name + "\"" + sql_tail;
-                                        let update_con = mysql.createConnection({
-                                            host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
-                                            user: "shao44",
-                                            password: "ShaoZH0923?",
-                                            database: "cs307_sp19_team31"
-                                        });
-                                        update_con.connect(function(err){
-                                            update_con.query(update_sql, function(err, result){
-                                                if (err){
-                                                    res.json({
-                                                        "status": 203
-                                                    });
-                                                }
-                                            });
-                                        });
-
+                                        if (t === 0){
+                                            update_sql += ", ";
+                                        }
+                                        t = 0;
+                                        update_sql += "name = \"" + name + "\"";
                                     }
                                     if (gender !== undefined){
-                                        let update_sql = sql_head + "gender = \"" + gender + "\"" + sql_tail;
-                                        let update_con = mysql.createConnection({
-                                            host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
-                                            user: "shao44",
-                                            password: "ShaoZH0923?",
-                                            database: "cs307_sp19_team31"
-                                        });
-                                        update_con.connect(function(err){
-                                            update_con.query(update_sql, function(err, result){
-                                                if (err){
-                                                    res.json({
-                                                        "status": 203
-                                                    });
-                                                }
-                                            });
-                                        });
-
+                                        if (t === 0){
+                                            update_sql += ", ";
+                                        }
+                                        t = 0;
+                                        update_sql += "gender = \"" + gender + "\"";
                                     }
                                     if (school !== undefined){
-                                        let update_sql = sql_head + "school = \"" + school + "\"" + sql_tail;
-                                        let update_con = mysql.createConnection({
-                                            host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
-                                            user: "shao44",
-                                            password: "ShaoZH0923?",
-                                            database: "cs307_sp19_team31"
-                                        });
-                                        update_con.connect(function(err){
-                                            update_con.query(update_sql, function(err, result){
-                                                if (err){
-                                                    res.json({
-                                                        "status": 203
-                                                    });
-                                                }
-                                            });
-                                        });
-
+                                        if (t === 0){
+                                            update_sql += ", ";
+                                        }
+                                        t = 0;
+                                        update_sql += "school = \"" + school + "\"";
                                     }
                                     if (major !== undefined){
-                                        let update_sql = sql_head + "major = \"" + major + "\"" + sql_tail;
-                                        let update_con = mysql.createConnection({
-                                            host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
-                                            user: "shao44",
-                                            password: "ShaoZH0923?",
-                                            database: "cs307_sp19_team31"
-                                        });
-                                        update_con.connect(function(err){
-                                            update_con.query(update_sql, function(err, result){
-                                                if (err){
-                                                    res.json({
-                                                        "status": 203
-                                                    });
-                                                }
-                                            });
-                                        });
-
+                                        if (t === 0){
+                                            update_sql += ", ";
+                                        }
+                                        t = 0;
+                                        update_sql += "major = \"" + major + "\"";
                                     }
                                     if (year !== undefined){
-                                        let update_sql = sql_head + "class = \"" + year + "\"" + sql_tail;
-                                        let update_con = mysql.createConnection({
-                                            host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
-                                            user: "shao44",
-                                            password: "ShaoZH0923?",
-                                            database: "cs307_sp19_team31"
-                                        });
-                                        update_con.connect(function(err){
-                                            update_con.query(update_sql, function(err, result){
-                                                if (err){
-                                                    res.json({
-                                                        "status": 203
-                                                    });
-                                                }
-                                            });
-                                        });
-
+                                        if (t === 0){
+                                            update_sql += ", ";
+                                        }
+                                        t = 0;
+                                        update_sql += "class = \"" + year + "\"";
                                     }
                                     if (descrip !== undefined){
-                                        let update_sql = sql_head + "description = \"" + descrip + "\"" + sql_tail;
-                                        let update_con = mysql.createConnection({
-                                            host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
-                                            user: "shao44",
-                                            password: "ShaoZH0923?",
-                                            database: "cs307_sp19_team31"
-                                        });
-                                        update_con.connect(function(err){
-                                            update_con.query(update_sql, function(err, result){
-                                                if (err){
-                                                    res.json({
-                                                        "status": 203
-                                                    });
-                                                }
-                                            });
-                                        });
-
+                                        if (t === 0){
+                                            update_sql += ", ";
+                                        }
+                                        t = 0;
+                                        update_sql += "description = \"" + descrip + "\"" + sql_tail;
                                     }
+
+                                    update_sql += sql_tail;
+
+                                    let update_con = mysql.createConnection({
+                                        host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+                                        user: "shao44",
+                                        password: "ShaoZH0923?",
+                                        database: "cs307_sp19_team31"
+                                    });
+                                    console.log(update_sql);
+                                    update_con.connect(function(err){
+                                        update_con.query(update_sql, function(err, result){
+
+                                            res.json({
+                                                "status": 200
+                                            })
+                                        });
+                                    });
+
                                 }
                             });
                         }

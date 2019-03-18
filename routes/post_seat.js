@@ -12,11 +12,13 @@ var uid;
 *           major
 *           seat_type
 *           noise_level
+*           library
 * */
 router.post('/', function(req, res, next){
     var auth_code = req.body.auth_token;
     var seat_type = req.body.seat_type;
     var noise_level = req.body.noise_level;
+    let library = req.body.library;
 
     // TODO: grab user profile from auth_token
     var auth_sql = "SELECT * FROM user_auth WHERE auth_code = \"" + auth_code + "\"";
@@ -68,13 +70,14 @@ router.post('/', function(req, res, next){
                                 var major = result[0].major;
                                 // uid, seat_type, noise_level
 
-                                let post_sql = "insert matching_pool (uid, school, class, major, seat_type, noise_level)" +
+                                let post_sql = "insert matching_pool (uid, school, class, major, seat_type, library, noise_level)" +
                                     " values " +
                                     "(" + uid + ", " +
                                     "\"" + school + "\", " +
-                                    class_standing + ", " +
+                                    "\"" + class_standing + "\", " +
                                     "\"" + major + "\", " +
                                     "\"" + seat_type + "\", " +
+                                    "\"" + library + "\", " +
                                     noise_level + ")";
                                 let post_con = mysql.createConnection({
                                     host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",

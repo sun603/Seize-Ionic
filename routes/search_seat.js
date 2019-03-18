@@ -13,14 +13,23 @@ var uid;
 *           seat_type: <String>,
 *           noise_level: <int>
 *       }
-*
+*       Hidden info (from auth_token):
 *           school: <String>,
 *           class: <int>, // class standing
 *           major: <String>,
+*
+*
+*       JSON response:
+*       {
+*           status: 200(match found), 201(invalid token), 202(match not found)
+*       }
 * */
 
 router.post('/', function(req, res, next){
-    var auth_code = req.body.auth_token;
+    let auth_code = req.body.auth_token;
+    let seat_type = req.body.seat_type;
+    let noise_level = req.body.noise_level;
+    let library = req.body.library;
 
     // TODO: grab user profile from auth_token
     var auth_sql = "SELECT * FROM user_auth WHERE auth_code = \"" + auth_code + "\"";
@@ -68,12 +77,78 @@ router.post('/', function(req, res, next){
                             else{
                                 // TODO: subtract user profile info.
                                 var school = result[0].school;
-                                var class_stand = result[0].class;
+                                var class_stand = result[0].class; // VARCHAR(45)
                                 var major = result[0].major;
 
-                                let match_sql = "SELECT * FROM matching_pool WHERE" +
-                                    "school = \"" + school + "\", " +
-                                    "AND class_stand = ";
+                                let match_sql = "SELECT * FROM matching_pool WHERE " +
+                                    "school = \"" + school + "\" " +
+                                    "AND class = \"" + class_stand + "\" " +
+                                    "AND major = \"" + major + "\" " +
+                                    "AND seat_type = \"" + seat_type + "\" " +
+                                    "AND noise_level <= " + noise_level +
+                                    " AND library = \"" + library + "\"";
+
+                                console.log(match_sql);
+
+                                let match_con = mysql.createConnection({
+                                    host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+                                    user: "shao44",
+                                    password: "ShaoZH0923?",
+                                    database: "cs307_sp19_team31"
+                                });
+
+                                match_con.connect(function(err){
+                                    match_con.query(match_sql, function(err, result){
+                                        if (result === undefined){
+                                            // MATCH NOT FOUND
+                                            res.json({
+                                                "status": 202,
+                                                "err_message": "match not found"
+                                            })
+                                        }
+                                        else if (result[0] === undefined){
+                                            // MATCH NOT FOUND
+                                            res.json({
+                                                "status": 202,
+                                                "err_message": "match not found"
+                                            })
+                                        }
+                                        else{
+                                            // MATCH FOUND
+                                            // TODO: 1. DELETE the post in matching_pool
+                                            //       2. RESPONSE with the mathced user id
+                                            //       3. (if time allows) send notification to post-er
+
+                                            console.log(result);
+
+                                            // 1. DELETE the post in matching_pool
+
+                                            let poster_uid = result[0].uid;
+                                            let delete_sql = "delete from matching_pool where uid = " + poster_uid;
+
+                                            let delete_con = mysql.createConnection({
+                                                host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+                                                user: "shao44",
+                                                password: "ShaoZH0923?",
+                                                database: "cs307_sp19_team31"
+                                            });
+
+                                            delete_con.connect(function(err){
+                                                delete_con.query(delete_sql, function(err, result){
+                                                    // DELETE complete
+                                                })
+                                            })
+
+                                            // 2. (if time allows) send notification to post-er
+
+                                            // 3. RESPONSE with the mathced user id
+                                            res.json({
+                                                "status": 200,
+                                                "uid": result[0].uid
+                                            });
+                                        }
+                                    });
+                                });
                             }
                         });
                     });

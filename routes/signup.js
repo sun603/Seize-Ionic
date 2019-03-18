@@ -94,8 +94,8 @@ router.post('/', function(req, res, next) {
                                     profile_sql = "insert profile";
                                     profile_sql += "(uid, school, class, name, major)";
                                     profile_sql += "values";
-                                    profile_sql += "(" + uid + ",\"" + university + "\",";
-                                    profile_sql += year + ", \"" + name + "\", \"" + major + "\")";
+                                    profile_sql += "(" + uid + ",\"" + university + "\", \"";
+                                    profile_sql += year + "\", \"" + name + "\", \"" + major + "\")";
                                     console.log(profile_sql);
 
                                     var profile_con = mysql.createConnection({
