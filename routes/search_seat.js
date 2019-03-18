@@ -29,6 +29,7 @@ router.post('/', function(req, res, next){
     let auth_code = req.body.auth_token;
     let seat_type = req.body.seat_type;
     let noise_level = req.body.noise_level;
+    let library = req.body.library;
 
     // TODO: grab user profile from auth_token
     var auth_sql = "SELECT * FROM user_auth WHERE auth_code = \"" + auth_code + "\"";
@@ -84,7 +85,8 @@ router.post('/', function(req, res, next){
                                     "AND class = \"" + class_stand + "\" " +
                                     "AND major = \"" + major + "\" " +
                                     "AND seat_type = \"" + seat_type + "\" " +
-                                    "AND noise_level <= " + noise_level;
+                                    "AND noise_level <= " + noise_level +
+                                    " AND library = \"" + library + "\"";
 
                                 console.log(match_sql);
 
