@@ -2,7 +2,7 @@ var request = require("supertest");
 var server = require("../app.js");
 var assert = require("assert");
 
-var token;
+var auth_code;
 
 /*
 * testing getprofile for user:
@@ -30,14 +30,14 @@ it('acquiring token from login', function(done)
         .end(done);
 });
 
-it('checking if getting profiles correctly', function(done)
+it('checking if cancelling post correctly', function(done)
 {
     let data = {
         "auth_code": auth_code
     }
 
     request(server)
-        .post("/getprofile")
+        .post("/cancel_post")
         .send(data)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
