@@ -39,6 +39,8 @@ it('acquiring token from login', function(done)
             assert.equal(res.body.status, 200);
             token = res.body.auth;
             console.log("token = ", token);
+            uid = res.body.uid;
+            console.log("uid = ", uid);
         })
         .end(done);
 });
@@ -46,11 +48,12 @@ it('acquiring token from login', function(done)
 it('checking if getting pictures correctly', function(done)
 {
     let data = {
-        "auth_token": token
+        "auth_token": token,
+        "uid": uid
     }
 
     request(server)
-        .post("/getprofile")
+        .post("/get_pic")
         .send(data)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
