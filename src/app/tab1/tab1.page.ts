@@ -11,12 +11,11 @@ export class Tab1Page {
   library:any;
   libs:any;
   constructor(){
-    // library = new LibraryModel();
+    this.library = new LibraryModel();
   }
   ngOnInit() {
-    this.libs = LibraryModel.libs;
+    this.libs = this.library.getlibs();
   }
   ngAfterContentInit(){
-    console.log(libs);
   }
 }

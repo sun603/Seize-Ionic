@@ -1,5 +1,5 @@
 export class LibraryModel {
-  public libs = [
+  private libs = [
     'Archives & Special Collections',
     'Aviation Technology',
     'Black Cultural Center',
@@ -10,4 +10,8 @@ export class LibraryModel {
     'Veterinary Medical',
     'WALC -- Library of Engineering & Science',
   ];
+
+  getlibs(): any[] {
+    return this.libs;
+  }
 }
