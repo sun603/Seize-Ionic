@@ -6,7 +6,7 @@ import { Storage } from '@ionic/storage';
 import { map, retry } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
-import { apisettings } from '../settings/apisettings'
+import { apisettings } from '../settings/apisettings';
 import { ProfileModel } from '../models/profile.model';
 import { AuthenticationService } from './authentication.service';
 @Injectable({
