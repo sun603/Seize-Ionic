@@ -12,6 +12,9 @@
   <ion-item>
     <ion-label>Library</ion-label>
     <ion-select placeholder="which library?">
+        <ion-select-option *ngFor="let lib of libs" value={{lib}}>
+            {{lib}}
+        </ion-select-option >
     </ion-select>
   </ion-item>
   <ion-item>
@@ -28,5 +31,9 @@
       <ion-icon slot="end" name="volume-high"></ion-icon>
     </ion-range>
   </ion-item>
-
+  <ion-item>
+      <ion-button block (click)="find()">
+        Find this seat
+      </ion-button>
+    </ion-item>
 </ion-content>
