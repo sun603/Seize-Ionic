@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatchService } from '../services/match.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-waiting',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WaitingPage implements OnInit {
 
-  constructor() { }
+  constructor(public matchService: MatchService, private router:Router) { }
 
   ngOnInit() {
   }
 
+  cencel(){
+    this.matchService.cencel().then(data =>{
+      console.log("cencel",data);
+      if(data["status"] == 200){
+        this.router.navigate(['']);
+      }
+    });
+  }
 }

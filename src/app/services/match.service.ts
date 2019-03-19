@@ -65,4 +65,38 @@ export class MatchService {
   httpfind(data){
     return this.http.post(environment.apiUrl+apisettings.search, data).pipe(map(res => res));
   }
+
+  cencel(): Promise<any>{
+    return new Promise((resolve,reject) => {
+      this.auth.getauth().then(res => {
+        let data = {
+          "auth_token": res,
+        };
+        this.httpcencel(data).subscribe(
+          (val) =>{
+            if(val["status"]== 200){
+              resolve(val);
+            }else if(val["status"]== 201){
+              console.log("Logout at find for 201"+val+data);
+              this.auth.logout();
+              reject(val);
+            }else{
+              console.log("not sccuess in post seat, but server on"+val["status"]);
+              reject(val);
+            }
+          },
+          err =>{
+            console.log("a connection err in post seat"+err);
+            reject(err);
+          }
+        );
+      }).catch(err =>{
+        reject(err);
+      });
+    });
+
+  }
+  httpcencel(data){
+    return this.http.post(environment.apiUrl+apisettings.cencel, data).pipe(map(res => res));
+  }
 }
