@@ -8,7 +8,8 @@ const routes: Routes = [
   { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
   { path: 'profile', canActivate: [AuthGuard], loadChildren: './profile/profile.module#ProfilePageModule' },
   { path: 'editprofile', loadChildren: './editprofile/editprofile.module#EditprofilePageModule' },
-  { path: 'forgetpassword', loadChildren: './forgetpassword/forgetpassword.module#ForgetpasswordPageModule' }
+  { path: 'forgetpassword', loadChildren: './forgetpassword/forgetpassword.module#ForgetpasswordPageModule' },
+  { path: 'waiting', loadChildren: './waiting/waiting.module#WaitingPageModule' }
 ];
 @NgModule({
   imports: [
