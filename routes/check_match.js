@@ -48,7 +48,7 @@ router.post('/', function(req, res, next){
                 else{
                     uid = result[0].uid;
 
-                    let serach_sql = "SELECT * FROM matching_pool WHERE uid = " + uid;
+                    let search_sql = "SELECT * FROM matching_pool WHERE uid = " + uid;
 
                     let search_con = mysql.createConnection({
                         host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
@@ -65,25 +65,45 @@ router.post('/', function(req, res, next){
                             });
                         }
                         else{
-                            if (result === undefined){
-                                res.json({
-                                    "status": 404,
-                                    "error message": "database connection capacity error"
-                                });
-                            }
-                            else if (result.length === 0) {
-                                res.json({
-                                    "status": 201,
-                                    "error message": "invalid auth_token"
-                                });
-                            }
-                            else{
-                                search_con.query(serach_sql, function(err, result){
-                                    if (result === undefined){
-                                        
-                                    }
-                                })
-                            }
+                            search_con.query(search_sql, function(err, result){
+                                if (result === undefined){
+                                    res.json({
+                                        "status": 404,
+                                        "error message": "database connection capacity error"
+                                    });
+                                }
+                                else if (result.length === 0) {
+                                    res.json({
+                                        "status": 205,
+                                        "error message": "Unknown error - user not posted in matching pool"
+                                    });
+                                }
+                                else{
+                                    let search_uid = result[0].matching_status;
+
+                                    let delete_sql = "delete from matching_pool where uid = " + uid;
+
+                                    let delete_con = mysql.createConnection({
+                                        host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+                                        user: "shao44",
+                                        password: "ShaoZH0923?",
+                                        database: "cs307_sp19_team31"
+                                    });
+
+                                    console.log(delete_sql);
+
+                                    delete_con.connect(function(err){
+                                        delete_con.query(delete_sql, function(err, result){
+                                            // DELETE complete
+                                        })
+                                    })
+
+                                    res.json({
+                                        "status": 200,
+                                        "matching_user": search_uid
+                                    })
+                                }
+                            })
                         }
                     })
                 }

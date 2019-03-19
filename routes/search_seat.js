@@ -144,7 +144,7 @@ router.post('/', function(req, res, next){
 
                                             delete_con.connect(function(err){
                                                 delete_con.query(delete_sql, function(err, result){
-                                                    // DELETE complete
+
                                                 })
                                             })
 
