@@ -14,9 +14,9 @@ export class MatchService {
 
   constructor(public http: HttpClient,public auth: AuthenticationService) { }
 
-  find(data): Promise<any>{
+  post(data): Promise<any>{
     return new Promise((resolve,reject) => {
-      this.httpfind(data).subscribe(
+      this.httppost(data).subscribe(
         (val) =>{
           if(val["status"]== 200){
             resolve(val);
@@ -36,7 +36,7 @@ export class MatchService {
       );
     });
   }
-  httpfind(data){
+  httppost(data){
     return this.http.post(environment.apiUrl+apisettings.post, data).pipe(map(res => res));
   }
 }

@@ -23,7 +23,7 @@ export class Tab1Page {
     this.libs = this.library.getlibs();
   }
 
-  find(){
+  post(){
     this.auth.getauth().then(res => {
       let data = {
         "auth_token": res,
@@ -31,7 +31,7 @@ export class Tab1Page {
         "seat_type": this.seattype,
         "noise_level": this.sound,
       };
-      this.matchService.find(data).then(data =>{
+      this.matchService.post(data).then(data =>{
         this.router.navigate(['/waiting']);
       });
       
