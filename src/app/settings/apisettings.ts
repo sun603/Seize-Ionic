@@ -6,8 +6,8 @@ export const apisettings = {
   updateprofile:'/updateprofile',
   updatepic:'update_pic',
   logout:'/logout',
-  post:'post_seat',
-  search:'search_seat',
-  cencel:'cencel_seat',
+  post:'/post_seat',
+  search:'/search_seat',
+  cencel:'/cencel_seat',
   // forget
 }
