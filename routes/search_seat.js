@@ -49,7 +49,13 @@ router.post('/', function(req, res, next){
             })
         } else {
             auth_con.query(auth_sql, function (err, result) {
-                if (result.length === 0) {
+                if (result === undefined){
+                    res.json({
+                        "status": 201,
+                        "error message": "invalid auth_token"
+                    });
+                }
+                else if (result.length === 0) {
                     res.json({
                         "status": 201,
                         "error message": "invalid auth_token"
@@ -103,14 +109,14 @@ router.post('/', function(req, res, next){
                                             // MATCH NOT FOUND
                                             res.json({
                                                 "status": 202,
-                                                "err_message": "match not found"
+                                                "err_message": "match not found undefined"
                                             })
                                         }
                                         else if (result[0] === undefined){
                                             // MATCH NOT FOUND
                                             res.json({
                                                 "status": 202,
-                                                "err_message": "match not found"
+                                                "err_message": "match not found 0"
                                             })
                                         }
                                         else{
@@ -121,10 +127,11 @@ router.post('/', function(req, res, next){
 
                                             console.log(result);
 
-                                            // 1. DELETE the post in matching_pool
+                                            // 1. EDIT the post in matching_pool
 
                                             let poster_uid = result[0].uid;
-                                            let delete_sql = "delete from matching_pool where uid = " + poster_uid;
+                                            //let delete_sql = "delete from matching_pool where uid = " + poster_uid;
+                                            let delete_sql = "update matching_pool set matching_status = " + uid + " where uid = " + poster_uid;
 
                                             let delete_con = mysql.createConnection({
                                                 host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
@@ -133,9 +140,11 @@ router.post('/', function(req, res, next){
                                                 database: "cs307_sp19_team31"
                                             });
 
+                                            console.log(delete_sql);
+
                                             delete_con.connect(function(err){
                                                 delete_con.query(delete_sql, function(err, result){
-                                                    // DELETE complete
+
                                                 })
                                             })
 
@@ -144,7 +153,7 @@ router.post('/', function(req, res, next){
                                             // 3. RESPONSE with the mathced user id
                                             res.json({
                                                 "status": 200,
-                                                "uid": result[0].uid
+                                                "uid": poster_uid
                                             });
                                         }
                                     });
