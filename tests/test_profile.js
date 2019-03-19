@@ -34,7 +34,7 @@ it('checking if getting profiles correctly', function(done)
 {
     let data = {
         "auth_token": token
-    }
+    };
 
     request(server)
         .post("/getprofile")
