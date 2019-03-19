@@ -21,7 +21,7 @@ export class MatchService {
           if(val["status"]== 200){
             resolve(val);
           }else if(val["status"]== 201){
-            console.log("Logout at find for 201"+val);
+            console.log("Logout at find for 201"+val+data);
             this.auth.logout();
             reject(val);
           }else{
