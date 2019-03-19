@@ -25,12 +25,12 @@ export class MatchService {
             this.auth.logout();
             reject(val);
           }else{
-            console.log("not sccuess in get http profile, but server on"+val["status"]);
+            console.log("not sccuess in post seat, but server on"+val["status"]);
             reject(val);
           }
         },
         err =>{
-          console.log("a connection err in get http find"+err);
+          console.log("a connection err in post seat"+err);
           reject(err);
         }
       );
@@ -51,12 +51,12 @@ export class MatchService {
             this.auth.logout();
             reject(val);
           }else{
-            console.log("not sccuess in get http profile, but server on"+val["status"]);
+            console.log("not sccuess in find seat, but server on"+val["status"]);
             reject(val);
           }
         },
         err =>{
-          console.log("a connection err in get http find"+err);
+          console.log("a connection err in find seat"+err);
           reject(err);
         }
       );

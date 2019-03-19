@@ -41,6 +41,7 @@ export class Tab1Page {
           "noise_level": this.sound,
         };
         this.matchService.post(data).then(data =>{
+          console.log("post success",data);
           this.router.navigate(['/waiting']);
         });
         

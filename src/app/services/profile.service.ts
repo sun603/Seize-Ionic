@@ -106,12 +106,15 @@ export class ProfileService {
           if(res){
             res(val["pic"]);
           }
+        }else if(val["status"] == 201){
+          console.log("not sccuess in get http avatar, 200 logout", val);
+          this.auth.logout();
         }else{
-          console.log("not sccuess in get http avatar, but server on");
+          console.log("not sccuess in get http avatar, but server on", val);
         }
       },
       err => {
-        console.log("a connection err in get http avatar");
+        console.log("a connection err in get http avatar", err);
       }
     );
   }

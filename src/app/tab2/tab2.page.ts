@@ -32,19 +32,24 @@ export class Tab2Page {
     }else if(typeof(this.sound) != 'number' ||this.sound == undefined){
       this.presentAlert("Please choose soundlevel");
     }else{
-     this.auth.getauth().then(res => {
-       let data = {
-         "auth_token": res,
-         "library": location,
-         "seat_type": this.seattype,
-         "noise_level": this.sound,
-       };
-       this.matchService.find(data).then(data =>{
-         this.router.navigate(['/waiting']);
-       });
+      this.auth.getauth()
+      .then(res => {
+        return {
+          "auth_token": res,
+          "library": this.location,
+          "seat_type": this.seattype,
+          "noise_level": this.sound,
+        };
+      }).then( data => {
+        console.log("find seat"+data);
+        this.matchService.find(data).then(data =>{
+        console.log("find seat done"+data);
+        this.router.navigate(['/waiting']);
+        });
       
-     });
-
+      }).catch(function(error){
+        console.error(error);
+      });
     }
 
   }
