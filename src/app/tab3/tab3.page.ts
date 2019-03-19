@@ -23,7 +23,7 @@ export class Tab3Page {
       if(data){
         this.me.name = data.name;
       }else{
-        // console.log("tab3 data about name do not exist???");
+        console.log("tab3 data about name do not exist???");
         this.prof.getLocalProfile().then(data => {
           this.me.name = data.name;
         });
@@ -43,12 +43,10 @@ export class Tab3Page {
   }
 
   editprofile(){
-    console.log("editprofile");
     this.router.navigate(['/editprofile']);
   }
 
   profile(){
-    console.log("profile");
     this.router.navigate(['/profile']);
   }
 }

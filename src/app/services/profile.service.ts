@@ -8,12 +8,13 @@ import { map, retry } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { apisettings } from '../settings/apisettings'
 import { ProfileModel } from '../models/profile.model';
+import { AuthenticationService } from './authentication.service';
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
   authcode:any;
-  constructor(private http: HttpClient, private storage: Storage) {}
+  constructor(public http: HttpClient, public storage: Storage, public auth: AuthenticationService) {}
   getLocalProfile(): Promise<any>{
     return new Promise((resolve,reject) => {
       this.storage.get("me").then((res) => {
@@ -50,8 +51,10 @@ export class ProfileService {
           if(res){
             res(val);
           }
+        }else if(val["status"]== 201){
+          this.auth.logout();
         }else{
-          console.log("not sccuess in get http profile, but server on");
+          console.log("not sccuess in get http profile, but server on"+val["status"]);
         }
       },
       err => {
