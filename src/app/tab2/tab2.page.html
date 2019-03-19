@@ -11,7 +11,7 @@
   <app-chooselibrary></app-chooselibrary> -->
   <ion-item>
     <ion-label>Library</ion-label>
-    <ion-select placeholder="which library?">
+    <ion-select placeholder="which library?" [(ngModel)]="location">
         <ion-select-option *ngFor="let lib of libs" value={{lib}}>
             {{lib}}
         </ion-select-option >
@@ -19,14 +19,14 @@
   </ion-item>
   <ion-item>
       <ion-label>Seat Type</ion-label>
-      <ion-select placeholder="Select One">
+      <ion-select placeholder="Select One" [(ngModel)]="seattype">
         <ion-select-option value="s1">Chair</ion-select-option>
         <ion-select-option value="s2">Sofa</ion-select-option>
       </ion-select>
   </ion-item>
   <ion-item>
     <ion-label>Sound Level</ion-label>
-    <ion-range min="1" max="10" pin="true">
+    <ion-range min="1" max="10" pin="true"[(ngModel)]="sound">
       <ion-icon slot="start" name="volume-low"></ion-icon>
       <ion-icon slot="end" name="volume-high"></ion-icon>
     </ion-range>

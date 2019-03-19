@@ -27,11 +27,11 @@ export class Tab1Page {
   post(){
     console.log(this.location,this.seattype,this.sound);
     if(this.location == "" || this.location == undefined ){
-      this.presentAlert("Plase choose library");
+      this.presentAlert("Please choose library");
     }else if(this.seattype == "" || this.seattype == undefined){
-      this.presentAlert("Plase choose seattype");
+      this.presentAlert("Please choose seattype");
     }else if(typeof(this.sound) != 'number' ||this.sound == undefined){
-      this.presentAlert("Plase choose soundlevel");
+      this.presentAlert("Please choose soundlevel");
     }else{
       this.auth.getauth().then(res => {
         let data = {

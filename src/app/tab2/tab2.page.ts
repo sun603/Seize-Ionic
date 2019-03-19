@@ -24,29 +24,34 @@ export class Tab2Page {
   }
 
   find(){
-    this.auth.getauth().then(res => {
-      let data = {
-        "auth_token": res,
-        "library": location,
-        "seat_type": this.seattype,
-        "noise_level": this.sound,
-      };
-
-
-
-
-      this.matchService.find(data).then(data =>{
-        this.router.navigate(['/waiting']);
-      });
+    console.log(this.location,this.seattype,this.sound);
+    if(this.location == "" || this.location == undefined ){
+      this.presentAlert("Please choose library");
+    }else if(this.seattype == "" || this.seattype == undefined){
+      this.presentAlert("Please choose seattype");
+    }else if(typeof(this.sound) != 'number' ||this.sound == undefined){
+      this.presentAlert("Please choose soundlevel");
+    }else{
+     this.auth.getauth().then(res => {
+       let data = {
+         "auth_token": res,
+         "library": location,
+         "seat_type": this.seattype,
+         "noise_level": this.sound,
+       };
+       this.matchService.find(data).then(data =>{
+         this.router.navigate(['/waiting']);
+       });
       
-    })
+     });
+
+    }
 
   }
-
   async presentAlert(msg) {
     const alert = await this.alertController.create({
       // header: 'Alert',
-      subHeader: 'find',
+      subHeader: 'Find',
       message: msg,
       buttons: ['OK']
     });
