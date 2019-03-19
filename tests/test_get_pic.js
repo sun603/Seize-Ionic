@@ -27,7 +27,7 @@ it('acquiring token from login', function(done)
     let data = {
         "email": "shao44@purdue.edu",
         "password": "ShaoZH0923?"
-    }
+    };
     request(server)
         .post("/email_login")
         .send(data)
@@ -50,7 +50,7 @@ it('checking if getting pictures correctly', function(done)
     let data = {
         "auth_token": token,
         "uid": uid
-    }
+    };
 
     request(server)
         .post("/get_pic")

@@ -16,7 +16,7 @@ it('acquiring token from login', function(done)
     let data = {
         "email": "shao44@purdue.edu",
         "password": "ShaoZH0923?"
-    }
+    };
     request(server)
         .post("/email_login")
         .send(data)
@@ -46,14 +46,14 @@ it('acquiring token from login', function(done)
         .end(done);
 });
 
-it('post seat with loged in user', function(done)
+it('post seat by user', function(done)
 {
     let data = {
         "auth_token": token,
         "seat_type": "sofa",
         "noise_level": 1,
         "library":"hicks"
-    }
+    };
 
     request(server)
         .post("/post_seat")
@@ -83,6 +83,6 @@ it('checking if info is in the posting pool', function(done){
             assert.equal(result[0].seat_type, "sofa");
             assert.equal(result[0].noise_level, 1);
         });
-    })
+    });
     done();
 });
