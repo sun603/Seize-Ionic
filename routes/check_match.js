@@ -1,0 +1,95 @@
+var express = require('express');
+var router = express.Router();
+var mysql = require('mysql');
+
+/*
+* TODO: 1. SEARCH matching_pool for matching_status = 1
+*       2.
+*
+*
+*
+*
+* */
+
+var uid;
+
+router.post('/', function(req, res, next){
+    let auth_code = req.body.auth_token;
+
+    var auth_sql = "SELECT * FROM user_auth WHERE auth_code = \"" + auth_code + "\"";
+    console.log(auth_sql);
+    var auth_con = mysql.createConnection({
+        host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+        user: "shao44",
+        password: "ShaoZH0923?",
+        database: "cs307_sp19_team31"
+    });
+
+    auth_con.connect(function(err){
+        if (err){
+            res.json({
+                "status": 404,
+                "error message": "database connection error"
+            });
+        } else{
+            auth_con.query(auth_sql, function(err, result){
+                if (result === undefined){
+                    res.json({
+                        "status": 404,
+                        "error message": "database connection capacity error"
+                    });
+                }
+                else if (result.length === 0) {
+                    res.json({
+                        "status": 201,
+                        "error message": "invalid auth_token"
+                    });
+                }
+                else{
+                    uid = result[0].uid;
+
+                    let serach_sql = "SELECT * FROM matching_pool WHERE uid = " + uid;
+
+                    let search_con = mysql.createConnection({
+                        host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+                        user: "shao44",
+                        password: "ShaoZH0923?",
+                        database: "cs307_sp19_team31"
+                    });
+
+                    search_con.connect(function(err){
+                        if (err){
+                            res.json({
+                                "status": 404,
+                                "error message": "database connection error"
+                            });
+                        }
+                        else{
+                            if (result === undefined){
+                                res.json({
+                                    "status": 404,
+                                    "error message": "database connection capacity error"
+                                });
+                            }
+                            else if (result.length === 0) {
+                                res.json({
+                                    "status": 201,
+                                    "error message": "invalid auth_token"
+                                });
+                            }
+                            else{
+                                search_con.query(serach_sql, function(err, result){
+                                    if (result === undefined){
+                                        
+                                    }
+                                })
+                            }
+                        }
+                    })
+                }
+            });
+        }
+    });
+});
+
+module.exports = router;
