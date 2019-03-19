@@ -78,14 +78,28 @@ export class AuthenticationService {
       this.authenticationState.next(true);
     });
   }
+
+  getauth(): Promise<any>{
+    return new Promise((resolve,reject) => {
+      this.storage.get(environment.TOKEN_KEY).then(
+        res => {
+          resolve(res);
+        },
+        error => {
+          console.log("err in get auth", error);
+          reject(error);
+        }
+      );
+    });
+  }
 }
 
 
-class newProfile{
-  name:any;
-  email:any;
-  password:any;
-  university:any;
-  class:any;
-  major:any;
-}
+// class newProfile{
+//   name:any;
+//   email:any;
+//   password:any;
+//   university:any;
+//   class:any;
+//   major:any;
+// }
