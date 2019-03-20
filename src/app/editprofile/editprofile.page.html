@@ -21,7 +21,7 @@
 
     <ion-item>
         <ion-label>Name</ion-label>
-        <ion-input [(ngModel)]="me.name" value="{{me.name}}"></ion-input>
+        <ion-input [(ngModel)]="name"></ion-input>
     </ion-item>
 
     <!-- <ion-item>
@@ -36,10 +36,10 @@
 
         <ion-item>
             <ion-label>Gender</ion-label>
-            <ion-select [placeholder]="me.gender" id="fullWidth" [(ngModel)]="me.gender">
-            <ion-select-option value="Male">Male</ion-select-option>
-            <ion-select-option value="Female">Female</ion-select-option>
-            <ion-select-option value="You guess it">You guess it</ion-select-option>
+            <ion-select placeholder="Select One" id="fullWidth" [(ngModel)]="gender">
+            <ion-select-option value="m">Male</ion-select-option>
+            <ion-select-option value="f">Female</ion-select-option>
+            <ion-select-option value="u">You guess it</ion-select-option>
           </ion-select>
           </ion-item>
 
@@ -51,7 +51,7 @@
 
   <ion-item>
     <ion-label>University</ion-label>
-    <ion-select [placeholder]="me.university" id="fullWidth" [(ngModel)]="me.university">
+    <ion-select placeholder="Select One" id="fullWidth" [(ngModel)]="university">
       <ion-select-option value="Purdue University (West Lafayette)">Purdue University (West Lafayette)</ion-select-option>
     </ion-select>
   </ion-item> 
@@ -63,13 +63,13 @@
 
   <ion-item>
       <ion-label>Major</ion-label>
-      <ion-input [(ngModel)]="me.major" value="{{me.major}}"></ion-input>
+      <ion-input [(ngModel)]="major"></ion-input>
     </ion-item>
 </ion-list>
 
 <ion-item>
     <ion-label>Class Standing</ion-label>
-    <ion-select [placeholder]="me.class" id="fullWidth" [(ngModel)]="me.class">
+    <ion-select placeholder="Select One" id="fullWidth" [(ngModel)]="class">
     <ion-select-option value="Freshman">Freshman</ion-select-option>
     <ion-select-option value="Sophomore">Sophomore</ion-select-option>
     <ion-select-option value="Junior">Junior</ion-select-option>

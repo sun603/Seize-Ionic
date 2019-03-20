@@ -13,7 +13,6 @@ import { AuthenticationService } from './authentication.service';
   providedIn: 'root'
 })
 export class ProfileService {
-  
   authcode:any;
   constructor(public http: HttpClient, public storage: Storage, public auth: AuthenticationService) {}
   getLocalProfile(): Promise<any>{

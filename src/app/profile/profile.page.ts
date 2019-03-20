@@ -24,7 +24,7 @@ export class ProfilePage implements OnInit {
         this.me.gender = data.gender;
         this.me.major = data.major;
         this.me.university = data.university;
-        this.me.class = data.class;
+        this.me.year = data.year;
       }else{
         // console.log("tab3 data about name do not exist???");
         this.prof.getLocalProfile().then(data => {
@@ -32,7 +32,7 @@ export class ProfilePage implements OnInit {
           this.me.gender = data.gender;
           this.me.major = data.major;
           this.me.university = data.university;
-          this.me.class = data.class;
+          this.me.year = data.year;
         });
       }
     });
