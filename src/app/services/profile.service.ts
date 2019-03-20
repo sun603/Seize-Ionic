@@ -13,6 +13,7 @@ import { AuthenticationService } from './authentication.service';
   providedIn: 'root'
 })
 export class ProfileService {
+  
   authcode:any;
   constructor(public http: HttpClient, public storage: Storage, public auth: AuthenticationService) {}
   getLocalProfile(): Promise<any>{
@@ -120,5 +121,25 @@ export class ProfileService {
   }
   getAvatar(data){
     return this.http.post(environment.apiUrl+apisettings.getavatar, data).pipe(map(res => res));
+  }
+  updateprofile(data): Promise<any>{
+    return new Promise((resolve,reject) => {
+      this.auth.getauth().then(res =>{
+        data["auth_token"]=res;
+        this.httpupdateprofile(data).subscribe(
+          (val) =>{
+            resolve(val);
+          },
+          (err) => {
+            reject(err);
+          }
+        );
+      },err =>{
+        reject(err);
+      });
+    });
+  }
+  httpupdateprofile(data){
+    return this.http.post(environment.apiUrl+apisettings.updateprofile, data).pipe(map(res => res));
   }
 }
