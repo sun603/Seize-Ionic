@@ -88,7 +88,7 @@ router.post('/', function(req, res, next){
                                         "gender": gender,
                                         "university": school,
                                         "major": major,
-                                        "year": year,
+                                        "class": year,
                                         "description": descrip
                                     });
                                 }
