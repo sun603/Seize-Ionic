@@ -5,13 +5,14 @@ var mysql = require('mysql');
 
 var token;
 var uid;
+var picId;
 
 /*
-* testing post_seat for user:
+* testing update_pic for user:
 * email: shao44@purdue.edu
 * password: ShaoZH0923?
 * */
-it('acquiring token from login', function(done)
+it('acquiring token and uid from login', function(done)
 {
     let data = {
         "email": "shao44@purdue.edu",
@@ -46,17 +47,14 @@ it('acquiring token from login', function(done)
         .end(done);
 });
 
-it('post seat by user', function(done)
+it('checking pic id', function(done)
 {
     let data = {
-        "auth_token": token,
-        "seat_type": "sofa",
-        "noise_level": 1,
-        "library":"hicks"
+        "email": "shao44@purdue.edu",
+        "password": "ShaoZH0923?"
     };
-
     request(server)
-        .post("/post_seat")
+        .post("/email_login")
         .send(data)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
@@ -64,25 +62,23 @@ it('post seat by user', function(done)
         .expect(function(res)
         {
             assert.equal(res.body.status, 200);
+            token = res.body.auth;
+            console.log("auth_token = ", token);
+
+            let pic_sql = "select * from profile_pic where pic_id = " + picId;
+            lconsole.log("pic_sql: ", pic_sql);
+            let pic_con = mysql.createConnection({
+                host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+                user: "shao44",
+                password: "ShaoZH0923?",
+                database: "cs307_sp19_team31"
+            });
+
+            pic_con.connect(function(err){
+                pic_con.query(pic_sql, function(err, result){
+                    picId = result[0].pic_id;
+                })
+            })
         })
         .end(done);
-});
-
-it('checking if info is in the posting pool', function(done){
-    let check_sql = "SELECT * FROM matching_pool WHERE uid = " + uid;
-    console.log("check_sql: ", check_sql);
-    let check_con = mysql.createConnection({
-        host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
-        user: "shao44",
-        password: "ShaoZH0923?",
-        database: "cs307_sp19_team31"
-    });
-
-    check_con.connect(function(err){
-        check_con.query(check_sql, function(err, result){
-            assert.equal(result[0].seat_type, "sofa");
-            assert.equal(result[0].noise_level, 1);
-        });
-    });
-    done();
 });
