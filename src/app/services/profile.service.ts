@@ -129,6 +129,10 @@ export class ProfileService {
         this.httpupdateprofile(data).subscribe(
           (val) =>{
             resolve(val);
+            let pdata = {
+              "auth_token": res,
+            };
+            this.getwebProfile(pdata);
           },
           (err) => {
             reject(err);

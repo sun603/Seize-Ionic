@@ -42,8 +42,12 @@ export class ProfilePage implements OnInit {
     });
   }
 
+  ngOnDestroy(){
+    console.log("destroy profile");
+  }
   editprofile(){
     console.log("editprofile");
     this.router.navigate(['/editprofile']);
   }
+
 }
