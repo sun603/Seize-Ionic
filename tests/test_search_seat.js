@@ -46,3 +46,42 @@ it('check for incorrect auth_token', function(done){
         })
         .end(done);
 })
+
+it('post seat by user', function(done)
+{
+    let data = {
+        "auth_token": token,
+        "seat_type": "Sofa",
+        "noise_level": 1,
+        "library":"Hicks Undergraduate"
+    };
+
+    request(server)
+        .post("/post_seat")
+        .send(data)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .expect(function(res)
+        {
+            assert.equal(res.body.status, 200);
+        })
+        .end(done);
+});
+
+it ('check for correct auth_token', function(done){
+    let data = {
+        "auth_token": token
+    };
+    request(server)
+        .post("/search_seat")
+        .send(data)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .expect(function(res)
+        {
+            assert.equal(res.body.status, 200);
+        })
+        .end(done);
+})
