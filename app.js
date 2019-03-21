@@ -95,11 +95,11 @@ app.use(function(err, req, res, next) {
 var oneHour = 60 * 60 * 1000;
 var clear_timeout = require('./routes/clear_timeout.js');
 
-var oneSecond = 1000 * 1; // one second = 1000 x 1 ms
-setInterval(function() {
-  console.log("this is one second.");
-}, oneSecond);
-
-clear_timeout();
+// var oneSecond = 1000 * 1; // one second = 1000 x 1 ms
+// setInterval(function() {
+//   console.log("this is one second.");
+// }, oneSecond);
+//
+// clear_timeout();
 
 module.exports = app;
