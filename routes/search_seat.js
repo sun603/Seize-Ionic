@@ -74,7 +74,13 @@ router.post('/', function(req, res, next){
 
                     profile_con.connect(function(err){
                         profile_con.query(profile_sql, function(err, result){
-                            if (result.length === 0){
+                            if (result === undefined){
+                                res.json({
+                                    "status": 404,
+                                    "error message": "database connection capacity error"
+                                });
+                            }
+                            else if (result.length === 0){
                                 // user profile does not exist
                                 res.json({
                                     "status": 201
