@@ -58,7 +58,13 @@ router.post('/', function(req, res, next){
                         console.log(select_sql);
                         select_con.connect(function (err) {
                             select_con.query(select_sql, function (err, result) {
-                                if (result.length === 0) {
+                                if (result === undefined){
+                                    res.json({
+                                        "status": 202,
+                                        "err_message": "user does not exist"
+                                    });
+                                }
+                                else if (result.length === 0) {
                                     res.json({
                                         "status": 202,
                                         "err_message": "user does not exist"
