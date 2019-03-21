@@ -13,9 +13,20 @@ import { AuthenticationService } from './authentication.service';
   providedIn: 'root'
 })
 export class ProfileService {
-  
+  me:any;
+  profileImgUrl:any;
   authcode:any;
-  constructor(public http: HttpClient, public storage: Storage, public auth: AuthenticationService) {}
+  constructor(public http: HttpClient, public storage: Storage, public auth: AuthenticationService) {
+    this.me = new ProfileModel();
+    this.getLocalProfile().then( data =>{
+      this.me = data;
+    }).catch( err =>{
+      console.log(err);
+    });
+    this.getLocalAvatar().then( data=> {
+      this.profileImgUrl = data;
+    });
+  }
   getLocalProfile(): Promise<any>{
     return new Promise((resolve,reject) => {
       this.storage.get("me").then((res) => {
@@ -41,7 +52,6 @@ export class ProfileService {
         reject(error);
       });
     });
-
   }
   getwebProfile(data,res?){
     this.getProfile(data).subscribe(
@@ -77,7 +87,7 @@ export class ProfileService {
               };
               this.getwebAvatar(data, res =>{
                 console.log("from web pic",res);
-                resolve(res);
+                resolve("data:image/jpg;base64,"+res);
               })
             },
             error =>{
