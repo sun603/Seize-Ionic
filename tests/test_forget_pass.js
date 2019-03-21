@@ -18,13 +18,13 @@ it('should return {"status":201}', function(done)
         })
         .end(done);
 });
-
+/*
 it('should return 200 by checking new password', function(done)
 {
     let data = {
         "email": "shao44@purdue.edu",
         "password": "ShaoZH0923?"
-    }
+    };
     request(server)
         .post("/password_reset")
         .send(data)
@@ -37,4 +37,4 @@ it('should return 200 by checking new password', function(done)
         })
         .end(done);
 });
-
+*/
