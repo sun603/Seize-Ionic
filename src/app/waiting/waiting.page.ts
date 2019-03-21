@@ -18,7 +18,7 @@ export class WaitingPage implements OnInit {
     this.matchService.cencel().then(data =>{
       console.log("cencel",data);
       if(data["status"] == 200){
-        this.router.navigate(['']);
+        this.router.navigate(['/tabs']);
       }
     });
   }

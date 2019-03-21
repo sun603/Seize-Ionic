@@ -8,6 +8,6 @@ export const apisettings = {
   logout:'/logout',
   post:'/post_seat',
   search:'/search_seat',
-  cencel:'/cencel_seat',
+  cencel:'/cancel_post',
   // forget
 }
