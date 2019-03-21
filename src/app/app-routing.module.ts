@@ -9,7 +9,8 @@ const routes: Routes = [
   { path: 'profile', canActivate: [AuthGuard], loadChildren: './profile/profile.module#ProfilePageModule' },
   { path: 'editprofile', loadChildren: './editprofile/editprofile.module#EditprofilePageModule' },
   { path: 'forgetpassword', loadChildren: './forgetpassword/forgetpassword.module#ForgetpasswordPageModule' },
-  { path: 'waiting', loadChildren: './waiting/waiting.module#WaitingPageModule' }
+  { path: 'waiting', loadChildren: './waiting/waiting.module#WaitingPageModule' },
+  { path: 'editpic', loadChildren: './editpic/editpic.module#EditpicPageModule' }
 ];
 @NgModule({
   imports: [

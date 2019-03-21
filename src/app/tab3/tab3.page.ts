@@ -35,7 +35,7 @@ export class Tab3Page {
     });
   }
 
-  update(data){
+  updatename(data){
     this.me.name = data.name;
   }
   logOut(){

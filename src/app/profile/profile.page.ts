@@ -49,5 +49,8 @@ export class ProfilePage implements OnInit {
     console.log("editprofile");
     this.router.navigate(['/editprofile']);
   }
+  editpic(){
+    this.router.navigate(['/editpic']);
+  }
 
 }

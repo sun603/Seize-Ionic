@@ -8,6 +8,16 @@
 </ion-header>
 
 <ion-content>
+  <ion-card *ngIf="profileImgUrl" (click)="editpic()">
+      <ion-card-header>
+        <ion-card-title>Profile Image</ion-card-title>
+      </ion-card-header>
+          
+      <ion-card-content>
+          <img *ngIf="profileImgUrl" [src]="profileImgUrl" id="profile-image">
+      </ion-card-content>
+  </ion-card>
+
   <ion-card *ngIf="me.name">
       <ion-card-header>
         <ion-card-title>Name</ion-card-title>
