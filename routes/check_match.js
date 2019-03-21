@@ -79,48 +79,58 @@ router.post('/', function(req, res, next){
                                     });
                                 }
                                 else{
+
                                     let search_uid = result[0].matching_status;
+                                    console.log("search_uid: ", search_uid);
+                                    if (search_uid === null){
+                                        res.json({
+                                            "status": 202,
+                                            "error_message": "match not found"
+                                        });
+                                    }
+                                    else {
 
-                                    let delete_sql = "delete from matching_pool where uid = " + uid;
+                                        let delete_sql = "delete from matching_pool where uid = " + uid;
 
-                                    let delete_con = mysql.createConnection({
-                                        host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
-                                        user: "shao44",
-                                        password: "ShaoZH0923?",
-                                        database: "cs307_sp19_team31"
-                                    });
+                                        let delete_con = mysql.createConnection({
+                                            host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+                                            user: "shao44",
+                                            password: "ShaoZH0923?",
+                                            database: "cs307_sp19_team31"
+                                        });
 
-                                    console.log(delete_sql);
+                                        console.log(delete_sql);
 
-                                    delete_con.connect(function(err){
-                                        delete_con.query(delete_sql, function(err, result){
-                                            // DELETE complete
+                                        delete_con.connect(function (err) {
+                                            delete_con.query(delete_sql, function (err, result) {
+                                                // DELETE complete
+                                            })
                                         })
-                                    })
 
-                                    // res.json({
-                                    //     "status": 200,
-                                    //     "matching_user": search_uid
-                                    // })
+                                        // res.json({
+                                        //     "status": 200,
+                                        //     "matching_user": search_uid
+                                        // })
 
-                                    let profile_sql = "SELECT name FROM profile WHERE uid = " + search_uid;
-                                    let profile_con = mysql.createConnection({
-                                        host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
-                                        user: "shao44",
-                                        password: "ShaoZH0923?",
-                                        database: "cs307_sp19_team31"
-                                    });
+                                        let profile_sql = "SELECT name FROM profile WHERE uid = " + search_uid;
+                                        let profile_con = mysql.createConnection({
+                                            host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+                                            user: "shao44",
+                                            password: "ShaoZH0923?",
+                                            database: "cs307_sp19_team31"
+                                        });
 
-                                    profile_con.connect(function(err){
-                                        profile_con.query(profile_sql, function(err, result){
-                                            let name = result[0].name;
-                                            res.json({
-                                                "status": 200,
-                                                "uid": search_uid,
-                                                "name": name
-                                            });
+                                        profile_con.connect(function (err) {
+                                            profile_con.query(profile_sql, function (err, result) {
+                                                let name = result[0].name;
+                                                res.json({
+                                                    "status": 200,
+                                                    "uid": search_uid,
+                                                    "name": name
+                                                });
+                                            })
                                         })
-                                    })
+                                    }
                                 }
                             })
                         }
