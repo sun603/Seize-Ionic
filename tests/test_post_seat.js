@@ -29,6 +29,24 @@ it('acquiring token from login', function(done)
     })
 });
 
+it ('checking for incorrect auth_token', function(done){
+    let data = {
+        "auth_token": "1234567890"
+    };
+
+    request(server)
+        .post("/post_seat")
+        .send(data)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .expect(function(res)
+        {
+            assert.equal(res.body.status, 201);
+        })
+        .end(done);
+});
+
 it('post seat by user', function(done)
 {
     let data = {
@@ -63,8 +81,8 @@ it('checking if seat_type info is correct.', function(done){
 
     check_con.connect(function(err){
         check_con.query(check_sql, function(err, result){
-            console.log("seat_type = ", result[0].seat_type);
             assert.equal(result[0].seat_type, "Sofa");
+            console.log("seat_type = ", result[0].seat_type);
         });
     });
     done();
@@ -82,8 +100,8 @@ it ('checking if noise_level info is correct.', function(done){
 
     check_con.connect(function(err){
         check_con.query(check_sql, function(err, result){
-            console.log("noise_level = ", result[0].noise_level);
             assert.equal(result[0].noise_level, 1);
+            console.log("noise_level = ", result[0].noise_level);
         });
     });
     done();
@@ -101,8 +119,8 @@ it ('checking if library info is correct.', function(done){
 
     check_con.connect(function(err){
         check_con.query(check_sql, function(err, result){
-            console.log("library = ", result[0].library);
             assert.equal(result[0].library, "Hicks Undergraduate");
+            console.log("library = ", result[0].library);
         });
     });
     done();
