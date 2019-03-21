@@ -4,7 +4,7 @@ export const apisettings = {
   getavatar:'/get_pic',
   getprofile:'/getprofile',
   updateprofile:'/updateprofile',
-  updatepic:'update_pic',
+  updatepic:'/update_pic',
   logout:'/logout',
   post:'/post_seat',
   search:'/search_seat',
