@@ -146,4 +146,30 @@ export class ProfileService {
   httpupdateprofile(data){
     return this.http.post(environment.apiUrl+apisettings.updateprofile, data).pipe(map(res => res));
   }
+
+  updatepic(data): Promise<any>{
+    return new Promise((resolve,reject) => {
+      this.auth.getauth().then(res =>{
+        data["auth_token"]=res;
+        console.log(data);
+        this.httpupdatepic(data).subscribe(
+          (val) =>{
+            resolve(val);
+            let pdata = {
+              "auth_token": res,
+            };
+            this.getwebAvatar(pdata);
+          },
+          (err) => {
+            reject(err);
+          }
+        );
+      },err =>{
+        reject(err);
+      });
+    });
+  }
+  httpupdatepic(data){
+    return this.http.post(environment.apiUrl+apisettings.updatepic, data).pipe(map(res => res));
+  }
 }
