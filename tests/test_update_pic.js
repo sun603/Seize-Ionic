@@ -38,7 +38,7 @@ it ('checking for incorrect auth_token', function(done){
     };
 
     request(server)
-        .post("/post_seat")
+        .post("/update_pic")
         .send(data)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
@@ -46,6 +46,44 @@ it ('checking for incorrect auth_token', function(done){
         .expect(function(res)
         {
             assert.equal(res.body.status, 201);
+        })
+        .end(done);
+});
+
+it ('checking for incorrect auth_token', function(done){
+    let data = {
+        "auth_token": token,
+        "pic": unknown
+    };
+
+    request(server)
+        .post("/update_pic")
+        .send(data)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .expect(function(res)
+        {
+            assert.equal(res.body.status, 200);
+        })
+        .end(done);
+});
+
+it ('checking for incorrect auth_token', function(done){
+    let data = {
+        "auth_token": token
+    };
+
+    request(server)
+        .post("/get_pic")
+        .send(data)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .expect(function(res)
+        {
+            assert.equal(res.body.status, 200);
+            assert.equal(res.body.pic, unknown);
         })
         .end(done);
 });
