@@ -6,6 +6,8 @@ import { Storage } from '@ionic/storage';
 
 import { AuthenticationService } from '../services/authentication.service'
 import { environment } from '../../environments/environment'
+
+import { MajorModel } from '../models/major.model';
 @Component({
   selector: 'app-signup',
 templateUrl: './signup.page.html',
@@ -19,13 +21,17 @@ export class SignupPage implements OnInit {
   private university:any;
   private class:any;
   private major:any;
+  majors;
+  majorModel;
   TOKEN_KEY = '';
   constructor(private auth: AuthenticationService, public alertController: AlertController, private storage: Storage, private router: Router) {
     // for (var i = 2000; i < 2100; i++) this.years.push(i);
     this.TOKEN_KEY = environment.TOKEN_KEY;
+    this.majorModel = new MajorModel();
    }
 
   ngOnInit() {
+    this.majors = this.majorModel.getmajors();
   }
   
   signUp(){

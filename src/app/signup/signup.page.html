@@ -50,7 +50,10 @@
   </ion-item>
   <ion-item>
     <ion-label>Major</ion-label>
-    <ion-input type="major" [(ngModel)]="major"></ion-input>
+    <!-- <ion-input type="major" [(ngModel)]="major"></ion-input> -->
+    <ion-select [(ngModel)]="major">
+      <ion-select-option *ngFor="let ma of majors" [value]="ma">{{ma}}</ion-select-option>
+    </ion-select>
   </ion-item>
 </ion-list>
   <div padding>
