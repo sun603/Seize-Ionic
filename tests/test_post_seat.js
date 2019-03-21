@@ -69,5 +69,55 @@ it('checking if seat_type info is correct.', function(done){
     done();
 });
 
+it ('checking if noise_level info is correct.', function(done){
+    let check_sql = "SELECT * FROM matching_pool WHERE uid = " + uid;
+    console.log("check_sql: ", check_sql);
+    let check_con = mysql.createConnection({
+        host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+        user: "shao44",
+        password: "ShaoZH0923?",
+        database: "cs307_sp19_team31"
+    });
 
-// assert.equal(result[0].noise_level, 1);
+    check_con.connect(function(err){
+        check_con.query(check_sql, function(err, result){
+            assert.equal(result[0].noise_level, 1);
+        });
+    });
+    done();
+});
+
+it ('checking if library info is correct.', function(done){
+    let check_sql = "SELECT * FROM matching_pool WHERE uid = " + uid;
+    console.log("check_sql: ", check_sql);
+    let check_con = mysql.createConnection({
+        host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+        user: "shao44",
+        password: "ShaoZH0923?",
+        database: "cs307_sp19_team31"
+    });
+
+    check_con.connect(function(err){
+        check_con.query(check_sql, function(err, result){
+            assert.equal(result[0].library, "Hicks Underground");
+        });
+    });
+    done();
+});
+
+it ('delete test1 post_seat info', function(done){
+    let delete_sql = "DELETE FROM matching_pool WHERE uid = 64";
+    let delete_con = mysql.createConnection({
+        host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+        user: "shao44",
+        password: "ShaoZH0923?",
+        database: "cs307_sp19_team31"
+    });
+
+    delete_con.connect(function(err){
+        delete_con.query(delete_sql, function(err, result){
+            assert.equal(result[0], undefined);
+        })
+    })
+    done();
+});
