@@ -4,16 +4,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
-import { chooseseatComponentModule } from '../chooseseat/chooseseat.component.module';
-import { chooselibraryComponentModule } from '../chooselibrary/chooselibrary.component.module';
+// import { chooseseatComponentModule } from '../chooseseat/chooseseat.component.module';
+// import { chooselibraryComponentModule } from '../chooselibrary/chooselibrary.component.module';
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
     RouterModule.forChild([{ path: '', component: Tab1Page }]),
-    chooseseatComponentModule,
-    chooselibraryComponentModule,
+    // chooseseatComponentModule,
+    // chooselibraryComponentModule,
   ],
   declarations: [Tab1Page]
 })
