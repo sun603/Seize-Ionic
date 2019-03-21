@@ -12,32 +12,32 @@ import { config } from 'rxjs';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
-  me:any;
-  profileImgUrl:any;
-  constructor(private router: Router,private prof: ProfileService, private auth:AuthenticationService){
-    this.me = new ProfileModel();
+  // me:any;
+  // profileImgUrl:any;
+  constructor(public router: Router,public prof: ProfileService, public auth:AuthenticationService){
+    // this.me = new ProfileModel();
   }
   ngOnInit() {
-    this.prof.getLocalProfile().then(data => {
-      console.log("tab3: data",data);
-      if(data){
-        this.me.name = data.name;
-      }else{
-        console.log("tab3 data about name do not exist???");
-        this.prof.getLocalProfile().then(data => {
-          this.me.name = data.name;
-        });
-      }
-    });
-    this.prof.getLocalAvatar().then((data) =>{
-      // console.log("tab3: avatar",data);
-      this.profileImgUrl = "data:image/jpg;base64,"+data;
-    });
+    // this.prof.getLocalProfile().then(data => {
+    //   console.log("tab3: data",data);
+    //   if(data){
+    //     // this.me.name = data.name;
+    //   }else{
+    //     console.log("tab3 data about name do not exist???");
+    //     this.prof.getLocalProfile().then(data => {
+    //       // this.me.name = data.name;
+    //     });
+    //   }
+    // });
+    // this.prof.getLocalAvatar().then((data) =>{
+    //   // console.log("tab3: avatar",data);
+    //   // this.profileImgUrl = "data:image/jpg;base64,"+data;
+    // });
   }
 
-  updatename(data){
-    this.me.name = data.name;
-  }
+  // updatename(data){
+  //   this.me.name = data.name;
+  // }
   logOut(){
     this.auth.logout();
   }
