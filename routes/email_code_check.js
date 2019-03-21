@@ -31,7 +31,7 @@ router.post('/', function(req, res, next){
         else{
             ec_con.query(ec_sql, function(err, result){
                 if (result.length === 0){
-                    ec_con.release();
+                    ec_con.destroy();
                     res.json({
                         "status": 501,
                         "err_message": "email does not exist"
@@ -42,13 +42,13 @@ router.post('/', function(req, res, next){
                     var v_code = result[0].code;
                     console.log("v_code", v_code);
                     if (v_code == code){
-                        ec_con.release();
+                        ec_con.destroy();
                         res.json({
                             "status": 200
                         });
                     }
                     else{
-                        ec_con.release();
+                        ec_con.destroy();
                         res.json({
                             "status": 201,
                             "err_message": "wrong code"

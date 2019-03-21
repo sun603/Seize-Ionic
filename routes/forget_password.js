@@ -28,14 +28,14 @@ router.post('/', function(req, res, next){
             check_con.query(check_sql, function(err, result){
                 if (result.length === 0){
                     // email does not exist
-                    check_con.release();
+                    check_con.destroy();
                     res.json({
                         "status": 201,
                         "err_message": "email does not exist"
                     });
                 }
                 else{
-                    check_con.release();
+                    check_con.destroy();
                     var send = require('./send.js');
                     var v_code = require('./verification_code');
 
@@ -78,8 +78,8 @@ router.post('/', function(req, res, next){
                         delete_con.query(delete_sql, function(err, result){
                             insert_con.connect(function(err){
                                 insert_con.query(insert_sql, function(err, result){
-                                    delete_con.release();
-                                    insert_con.release();
+                                    delete_con.destroy();
+                                    insert_con.destroy();
                                     res.json({
                                         "status": 200
                                     });

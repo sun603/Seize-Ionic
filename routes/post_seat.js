@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
+var pool = require('pool');
 var uid;
 
 /*
@@ -40,7 +41,7 @@ router.post('/', function(req, res, next){
         else{
             auth_con.query(auth_sql, function(err, result){
                 if (result.length === 0){
-                    auth_con.release();
+                    auth_con.destroy();
                     res.json({
                         "status": 201,
                         "error message": "invalid auth_token"
@@ -48,7 +49,8 @@ router.post('/', function(req, res, next){
                 }
                 else{
                     uid = result[0].uid;
-                    auth_con.release();
+                    auth_con.destroy();
+
                     console.log("uid = ", uid);
                     let select_sql = "select * from profile where uid = " + uid;
                     let select_con = mysql.createConnection({
@@ -61,7 +63,7 @@ router.post('/', function(req, res, next){
                     select_con.connect(function (err) {
                         select_con.query(select_sql, function (err, result) {
                             if (result.length === 0) {
-                                select_con.release();
+                                select_con.destroy();
                                 res.json({
                                     "status": 201,
                                     "err_message": "user does not exist"
@@ -72,7 +74,7 @@ router.post('/', function(req, res, next){
                                 var class_standing = result[0].class;
                                 var major = result[0].major;
                                 // uid, seat_type, noise_level
-                                select_con.release();
+                                select_con.destroy();
                                 let post_sql = "insert matching_pool (uid, school, class, major, seat_type, library, noise_level)" +
                                     " values " +
                                     "(" + uid + ", " +
@@ -91,7 +93,7 @@ router.post('/', function(req, res, next){
 
                                 post_con.connect(function(err){
                                     post_con.query(post_sql, function(err, result){
-                                        post_con.release();
+                                        post_con.destroy();
                                         res.json({
                                             "status": 200
                                         });

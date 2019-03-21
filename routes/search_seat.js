@@ -43,7 +43,7 @@ router.post('/', function(req, res, next){
 
     auth_con.connect(function(err) {
         if (err) {
-            auth_con.release();
+            auth_con.destroy();
             res.json({
                 "status": 404,
                 "error message": "database connection error"
@@ -51,21 +51,21 @@ router.post('/', function(req, res, next){
         } else {
             auth_con.query(auth_sql, function (err, result) {
                 if (result === undefined){
-                    auth_con.release();
+                    auth_con.destroy();
                     res.json({
                         "status": 201,
                         "error message": "invalid auth_token"
                     });
                 }
                 else if (result.length === 0) {
-                    auth_con.release();
+                    auth_con.destroy();
                     res.json({
                         "status": 201,
                         "error message": "invalid auth_token"
                     });
                 } else {
                     uid = result[0].uid;
-                    auth_con.release();
+                    auth_con.destroy();
 
                     let profile_sql = "SELECT * FROM profile WHERE uid = " + uid;
 
@@ -79,7 +79,7 @@ router.post('/', function(req, res, next){
                     profile_con.connect(function(err){
                         profile_con.query(profile_sql, function(err, result){
                             if (result === undefined){
-                                profile_con.release();
+                                profile_con.destroy();
                                 res.json({
                                     "status": 404,
                                     "error message": "database connection capacity error"
@@ -87,7 +87,7 @@ router.post('/', function(req, res, next){
                             }
                             else if (result.length === 0){
                                 // user profile does not exist
-                                profile_con.release();
+                                profile_con.destroy();
                                 res.json({
                                     "status": 201
                                 });
@@ -98,7 +98,7 @@ router.post('/', function(req, res, next){
                                 var class_stand = result[0].class; // VARCHAR(45)
                                 var major = result[0].major;
 
-                                profile_con.release();
+                                profile_con.destroy();
 
                                 let match_sql = "SELECT * FROM matching_pool WHERE " +
                                     "school = \"" + school + "\" " +
@@ -119,7 +119,7 @@ router.post('/', function(req, res, next){
                                     match_con.query(match_sql, function(err, result){
                                         if (result === undefined){
                                             // MATCH NOT FOUND
-                                            match_con.release();
+                                            match_con.destroy();
                                             res.json({
                                                 "status": 202,
                                                 "err_message": "match not found undefined"
@@ -127,7 +127,7 @@ router.post('/', function(req, res, next){
                                         }
                                         else if (result[0] === undefined){
                                             // MATCH NOT FOUND
-                                            match_con.release();
+                                            match_con.destroy();
                                             res.json({
                                                 "status": 202,
                                                 "err_message": "match not found 0"
@@ -177,7 +177,7 @@ router.post('/', function(req, res, next){
                                                 }
                                             }
 
-                                            match_con.release();
+                                            match_con.destroy();
 
                                             // 1. EDIT the post in matching_pool
                                             let poster_uid = grid[0][0];
@@ -196,7 +196,7 @@ router.post('/', function(req, res, next){
 
                                             delete_con.connect(function(err){
                                                 delete_con.query(delete_sql, function(err, result){
-                                                    delete_con.release();
+                                                    delete_con.destroy();
                                                 })
                                             })
 
@@ -216,7 +216,7 @@ router.post('/', function(req, res, next){
                                             profile_con.connect(function(err){
                                                 profile_con.query(profile_sql, function(err, result){
                                                     let name = result[0].name;
-                                                    profile_con.release();
+                                                    profile_con.destroy();
                                                     res.json({
                                                         "status": 200,
                                                         "uid": poster_uid,

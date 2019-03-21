@@ -43,7 +43,7 @@ router.post('/', function(req, res, next) {
 
     con.connect(function(err) {
         if (err) {
-            con.release();
+            con.destroy();
             res.json({"status":404});
             //throw err;
         }
@@ -56,18 +56,18 @@ router.post('/', function(req, res, next) {
                 console.log(result);
                 if (result[0] == null){
                     // wrong email
-                    con.release();
+                    con.destroy();
                     res.json({"status":201});
                 }
                 else {
                     var db_password = result[0].password;
                     if (db_password !== password) {
                         // wrong passwrod
-                        con.release();
+                        con.destroy();
                         res.json({"status": 202});
                     } else {
                         var uid = result[0].uid;
-                        con.release();
+                        con.destroy();
                         var u_auth = auth_gen(uid);
                         console.log("uid = " + uid);
 
@@ -94,7 +94,7 @@ router.post('/', function(req, res, next) {
                                     add_sql += " values ";
                                     add_sql += "(" + uid + ",\"" + u_auth + "\")";
 
-                                    auth_con.release();
+                                    auth_con.destroy();
 
                                     var add_con = mysql.createConnection({
                                         host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
@@ -104,7 +104,7 @@ router.post('/', function(req, res, next) {
                                     });
 
                                     add_con.query(add_sql, function(err, result){
-                                        add_con.release();
+                                        add_con.destroy();
                                         res.json({
                                                 "status": 200,
                                                 "auth": u_auth

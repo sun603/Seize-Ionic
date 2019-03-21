@@ -47,7 +47,7 @@ router.post('/', function(req, res, next){
                 }
                 else{
                     uid = result[0].uid;
-                    auth_con.release();
+                    auth_con.destroy();
 
                     let search_sql = "SELECT * FROM matching_pool WHERE uid = " + uid;
 
@@ -84,14 +84,14 @@ router.post('/', function(req, res, next){
                                     let search_uid = result[0].matching_status;
                                     console.log("search_uid: ", search_uid);
                                     if (search_uid === null){
-                                        search_con.release();
+                                        search_con.destroy();
                                         res.json({
                                             "status": 202,
                                             "error_message": "match not found"
                                         });
                                     }
                                     else {
-                                        search_con.release();
+                                        search_con.destroy();
 
                                         let delete_sql = "delete from matching_pool where uid = " + uid;
 
@@ -107,7 +107,7 @@ router.post('/', function(req, res, next){
                                         delete_con.connect(function (err) {
                                             delete_con.query(delete_sql, function (err, result) {
                                                 // DELETE complete
-                                                delete_con.release();
+                                                delete_con.destroy();
                                             })
                                         })
 
@@ -127,7 +127,7 @@ router.post('/', function(req, res, next){
                                         profile_con.connect(function (err) {
                                             profile_con.query(profile_sql, function (err, result) {
                                                 let name = result[0].name;
-                                                profile_con.release();
+                                                profile_con.destroy();
                                                 res.json({
                                                     "status": 200,
                                                     "uid": search_uid,

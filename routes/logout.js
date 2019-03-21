@@ -22,7 +22,7 @@ router.post('/', function(req, res, next) {
 
     logout_con.connect(function(err){
         if (err) {
-            logout_con.release();
+            logout_con.destroy();
             res.json({
                 "status": 404,
                 "error message": "database connection error"
@@ -31,14 +31,14 @@ router.post('/', function(req, res, next) {
         else{
             logout_con.query(logout_sql, function(err, result){
                 if (result === undefined){
-                    logout_con.release();
+                    logout_con.destroy();
                     res.json({
                         "status": 201,
                         "error message": "invalid auth_token"
                     });
                 }
                 else if (result.length === 0) {
-                    logout_con .release();
+                    logout_con .destroy();
                     res.json({
                         "status": 201,
                         "error message": "invalid auth_token"
@@ -60,7 +60,7 @@ router.post('/', function(req, res, next) {
                     delete_con.connect(function(err){
                         delete_con.query(delete_sql_1, function(err, result){});
                         delete_con.query(delete_sql_2, function(err, result){});
-                        delete_con.release();
+                        delete_con.destroy();
                         res.json({
                             "status": 200
                         })

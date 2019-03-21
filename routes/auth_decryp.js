@@ -39,7 +39,7 @@ module.exports = function (auth_code) {
                     console.log("user exists. uid = ", uid);
                     return uid;
                 }
-                con.release();
+                con.destroy();
             });
         }
     });

@@ -35,13 +35,13 @@ router.post('/', function(req, res, next){
             auth_con.query(auth_sql, function(err, result){
                 if (result.length === 0) {
                     console.log("invalid auth_token");
-                    auth_con.release();
+                    auth_con.destroy();
                     res.json({
                         "status": 201
                     });
                 } else {
                     uid = result[0].uid;
-                    auth_con.release();
+                    auth_con.destroy();
                     console.log("uid = ", uid);
                     if (uid <= 0) {
                         // invalid auth_token
@@ -61,21 +61,21 @@ router.post('/', function(req, res, next){
                         select_con.connect(function (err) {
                             select_con.query(select_sql, function (err, result) {
                                 if (result === undefined){
-                                    select_con.release();
+                                    select_con.destroy();
                                     res.json({
                                         "status": 202,
                                         "err_message": "user does not exist"
                                     });
                                 }
                                 else if (result.length === 0) {
-                                    select_con.release();
+                                    select_con.destroy();
                                     res.json({
                                         "status": 202,
                                         "err_message": "user does not exist"
                                     });
                                 } else {
                                     let picId = result[0].pic_id;
-                                    select_con.release();
+                                    select_con.destroy();
                                     //console.log("result: ", result);
 
                                     if (picId === null){
@@ -103,7 +103,7 @@ router.post('/', function(req, res, next){
                                         pic_con.connect(function(err){
                                             pic_con.query(pic_sql, function(err, result){
                                                 pic_dir = pic_dir + result[0].pic_file_name;
-                                                pic_con.release();
+                                                pic_con.destroy();
                                                 let pic_stream = base64_encode(pic_dir);
                                                 res.json({
                                                     "status":200,

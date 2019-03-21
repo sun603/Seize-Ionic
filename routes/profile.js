@@ -58,7 +58,7 @@ router.post('/', function(req, res, next) {
         if (err){
             // db connection error
             console.log("error");
-            auth_con.release();
+            auth_con.destroy();
             res.json({
                 "status":404
             })
@@ -67,7 +67,7 @@ router.post('/', function(req, res, next) {
             auth_con.query(auth_sql, function(err, result){
                 if (result.length === 0){
                     console.log("invalid authcode");
-                    auth_con.release();
+                    auth_con.destroy();
                     res.json({
                         "status": 201
                     });
@@ -75,7 +75,7 @@ router.post('/', function(req, res, next) {
                 else{
                     uid = result[0].uid;
                     console.log("user exists. uid = ", uid);
-                    auth_con.release();
+                    auth_con.destroy();
 
                     var con = mysql.createConnection({
                         host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
@@ -90,14 +90,14 @@ router.post('/', function(req, res, next) {
 
                     con.connect(function(err){
                         if (err){
-                            con.release();
+                            con.destroy();
                             res.json({"status": 404});
                         }
                         else {
                             con.query(sql, function(err, result){
                                 if (result.length === 0){
                                     //no profile found
-                                    con.release();
+                                    con.destroy();
                                     res.json({
                                         "status":202,
                                         "err_message": "profile for uid does not exist."
@@ -111,7 +111,7 @@ router.post('/', function(req, res, next) {
                                     let update_sql = "UPDATE profile SET ";
                                     let sql_tail = " WHERE uid = " + uid;
                                     var t = 1;
-                                    con.release();
+                                    con.destroy();
                                     /*
                                     * name
                                     * gender
@@ -176,7 +176,7 @@ router.post('/', function(req, res, next) {
                                     update_con.connect(function(err){
                                         update_con.query(update_sql, function(err, result){
 
-                                            update_con.release();
+                                            update_con.destroy();
                                             res.json({
                                                 "status": 200
                                             })
