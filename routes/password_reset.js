@@ -40,11 +40,13 @@ router.post('/', function(req, res, next) {
 
     ep_con.connect(function(err) {
         if (err) {
+            ep_con.release();
             res.json({
                 "status": 404
             });
         } else {
             ep_con.query(ep_sql, function (err, result) {
+                ep_con.release();
                 res.json({
                     "status": 200
                 });

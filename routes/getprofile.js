@@ -17,6 +17,7 @@ router.post('/', function(req, res, next){
     auth_con.connect(function(err) {
         if (err) {
             // db connection error
+            auth_con.release();
             res.json({
                 "status": 404
             })
@@ -24,11 +25,13 @@ router.post('/', function(req, res, next){
             auth_con.query(auth_sql, function (err, result) {
                 if (result.length === 0) {
                     console.log("invalid authcode");
+                    auth_con.release();
                     res.json({
                         "status": 201
                     });
                 } else {
                     uid = result[0].uid;
+                    auth_con.release();
                     console.log("uid = ", uid);
                     if (uid <= 0) {
                         // invalid auth_token
@@ -47,12 +50,14 @@ router.post('/', function(req, res, next){
                         select_con.connect(function (err) {
                             select_con.query(select_sql, function (err, result) {
                                 if (result === undefined){
+                                    select_con.release();
                                     res.json({
                                         "status": 202,
                                         "err_message": "user does not exist"
                                     });
                                 }
                                 else if (result.length === 0) {
+                                    select_con.release();
                                     res.json({
                                         "status": 202,
                                         "err_message": "user does not exist"
@@ -64,6 +69,8 @@ router.post('/', function(req, res, next){
                                     let year = result[0].class;
                                     let major = result[0].major;
                                     let descrip = result[0].description;
+
+                                    select_con.release();
                                     if (name === undefined) {
                                         name = null;
                                     }

@@ -46,9 +46,11 @@ router.post('/', function(req, res, next){
                         password: "ShaoZH0923?",
                         database: "cs307_sp19_team31"
                     });
+                    auth_con.release();
 
                     delete_con.connect(function(err){
                         delete_con.query(delete_sql, function(err, result){
+                            delete_con.release();
                             res.json({
                                 "status": 200
                             });

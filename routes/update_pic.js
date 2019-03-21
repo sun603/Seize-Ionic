@@ -27,6 +27,7 @@ router.post('/', function(req, res, next){
 
     auth_con.connect(function(err){
         if (err) {
+            auth_con.release();
             // db connection error
             res.json({
                 "status": 404
@@ -37,12 +38,14 @@ router.post('/', function(req, res, next){
             auth_con.query(auth_sql, function(err, result){
                 if (result.length === 0) {
                     console.log("invalid auth_token");
+                    auth_con.release();
                     res.json({
                         "status": 201
                     });
                 } else {
                     uid = result[0].uid;
                     console.log("uid = ", uid);
+                    auth_con.release();
                     if (uid <= 0) {
                         // invalid auth_token
                         console.log("invalid auth_token");
@@ -62,6 +65,7 @@ router.post('/', function(req, res, next){
                         select_con.connect(function (err) {
                             select_con.query(select_sql, function (err, result) {
                                 if (result.length === 0) {
+                                    select_con.release();
                                     res.json({
                                         "status": 202,
                                         "err_message": "user profile does not exist"
@@ -69,6 +73,7 @@ router.post('/', function(req, res, next){
                                 } else {
                                     // user profile found
                                     let picId = result[0].pic_id;
+                                    select_con.release();
                                     if (picId === null){
                                         // no picture found yet
                                         /*
@@ -106,6 +111,7 @@ router.post('/', function(req, res, next){
                                                     let update_sql = "update profile set pic_id = " +
                                                         pic_id + " where uid = " + uid;
                                                     pic_con.query(update_sql, function(err3, result3){
+                                                        pic_con.release();
                                                         res.json({
                                                             "status": 200
                                                         });
@@ -129,6 +135,7 @@ router.post('/', function(req, res, next){
                                                 pic_dir = pic_dir + result[0].pic_file_name;
                                                 console.log("pic_dir: ", pic_dir);
                                                 base64_decode(pic_stream, pic_dir);
+                                                pic_con.release();
                                                 res.json({
                                                     "status": 200
                                                 });
