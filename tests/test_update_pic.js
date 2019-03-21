@@ -50,7 +50,7 @@ it ('checking for incorrect auth_token', function(done){
         .end(done);
 });
 
-it ('checking for incorrect auth_token', function(done){
+it ('checking for correct auth_token', function(done){
     let data = {
         "auth_token": token,
         "pic": unknown
@@ -69,7 +69,7 @@ it ('checking for incorrect auth_token', function(done){
         .end(done);
 });
 
-it ('checking for incorrect auth_token', function(done){
+it ('checking if the picture is correct', function(done){
     let data = {
         "auth_token": token
     };
