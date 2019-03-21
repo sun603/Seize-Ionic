@@ -7,7 +7,7 @@ var token;
 var uid = 64;
 
 /*
-* testing getprofile for user:
+* testing post seat for user:
 * email: test_user_1@purdue.edu
 * password: TestUSER1
 * */
@@ -35,7 +35,7 @@ it('post seat by user', function(done)
         "auth_token": token,
         "seat_type": "Sofa",
         "noise_level": 1,
-        "library":"Hicks Underground"
+        "library":"Hicks Undergraduate"
     };
 
     request(server)
@@ -63,6 +63,7 @@ it('checking if seat_type info is correct.', function(done){
 
     check_con.connect(function(err){
         check_con.query(check_sql, function(err, result){
+            console.log("seat_type = ", result[0].seat_type);
             assert.equal(result[0].seat_type, "Sofa");
         });
     });
@@ -81,6 +82,7 @@ it ('checking if noise_level info is correct.', function(done){
 
     check_con.connect(function(err){
         check_con.query(check_sql, function(err, result){
+            console.log("noise_level = ", result[0].noise_level);
             assert.equal(result[0].noise_level, 1);
         });
     });
@@ -99,7 +101,8 @@ it ('checking if library info is correct.', function(done){
 
     check_con.connect(function(err){
         check_con.query(check_sql, function(err, result){
-            assert.equal(result[0].library, "Hicks Underground");
+            console.log("library = ", result[0].library);
+            assert.equal(result[0].library, "Hicks Undergraduate");
         });
     });
     done();
