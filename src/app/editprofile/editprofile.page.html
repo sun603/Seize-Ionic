@@ -54,9 +54,12 @@
 
   <ion-item>
       <ion-label>Major</ion-label>
-      <ion-input [(ngModel)]="me.major" value="{{me.major}}"></ion-input>
-    </ion-item>
-</ion-list>
+      <ion-select [(ngModel)]="me.major" [placeholder]="me.major">
+        <ion-select-option *ngFor="let ma of majors" [value]="ma">{{ma}}</ion-select-option>
+      </ion-select>
+    <!-- <ion-input [(ngModel)]="me.major" value="{{me.major}}"></ion-input> -->
+  </ion-item>
+
 
 <ion-item>
     <ion-label>Class Standing</ion-label>
@@ -67,11 +70,12 @@
     <ion-select-option value="Senior">Senior</ion-select-option>
     <ion-select-option value="Graduate">Graduate</ion-select-option>
   </ion-select>
-  </ion-item>
+</ion-item>
 
   <div padding>
     <ion-button block (click)="update()">
         UPDATE
       </ion-button>
   </div>
+</ion-list>
 </ion-content>

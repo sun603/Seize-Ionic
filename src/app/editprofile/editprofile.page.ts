@@ -5,6 +5,7 @@ import { AuthenticationService } from '../services/authentication.service'
 import { Location } from '@angular/common';
 import { ProfileService } from '../services/profile.service';
 import { ProfileModel } from '../models/profile.model';
+import { MajorModel } from '../models/major.model';
 @Component({
   selector: 'app-editprofile',
   templateUrl: './editprofile.page.html',
@@ -13,11 +14,16 @@ import { ProfileModel } from '../models/profile.model';
 export class EditprofilePage implements OnInit {
   me:any;
   profileImgUrl:any;
+  majors;
+  majorModel;
   constructor(public alertController: AlertController,public router: Router,public prof: ProfileService, public auth:AuthenticationService, private _location: Location) { 
     this.me = new ProfileModel();
+    this.majorModel = new MajorModel();
   }
 
   ngOnInit() {
+    // let majorModel = new MajorModel();
+    this.majors = this.majorModel.getmajors();
     this.prof.getLocalProfile().then(data => {
       console.log("tab3: data",data);
       if(data){
