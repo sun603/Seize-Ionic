@@ -7,7 +7,7 @@ var token;
 var uid = 64;
 
 /*
-* testing post seat for user:
+* testing search seat for user:
 * email: test_user_1@purdue.edu
 * password: TestUSER1
 * */
