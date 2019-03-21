@@ -9,5 +9,6 @@ export const apisettings = {
   post:'/post_seat',
   search:'/search_seat',
   cencel:'/cancel_post',
+  check:'/check_match'
   // forget
 }

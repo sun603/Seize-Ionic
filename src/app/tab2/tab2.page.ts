@@ -43,8 +43,8 @@ export class Tab2Page {
       }).then( data => {
         console.log("find seat",data);
         this.matchService.find(data).then(data =>{
-        console.log("find seat done",data);
-        this.router.navigate(['/waiting']);
+          console.log("find seat done",data);
+          this.presentAlert("match with "+ data["name"]);
         }).catch( error => {
           console.log(error,error.name);
           this.presentAlert("Sorry, no one is sharing seat now try later");

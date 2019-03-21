@@ -6,19 +6,27 @@ import { environment } from '../../environments/environment';
 import { apisettings } from '../settings/apisettings';
 import { map } from 'rxjs/operators';
 import { AuthenticationService } from './authentication.service';
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MatchService {
-
-  constructor(public http: HttpClient,public auth: AuthenticationService) { }
+  waitflag:boolean;
+  timerId:any;
+  constructor(public http: HttpClient,public auth: AuthenticationService, public router: Router, public alertController: AlertController) { 
+    this.waitflag = false;
+  }
 
   post(data): Promise<any>{
     return new Promise((resolve,reject) => {
       this.httppost(data).subscribe(
         (val) =>{
           if(val["status"]== 200){
+            this.waitflag = true;
+            let re = this.wait();
+            console.log(re);
             resolve(val);
           }else if(val["status"]== 201){
             console.log("Logout at find for 201"+val+data);
@@ -75,6 +83,13 @@ export class MatchService {
         this.httpcencel(data).subscribe(
           (val) =>{
             if(val["status"]== 200){
+              if(this.waitflag == true){
+                this.waitflag = false;
+                clearInterval(this.timerId);
+                console.log("cancel",this.waitflag);
+              }else{
+                console.log("cancel err",this.waitflag);
+              }
               resolve(val);
             }else if(val["status"]== 201){
               console.log("Logout at find for 201",val,data);
@@ -98,5 +113,84 @@ export class MatchService {
   }
   httpcencel(data){
     return this.http.post(environment.apiUrl+apisettings.cencel, data).pipe(map(res => res));
+  }
+  // towait(): boolean{
+  //   if(this.waitflag == true){
+  //     return false;
+  //   }else{
+  //     this.waitflag = true;
+  //     this.wait();
+  //     return true;
+  //   }
+  // }
+  wait(){
+    let oneSecond = 1000 * 1; // one second = 1000 x 1 ms
+    if(this.waitflag == true){
+      this.timerId = setInterval( () =>{
+        // console.log("interval", this.timerId,this.auth);
+        this.auth.getauth().then(res => {
+          let data = {
+            "auth_token": res,
+          };
+          this.httpcheck(data).subscribe(res =>{
+            if(res["status"] && res["status"] == 200){
+              console.log("match",res);
+              this.presentAlert("match with "+res["name"]);
+              this.router.navigate(['/tabs']);
+              clearInterval(this.timerId);
+            }else if(res["status"] && res["status"] == 201){
+              console.log("check 201",res);
+              this.auth.logout();
+            }else if(res["status"] == 202){
+              console.log("cont to wait",res);
+            }
+          }, err =>{
+            console.log(err);
+          }); 
+        }).catch( err =>{
+          console.log(err);
+        });
+      }, oneSecond*10);
+    }else{
+      if(this.timerId){
+        clearInterval(this.timerId);
+      }
+    }
+  }
+  // check() {
+  //   console.log("interval", this.timerId,this.auth);
+  //   this.auth.getauth().then(res => {
+  //     let data = {
+  //       "auth_token": res,
+  //     };
+  //     this.httpcheck(data).subscribe(res =>{
+  //       if(res["status"] && res["status"] == 200){
+  //         console.log("match",res);
+  //       }else if(res["status"] && res["status"] == 201){
+  //         console.log("check 201",res);
+  //         this.auth.logout();
+  //       }else if(res["status"] == 202){
+  //         console.log("cont to wait",res);
+  //       }
+  //     }, err =>{
+  //       console.log(err);
+  //     }); 
+  //   }).catch( err =>{
+  //     console.log(err);
+  //   });
+  // }
+  httpcheck(data){
+    return this.http.post(environment.apiUrl+apisettings.check, data).pipe(map(res => res));
+  }
+
+  async presentAlert(msg) {
+    const alert = await this.alertController.create({
+      // header: 'Alert',
+      subHeader: 'Find',
+      message: msg,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 }
