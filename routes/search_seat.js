@@ -94,8 +94,6 @@ router.post('/', function(req, res, next){
 
                                 let match_sql = "SELECT * FROM matching_pool WHERE " +
                                     "school = \"" + school + "\" " +
-                                    "AND class = \"" + class_stand + "\" " +
-                                    "AND major = \"" + major + "\" " +
                                     "AND seat_type = \"" + seat_type + "\" " +
                                     "AND noise_level <= " + noise_level +
                                     " AND library = \"" + library + "\"";
@@ -130,12 +128,48 @@ router.post('/', function(req, res, next){
                                             // TODO: 1. DELETE the post in matching_pool
                                             //       2. RESPONSE with the mathced user id
                                             //       3. (if time allows) send notification to post-er
+                                            //
+                                            //      "AND class = \"" + class_stand + "\" " +
+                                            //      "AND major = \"" + major + "\" " +
 
                                             console.log(result);
+                                            // 0. Find the best match from
+
+                                            var n = result.length;
+                                            var grid = new Array(n);
+                                            var i;
+                                            var j;
+                                            for (i = 0; i < n; i++){
+                                                grid[i] = new Array(2);
+                                                grid[i][0] = result[i].uid;
+                                                var count = 0;
+                                                if (result[i].class === class_stand){
+                                                    count = count +5;
+                                                }
+                                                if (result[i].major === major){
+                                                    count = count + 1;
+                                                }
+                                                grid[i][1] = count;
+                                            }
+
+                                            for (i = 0; i < (n - 1); i++){
+                                                for (j = i + 1; j < n; j++){
+                                                    if (grid[i][1] < grid[j][1]){
+                                                        var temp0 = grid[i][0];
+                                                        var temp1 = grid[i][1];
+
+                                                        grid[i][0] = grid[j][0];
+                                                        grid[i][1] = grid[j][1];
+
+                                                        grid[j][0] = temp0;
+                                                        grid[j][1] = temp1;
+                                                    }
+                                                }
+                                            }
 
                                             // 1. EDIT the post in matching_pool
-
-                                            let poster_uid = result[0].uid;
+                                            let poster_uid = grid[0][0];
+                                            //let poster_uid = result[0].uid;
                                             //let delete_sql = "delete from matching_pool where uid = " + poster_uid;
                                             let delete_sql = "update matching_pool set matching_status = " + uid + " where uid = " + poster_uid;
 
