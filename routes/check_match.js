@@ -98,9 +98,28 @@ router.post('/', function(req, res, next){
                                         })
                                     })
 
-                                    res.json({
-                                        "status": 200,
-                                        "matching_user": search_uid
+                                    // res.json({
+                                    //     "status": 200,
+                                    //     "matching_user": search_uid
+                                    // })
+
+                                    let profile_sql = "SELECT name FROM profile WHERE uid = " + search_uid;
+                                    let profile_con = mysql.createConnection({
+                                        host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+                                        user: "shao44",
+                                        password: "ShaoZH0923?",
+                                        database: "cs307_sp19_team31"
+                                    });
+
+                                    profile_con.connect(function(err){
+                                        profile_con.query(profile_sql, function(err, result){
+                                            let name = result[0].name;
+                                            res.json({
+                                                "status": 200,
+                                                "uid": search_uid,
+                                                "name": name
+                                            });
+                                        })
                                     })
                                 }
                             })
