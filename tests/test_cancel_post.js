@@ -29,6 +29,24 @@ it('acquiring token from login', function(done)
     })
 });
 
+it ('checking for incorrect auth_token', function(done){
+    let data = {
+        "auth_token": "1234567890"
+    };
+
+    request(server)
+        .post("/update_pic")
+        .send(data)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .expect(function(res)
+        {
+            assert.equal(res.body.status, 201);
+        })
+        .end(done);
+});
+
 it('post seat by user', function(done)
 {
     let data = {
