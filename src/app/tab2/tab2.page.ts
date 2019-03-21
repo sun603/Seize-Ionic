@@ -41,14 +41,16 @@ export class Tab2Page {
           "noise_level": this.sound,
         };
       }).then( data => {
-        console.log("find seat"+data);
+        console.log("find seat",data);
         this.matchService.find(data).then(data =>{
-        console.log("find seat done"+data);
+        console.log("find seat done",data);
         this.router.navigate(['/waiting']);
+        }).catch( error => {
+          console.log(error,error.name);
+          this.presentAlert("Sorry, no one is sharing seat now try later");
         });
-      
-      }).catch(function(error){
-        console.error(error);
+      }).catch((error) => {
+        console.log(error);
       });
     }
 

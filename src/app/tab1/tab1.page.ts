@@ -44,6 +44,8 @@ export class Tab1Page {
         this.matchService.post(data).then(data =>{
           console.log("post success",data);
           this.router.navigate(['/waiting']);
+        }).catch( err =>{
+          this.presentAlert("Problem with network. Please, try later");
         });
         
       });
