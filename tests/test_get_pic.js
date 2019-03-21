@@ -10,7 +10,7 @@ let unknown = "/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABkAAD/4
 
 
 /*
-* testing forget pass for user:
+* testing get picture for user:
 * email: shao44@purdue.edu
 * password: ShaoZH0923?
 * */
