@@ -36,10 +36,11 @@ export class Tab1Page {
       this.auth.getauth().then(res => {
         let data = {
           "auth_token": res,
-          "library": location,
+          "library": this.location,
           "seat_type": this.seattype,
           "noise_level": this.sound,
         };
+        console.log("post data",data);
         this.matchService.post(data).then(data =>{
           console.log("post success",data);
           this.router.navigate(['/waiting']);
