@@ -54,7 +54,16 @@ export class Tab2Page {
       });
     }
 
+    
+
   }
+
+  clear(){
+    this.location=null;
+    this.seattype=null;
+    this.sound=null;
+  }
+  
   async presentAlert(msg) {
     const alert = await this.alertController.create({
       // header: 'Alert',
