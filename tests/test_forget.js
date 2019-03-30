@@ -24,7 +24,7 @@ it('should return 200 by checking email from login', function(done)
     let data = {
         "email": "shao44@purdue.edu",
         "password": "ShaoZH0923?"
-    }
+    };
     request(server)
         .post("/email_login")
         .send(data)
@@ -37,4 +37,6 @@ it('should return 200 by checking email from login', function(done)
         })
         .end(done);
 });
+
+
 
