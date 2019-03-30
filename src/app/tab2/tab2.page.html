@@ -11,7 +11,7 @@
   <app-chooselibrary></app-chooselibrary> -->
   <ion-item>
     <ion-label>Library</ion-label>
-    <ion-select placeholder="which library?" [(ngModel)]="location">
+    <ion-select multiple="true" placeholder="which library?" [(ngModel)]="location">
         <ion-select-option *ngFor="let lib of libs" value={{lib}}>
             {{lib}}
         </ion-select-option >
