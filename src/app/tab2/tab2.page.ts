@@ -15,7 +15,10 @@ export class Tab2Page {
   libs:any;
   location:string;
   seattype:string;
-  sound:number;
+  sound:{
+   upper:number,
+   lower:number
+  }
   constructor(public auth: AuthenticationService, public matchService: MatchService,private router: Router,public alertController: AlertController){
     this.library = new LibraryModel();
   }
@@ -29,7 +32,7 @@ export class Tab2Page {
       this.presentAlert("Please choose library");
     }else if(this.seattype == "" || this.seattype == undefined){
       this.presentAlert("Please choose seattype");
-    }else if(typeof(this.sound) != 'number' ||this.sound == undefined){
+    }else if(this.sound.upper == 1){
       this.presentAlert("Please choose soundlevel");
     }else{
       this.auth.getauth()
@@ -38,7 +41,8 @@ export class Tab2Page {
           "auth_token": res,
           "library": this.location,
           "seat_type": this.seattype,
-          "noise_level": this.sound,
+          "noise_level1": this.sound.lower,
+          "noise_level2": this.sound.upper,
         };
       }).then( data => {
         console.log("find seat",data);
