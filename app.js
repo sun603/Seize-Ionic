@@ -27,6 +27,9 @@ let check_match = require('./routes/check_match.js');
 var app = express();
 var bodyParser = require('body-parser');
 
+const http = require('http').Server(app);
+let port = 3001;
+
 /*app.configure(function() {
   app.use(express.bodyParser({ keepExtensions: true, uploadDir: '/tmp' }));
 });
@@ -91,6 +94,23 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// socket.io server
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', function(req, res) {
+  res.sendFile(__dirname + '/public/index.html');
+});
+
+app.get('/api', function(req, res) {
+  res.send('.');
+});
+
+http.listen(port, function() {
+  console.log(`listening on port:${port}`);
+});
+
+
 
 var oneHour = 60 * 60 * 1000;
 var clear_timeout = require('./routes/clear_timeout.js');
