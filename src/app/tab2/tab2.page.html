@@ -11,7 +11,7 @@
   <app-chooselibrary></app-chooselibrary> -->
   <ion-item>
     <ion-label>Library</ion-label>
-    <ion-select placeholder="which library?" [(ngModel)]="location">
+    <ion-select multiple="true" placeholder="which library?" [(ngModel)]="location">
         <ion-select-option *ngFor="let lib of libs" value={{lib}}>
             {{lib}}
         </ion-select-option >
@@ -26,11 +26,19 @@
   </ion-item>
   <ion-item>
     <ion-label>Sound Level</ion-label>
-    <ion-range min="1" max="10" pin="true"[(ngModel)]="sound">
+    <ion-range dualKnobs="true" min="1" max="10" pin="true"[(ngModel)]="sound">
       <ion-icon slot="start" name="volume-low"></ion-icon>
       <ion-icon slot="end" name="volume-high"></ion-icon>
     </ion-range>
   </ion-item>
+
+  <!--ion-item>
+    <ion-range dualKnobs="true" min="1" max="10"  pin="true">
+      <ion-icon slot="start" name="volume-low"></ion-icon>
+      <ion-icon slot="end" name="volume-high"></ion-icon>
+    </ion-range>
+  </ion-item>-->
+
   <ion-item>
     <ion-button block (click)="clear()">
       Clear
