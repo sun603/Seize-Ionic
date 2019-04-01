@@ -45,7 +45,7 @@ it('check for incorrect auth_token', function(done){
             assert.equal(res.body.status, 201);
         })
         .end(done);
-})
+});
 
 it('post seat by user', function(done)
 {
@@ -88,7 +88,7 @@ it ('check for correct auth_token and search', function(done){
             assert.equal(res.body.uid, 64);
         })
         .end(done);
-})
+});
 
 it ('delete the testing post', function(done){
     let delete_sql = "delete from matching_pool where uid < 65";

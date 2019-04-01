@@ -139,6 +139,6 @@ it ('delete test1 post_seat info', function(done){
         delete_con.query(delete_sql, function(err, result){
             assert.equal(result[0], undefined);
         })
-    })
+    });
     done();
 });
