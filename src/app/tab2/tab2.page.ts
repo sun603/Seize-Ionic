@@ -70,9 +70,11 @@ export class Tab2Page {
   }
 
   clear(){
-    this.location=null;
-    this.seattype=null;
-    this.sound=null;
+    this.location = null;
+    this.seattype = null;
+    this.sound = null;
+    this.pc = false;
+    this.power = false;
   }
   
   async presentAlert(msg) {
