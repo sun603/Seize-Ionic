@@ -19,8 +19,13 @@ export class Tab2Page {
    upper:number,
    lower:number
   }
+  pc:boolean;
+  power:boolean
+
   constructor(public auth: AuthenticationService, public matchService: MatchService,private router: Router,public alertController: AlertController){
     this.library = new LibraryModel();
+    this.pc = false;
+    this.power = false;
   }
   ngOnInit() { 
     this.libs = this.library.getlibs();
@@ -43,6 +48,8 @@ export class Tab2Page {
           "seat_type": this.seattype,
           "noise_level1": this.sound.lower,
           "noise_level2": this.sound.upper,
+          "pc": this.pc,
+          "power": this.power
         };
       }).then( data => {
         console.log("find seat",data);

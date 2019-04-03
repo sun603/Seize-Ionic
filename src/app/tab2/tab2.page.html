@@ -40,6 +40,15 @@
   </ion-item>-->
 
   <ion-item>
+    <ion-label>PC</ion-label>
+    <ion-toggle [(ngModel)]="pc"></ion-toggle>
+  </ion-item>
+  <ion-item>
+    <ion-label>Power Outlet</ion-label>
+    <ion-toggle [(ngModel)]="power"></ion-toggle>
+  </ion-item>
+
+  <ion-item>
     <ion-button block (click)="clear()">
       Clear
     </ion-button>
