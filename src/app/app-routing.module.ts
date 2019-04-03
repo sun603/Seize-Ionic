@@ -10,7 +10,8 @@ const routes: Routes = [
   { path: 'editprofile', loadChildren: './editprofile/editprofile.module#EditprofilePageModule' },
   { path: 'forgetpassword', loadChildren: './forgetpassword/forgetpassword.module#ForgetpasswordPageModule' },
   { path: 'waiting', loadChildren: './waiting/waiting.module#WaitingPageModule' },
-  { path: 'editpic', loadChildren: './editpic/editpic.module#EditpicPageModule' }
+  { path: 'editpic', loadChildren: './editpic/editpic.module#EditpicPageModule' },
+  { path: 'chat', loadChildren: './chat/chat.module#ChatPageModule' }
 ];
 @NgModule({
   imports: [
