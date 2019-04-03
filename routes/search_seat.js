@@ -28,8 +28,16 @@ var uid;
 router.post('/', function(req, res, next){
     let auth_code = req.body.auth_token;
     let seat_type = req.body.seat_type;
-    let noise_level = req.body.noise_level;
-    let library = req.body.library;
+    let noise_level_low_search = req.body.noise_level1;
+    let noise_level_high_search = req.body.noise_level2;
+    let lib = req.body.library;
+    lib = lib + "";// array,长字符串
+    console.log("lib = " + lib);
+    let library_search = lib.split(","); // array of libraries from searcher
+    let pc_serach = req.body.pc;
+    let power_search = req.body.power;
+
+    let t = 1;
 
     // TODO: grab user profile from auth_token
     var auth_sql = "SELECT * FROM user_auth WHERE auth_code = \"" + auth_code + "\"";
@@ -101,10 +109,10 @@ router.post('/', function(req, res, next){
                                 profile_con.destroy();
 
                                 let match_sql = "SELECT * FROM matching_pool WHERE " +
-                                    "school = \"" + school + "\" " +
-                                    "AND seat_type = \"" + seat_type + "\" " +
-                                    "AND noise_level <= " + noise_level +
-                                    " AND library = \"" + library + "\"";
+                                    "school = \"" + school + "\"" +
+                                    " AND seat_type = \"" + seat_type + "\"" +
+                                    " AND pc = " + pc_serach +
+                                    " AND power = " + power_search;
 
                                 console.log(match_sql);
 
@@ -153,77 +161,103 @@ router.post('/', function(req, res, next){
                                                 grid[i] = new Array(2);
                                                 grid[i][0] = result[i].uid;
                                                 var count = 0;
+                                                // class 和 major 的适配度
                                                 if (result[i].class === class_stand){
                                                     count = count +5;
                                                 }
                                                 if (result[i].major === major){
                                                     count = count + 1;
                                                 }
-                                                grid[i][1] = count;
-                                            }
 
-                                            for (i = 0; i < (n - 1); i++){
-                                                for (j = i + 1; j < n; j++){
-                                                    if (grid[i][1] < grid[j][1]){
-                                                        var temp0 = grid[i][0];
-                                                        var temp1 = grid[i][1];
+                                                // check if noise level match
 
-                                                        grid[i][0] = grid[j][0];
-                                                        grid[i][1] = grid[j][1];
+                                                if ( noise_level_high_search >= result[i].noise_level &&
+                                                     noise_level_low_search <= result[i].noise_level){
+                                                    // do nothing, valid noise level
+                                                }
+                                                else{
+                                                    t = 0;
+                                                }
 
-                                                        grid[j][0] = temp0;
-                                                        grid[j][1] = temp1;
+                                                // check if library is match
+                                                let n = library_search.length;
+                                                for (j = 0; j < n; j++) {
+                                                    if (result[i].library === library_search[j]) {
+                                                        t = t + 1;
                                                     }
                                                 }
-                                            }
-
-                                            match_con.destroy();
-
-                                            // 1. EDIT the post in matching_pool
-                                            let poster_uid = grid[0][0];
-                                            //let poster_uid = result[0].uid;
-                                            //let delete_sql = "delete from matching_pool where uid = " + poster_uid;
-                                            let delete_sql = "update matching_pool set matching_status = " + uid + " where uid = " + poster_uid;
-
-                                            let delete_con = mysql.createConnection({
-                                                host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
-                                                user: "shao44",
-                                                password: "ShaoZH0923?",
-                                                database: "cs307_sp19_team31"
-                                            });
-
-                                            console.log(delete_sql);
-
-                                            delete_con.connect(function(err){
-                                                delete_con.query(delete_sql, function(err, result){
-                                                    delete_con.destroy();
-                                                })
-                                            })
-
-                                            // 2. (if time allows) send notification to post-er
-
-                                            // 3. RESPONSE with the mathced user id
-                                            // grab the username
-
-                                            let profile_sql = "SELECT name FROM profile WHERE uid = " + poster_uid;
-                                            let profile_con = mysql.createConnection({
-                                                host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
-                                                user: "shao44",
-                                                password: "ShaoZH0923?",
-                                                database: "cs307_sp19_team31"
-                                            });
-
-                                            profile_con.connect(function(err){
-                                                profile_con.query(profile_sql, function(err, result){
-                                                    let name = result[0].name;
-                                                    profile_con.destroy();
+                                                if (t < 2){
+                                                    match_con.destroy();
                                                     res.json({
-                                                        "status": 200,
-                                                        "uid": poster_uid,
-                                                        "name": name
-                                                    });
+                                                        "status": 202,
+                                                        "err_message": "match not found 0"
+                                                    })
+                                                }
+                                                grid[i][1] = count;
+                                            }
+                                            if (t === 2) {
+
+                                                for (i = 0; i < (n - 1); i++) {
+                                                    for (j = i + 1; j < n; j++) {
+                                                        if (grid[i][1] < grid[j][1]) {
+                                                            var temp0 = grid[i][0];
+                                                            var temp1 = grid[i][1];
+
+                                                            grid[i][0] = grid[j][0];
+                                                            grid[i][1] = grid[j][1];
+
+                                                            grid[j][0] = temp0;
+                                                            grid[j][1] = temp1;
+                                                        }
+                                                    }
+                                                }
+
+                                                match_con.destroy();
+
+                                                // 1. EDIT the post in matching_pool
+                                                let poster_uid = grid[0][0];
+                                                let delete_sql = "update matching_pool set matching_status = " + uid + " where uid = " + poster_uid;
+
+                                                let delete_con = mysql.createConnection({
+                                                    host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+                                                    user: "shao44",
+                                                    password: "ShaoZH0923?",
+                                                    database: "cs307_sp19_team31"
+                                                });
+
+                                                console.log(delete_sql);
+
+                                                delete_con.connect(function (err) {
+                                                    delete_con.query(delete_sql, function (err, result) {
+                                                        delete_con.destroy();
+                                                    })
                                                 })
-                                            })
+
+                                                // 2. (if time allows) send notification to post-er
+
+                                                // 3. RESPONSE with the mathced user id
+                                                // grab the username
+
+                                                let profile_sql = "SELECT name FROM profile WHERE uid = " + poster_uid;
+                                                let profile_con = mysql.createConnection({
+                                                    host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+                                                    user: "shao44",
+                                                    password: "ShaoZH0923?",
+                                                    database: "cs307_sp19_team31"
+                                                });
+
+                                                profile_con.connect(function (err) {
+                                                    profile_con.query(profile_sql, function (err, result) {
+                                                        let name = result[0].name;
+                                                        profile_con.destroy();
+                                                        res.json({
+                                                            "status": 200,
+                                                            "uid": poster_uid,
+                                                            "name": name
+                                                        });
+                                                    })
+                                                });
+                                            }
                                         }
                                     });
                                 });

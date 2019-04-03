@@ -19,6 +19,8 @@ router.post('/', function(req, res, next){
     var seat_type = req.body.seat_type;
     var noise_level = req.body.noise_level;
     let library = req.body.library;
+    let pc = req.body.pc;
+    let power = req.body.power;
 
     // TODO: grab user profile from auth_token
     var auth_sql = "SELECT * FROM user_auth WHERE auth_code = \"" + auth_code + "\"";
@@ -74,7 +76,7 @@ router.post('/', function(req, res, next){
                                 var major = result[0].major;
                                 // uid, seat_type, noise_level
                                 select_con.destroy();
-                                let post_sql = "insert matching_pool (uid, school, class, major, seat_type, library, noise_level)" +
+                                let post_sql = "insert matching_pool (uid, school, class, major, seat_type, library, noise_level, pc, power)" +
                                     " values " +
                                     "(" + uid + ", " +
                                     "\"" + school + "\", " +
@@ -82,7 +84,9 @@ router.post('/', function(req, res, next){
                                     "\"" + major + "\", " +
                                     "\"" + seat_type + "\", " +
                                     "\"" + library + "\", " +
-                                    noise_level + ")";
+                                    noise_level + ", " +
+                                    pc + ", " +
+                                    power + ")";
                                 let post_con = mysql.createConnection({
                                     host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
                                     user: "shao44",
