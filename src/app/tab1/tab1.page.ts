@@ -17,8 +17,13 @@ export class Tab1Page {
   location:string;
   seattype:string;
   sound:number;
+  pc:boolean;
+  power:boolean
+
   constructor(public auth: AuthenticationService, public matchService: MatchService,private router: Router, public alertController: AlertController){
     this.library = new LibraryModel();
+    this.pc = false;
+    this.power = false;
   }
   ngOnInit() { 
     this.libs = this.library.getlibs();
@@ -39,6 +44,8 @@ export class Tab1Page {
           "library": this.location,
           "seat_type": this.seattype,
           "noise_level": this.sound,
+          "pc": this.pc,
+          "power": this.power
         };
         console.log("post data",data);
         this.matchService.post(data).then(data =>{
@@ -53,9 +60,11 @@ export class Tab1Page {
   }
 
   clear(){
-    this.location=null;
-    this.seattype=null;
-    this.sound=null;
+    this.location = null;
+    this.seattype = null;
+    this.sound = null;
+    this.pc = false;
+    this.power = false;
   }
 
   async presentAlert(msg) {
