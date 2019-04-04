@@ -7,6 +7,7 @@
     "test": "mocha ./tests/*.js"
   },
   "dependencies": {
+    "@ionic-native/core": "^5.3.0",
     "@ionic-native/push": "^5.2.0",
     "assert": "^1.4.1",
     "cookie-parser": "^1.4.4",
@@ -27,7 +28,9 @@
     "pool": "^0.4.1",
     "promise": "^8.0.2",
     "pug": "^2.0.3",
+    "rxjs": "^6.4.0",
     "should": "^13.2.3",
+    "socket-io": "^1.0.0",
     "socket.io": "^2.2.0",
     "superagent": "^4.1.0",
     "supertest": "^3.4.2",
