@@ -40,15 +40,22 @@ it('checking if cancel post is correct.', function(done){
         database: "cs307_sp19_team31"
     });
     delete_con.connect(function(err){
-        delete_con.query(delete_sql, function(err, result){
-            delete_con.query(delete_sql_1, function(err, result){});
-            delete_con.query(delete_sql_2, function(err, result){});
-            delete_con.destroy();
-            res.json({
-                "status": 200
+        delete_con.query(delete_sql_2, function(err, result){
+            let check_sql = "SELECT * FROM matching_pool WHERE uid = " + uid;
+            console.log("check_sql: ", check_sql);
+            let check_con = mysql.createConnection({
+                host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+                user: "shao44",
+                password: "ShaoZH0923?",
+                database: "cs307_sp19_team31"
+            });
+
+            check_con.connect(function(err){
+                check_con.query(check_sql, function(err, result){
+                    assert.equal(result.length, 0);
+                    done();
+                });
             });
         });
     });
 });
-
-
