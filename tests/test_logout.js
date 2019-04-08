@@ -29,7 +29,25 @@ it('acquiring token from login', function(done)
     })
 });
 
-it('checking if cancel post is correct.', function(done){
+it ('checking for incorrect auth_token', function(done){
+    let data = {
+        "auth_token": "1234567890"
+    };
+
+    request(server)
+        .post("/update_pic")
+        .send(data)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .expect(function(res)
+        {
+            assert.equal(res.body.status, 201);
+        })
+        .end(done);
+});
+
+it('checking if log out.', function(done){
     let delete_sql_1 = "DELETE FROM user_auth WHERE uid = " + uid;
     let delete_sql_2 = "DELETE FROM matching_pool WHERE uid = " + uid;
 
