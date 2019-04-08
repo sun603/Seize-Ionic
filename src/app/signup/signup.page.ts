@@ -23,10 +23,10 @@ export class SignupPage implements OnInit {
   private major:any;
   majors;
   majorModel;
-  TOKEN_KEY = '';
+
   constructor(private auth: AuthenticationService, public alertController: AlertController, private storage: Storage, private router: Router) {
     // for (var i = 2000; i < 2100; i++) this.years.push(i);
-    this.TOKEN_KEY = environment.TOKEN_KEY;
+
     this.majorModel = new MajorModel();
    }
 

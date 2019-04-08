@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 import { AuthenticationService } from '../services/authentication.service'
 import { ProfileService } from '../services/profile.service';
 import { environment } from '../../environments/environment'
+import { localstoragesettings } from '../settings/localstorage.setting';
 
 @Component({
   selector: 'app-login',
@@ -16,9 +17,8 @@ export class LoginPage implements OnInit {
 
   private email:any;
   private password:any;
-  TOKEN_KEY = '';
+
   constructor(private router: Router, private auth: AuthenticationService, public alertController: AlertController, private storage: Storage, public profile: ProfileService) {
-    this.TOKEN_KEY = environment.TOKEN_KEY;
   }
 
   ngOnInit() {
@@ -46,7 +46,7 @@ export class LoginPage implements OnInit {
         (val) => {
             console.log("POST call successful value returned in body", val);
             if(val["status"]== 200){
-              this.storage.set(this.TOKEN_KEY,val["auth"]).then(() => {
+              this.storage.set(localstoragesettings.TOKEN_KEY,val["auth"]).then(() => {
                 let data = {
                   "auth_token": val["auth"],
                 };

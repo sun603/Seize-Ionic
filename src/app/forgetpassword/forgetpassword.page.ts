@@ -17,7 +17,6 @@ export class ForgetpasswordPage implements OnInit {
   label:string;
   input:any;
   steps:number;
-  TOKEN_KEY;
   email:string;
   constructor(private auth: AuthenticationService, public alertController: AlertController, private storage: Storage, private router: Router) {}
 
@@ -26,7 +25,6 @@ export class ForgetpasswordPage implements OnInit {
     this.label = "Email";
     this.steps = 0;
     this.input = "";
-    this.TOKEN_KEY = environment.TOKEN_KEY;
   }
 
   sumbit(){

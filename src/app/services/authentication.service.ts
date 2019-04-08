@@ -9,7 +9,8 @@ import { BehaviorSubject } from 'rxjs';
 
 
 import { environment } from '../../environments/environment'
-import { apisettings } from '../settings/apisettings'
+import { apisettings } from '../settings/api.settings'
+import { localstoragesettings } from '../settings/localstorage.setting';
 @Injectable({
   providedIn: 'root'
 })
@@ -26,17 +27,16 @@ export class AuthenticationService {
     })
   };
   apiUrl = '';
-  TOKEN_KEY = '';
+
   constructor(private http: HttpClient, private storage: Storage, private plt: Platform) {
     this.apiUrl = environment.apiUrl;
-    this.TOKEN_KEY = environment.TOKEN_KEY;
     this.plt.ready().then(() => {
       this.checkToken();
     });
   }
 
   checkToken() {
-    this.storage.get(this.TOKEN_KEY).then(res => {
+    this.storage.get(localstoragesettings.TOKEN_KEY).then(res => {
       if(res){
         console.log("checkToken: ",res);
         this.authenticationState.next(true);
@@ -56,7 +56,7 @@ export class AuthenticationService {
   }
 
   logout() {
-    // return this.storage.remove(this.TOKEN_KEY).then(() => {
+    // return this.storage.remove(localstoragesettings.TOKEN_KEY).then(() => {
     //   this.authenticationState.next(false);
     // });
     return this.storage.clear().then(() => {
@@ -74,14 +74,14 @@ export class AuthenticationService {
 
   // this is for dev only
   backdoor(){
-    this.storage.set(this.TOKEN_KEY,1).then(() => {
+    this.storage.set(localstoragesettings.TOKEN_KEY,1).then(() => {
       this.authenticationState.next(true);
     });
   }
 
   getauth(): Promise<any>{
     return new Promise((resolve,reject) => {
-      this.storage.get(environment.TOKEN_KEY).then(
+      this.storage.get(localstoragesettings.TOKEN_KEY).then(
         res => {
           resolve(res);
         },

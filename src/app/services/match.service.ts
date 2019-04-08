@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 
 import { environment } from '../../environments/environment';
-import { apisettings } from '../settings/apisettings';
+import { apisettings } from '../settings/api.settings';
 import { map } from 'rxjs/operators';
 import { AuthenticationService } from './authentication.service';
 import { Router } from '@angular/router';
