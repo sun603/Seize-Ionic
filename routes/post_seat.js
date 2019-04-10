@@ -34,6 +34,7 @@ router.post('/', function(req, res, next){
 
     auth_con.connect(function(err) {
         if (err){
+            auth_con.destroy();
             res.json({
                 "status": 404,
                 "error message": "database connection error"

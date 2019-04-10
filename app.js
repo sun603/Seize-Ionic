@@ -23,6 +23,8 @@ let search_seat = require('./routes/search_seat.js');
 let logout = require('./routes/logout.js');
 let resume = require('./routes/resume.js');
 let check_match = require('./routes/check_match.js');
+let get_friend_list = require('./routes/get_friend_list.js');
+let get_friend_profile = require('./routes/get_friend_profile.js');
 
 var app = express();
 var bodyParser = require('body-parser');
@@ -76,6 +78,8 @@ app.use('/search_seat', search_seat);
 app.use('/logout', logout);
 app.use('/resume', resume);
 app.use('/check_match', check_match);
+app.use('/get_friend_list', get_friend_list);
+app.use('/get_friend_profile', get_friend_profile);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
