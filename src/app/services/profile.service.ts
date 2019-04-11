@@ -6,43 +6,85 @@ import { Storage } from '@ionic/storage';
 import { map, retry } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
-import { apisettings } from '../settings/apisettings';
+import { apisettings } from '../settings/api.settings';
 import { ProfileModel } from '../models/profile.model';
 import { AuthenticationService } from './authentication.service';
+import { Subject, BehaviorSubject } from 'rxjs';
+import { localstoragesettings } from '../settings/localstorage.setting';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
-  
-  authcode:any;
-  constructor(public http: HttpClient, public storage: Storage, public auth: AuthenticationService) {}
-  getLocalProfile(): Promise<any>{
-    return new Promise((resolve,reject) => {
-      this.storage.get("me").then((res) => {
-        if(res == null || res == undefined){
-          this.storage.get(environment.TOKEN_KEY).then(
-            res => {
-              let data = {
-                "auth_token": res,
-              };
-              this.getwebProfile(data, res =>{
-                resolve(res);
-              })
-            },
-            error =>{
-              reject(error);
-            }
-          );
-        }else{
-          resolve(res);
-        }
+  picSubject:BehaviorSubject<string> = new BehaviorSubject(null);
+  meSubject:BehaviorSubject<ProfileModel> = new BehaviorSubject(null);
+  constructor(public http: HttpClient, public storage: Storage, public auth: AuthenticationService) {
+    this.updateView();
+  }
+  updateOnAppStart(){
+    // update local from web
+  }
+  updateView(){
+    // update view obserabel
+    this.storage.get(localstoragesettings.TOKEN_KEY).then(
+      res => {
+        let data = {
+          "auth_token": res,
+        };
+        this.getwebProfile(data, res =>{
+          this.meSubject.next(res);
+        })
       },
-      error => {
-        reject(error);
-      });
-    });
+      error =>{
+        console.log(error);
+      }
+    );
+
+    this.storage.get(localstoragesettings.TOKEN_KEY).then(
+      res => {
+        let data = {
+          "auth_token": res,
+        };
+        this.getwebAvatar(data, res =>{
+          console.log("from web pic",res);
+          this.picSubject.next("data:image/jpg;base64,"+res);
+        })
+      },
+      error =>{
+        console.log(error);
+      }
+    );
+     
+
 
   }
+  // getLocalProfile(): Promise<any>{
+  //   return new Promise((resolve,reject) => {
+  //     this.storage.get("me").then((res) => {
+  //       if(res == null || res == undefined){
+  //         this.storage.get(localstoragesettings.TOKEN_KEY).then(
+  //           res => {
+  //             let data = {
+  //               "auth_token": res,
+  //             };
+  //             this.getwebProfile(data, res =>{
+  //               resolve(res);
+  //             })
+  //           },
+  //           error =>{
+  //             reject(error);
+  //           }
+  //         );
+  //       }else{
+  //         resolve(res);
+  //       }
+  //     },
+  //     error => {
+  //       reject(error);
+  //     });
+  //   });
+
+  // }
   getwebProfile(data,res?){
     this.getProfile(data).subscribe(
       (val) =>{
@@ -66,34 +108,35 @@ export class ProfileService {
   getProfile(data){
       return this.http.post(environment.apiUrl+apisettings.getprofile, data).pipe(map(res => res));
   }
-  getLocalAvatar(){
-    return new Promise((resolve,reject) => {
-      this.storage.get("myAvatar").then((res) => {
-        if(res == null || res == undefined){
-          this.storage.get(environment.TOKEN_KEY).then(
-            res => {
-              let data = {
-                "auth_token": res,
-              };
-              this.getwebAvatar(data, res =>{
-                console.log("from web pic",res);
-                resolve(res);
-              })
-            },
-            error =>{
-              reject(error);
-            }
-          );
-        }else{
-          // console.log("from local pic",res);
-          resolve(res);
-        }
-      },
-      error => {
-        reject(error);
-      });
-    });
-  }
+  // getLocalAvatar(){
+  //   return new Promise((resolve,reject) => {
+  //     this.storage.get("myAvatar").then((res) => {
+  //       if(res == null || res == undefined){
+  //         this.storage.get(localstoragesettings.TOKEN_KEY).then(
+  //           res => {
+  //             let data = {
+  //               "auth_token": res,
+  //             };
+  //             this.getwebAvatar(data, res =>{
+  //               console.log("from web pic",res);
+  //               this.picSubject.next("data:image/jpg;base64,"+res);
+  //               resolve("data:image/jpg;base64,"+res);
+  //             })
+  //           },
+  //           error =>{
+  //             reject(error);
+  //           }
+  //         );
+  //       }else{
+  //         // console.log("from local pic",res);
+  //         this.picSubject.next("data:image/jpg;base64,"+res);
+  //         resolve("data:image/jpg;base64,"+res);
+  //       }
+  //     },
+  //     error => {
+  //       reject(error);
+  //     });
+  // }
   getwebAvatar(data,res?){
     this.getAvatar(data).subscribe(
       (val) =>{
@@ -133,6 +176,7 @@ export class ProfileService {
               "auth_token": res,
             };
             this.getwebProfile(pdata);
+            this.updateView();
           },
           (err) => {
             reject(err);
@@ -158,7 +202,9 @@ export class ProfileService {
             let pdata = {
               "auth_token": res,
             };
-            this.getwebAvatar(pdata);
+            this.getwebAvatar(pdata, (res) =>{
+              this.picSubject.next("data:image/jpg;base64,"+res);
+            });
           },
           (err) => {
             reject(err);

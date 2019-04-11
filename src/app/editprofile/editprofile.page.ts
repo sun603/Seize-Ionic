@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { ProfileService } from '../services/profile.service';
 import { ProfileModel } from '../models/profile.model';
 import { MajorModel } from '../models/major.model';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-editprofile',
   templateUrl: './editprofile.page.html',
@@ -13,9 +14,10 @@ import { MajorModel } from '../models/major.model';
 })
 export class EditprofilePage implements OnInit {
   me:any;
-  profileImgUrl:any;
   majors;
   majorModel;
+  subscriptions = new Subscription();
+
   constructor(public alertController: AlertController,public router: Router,public prof: ProfileService, public auth:AuthenticationService, private _location: Location) { 
     this.me = new ProfileModel();
     this.majorModel = new MajorModel();
@@ -24,25 +26,36 @@ export class EditprofilePage implements OnInit {
   ngOnInit() {
     // let majorModel = new MajorModel();
     this.majors = this.majorModel.getmajors();
-    this.prof.getLocalProfile().then(data => {
-      console.log("tab3: data",data);
-      if(data){
-        this.me.name = data.name;
-        this.me.gender = data.gender;
-        this.me.major = data.major;
-        this.me.university = data.university;
-        this.me.class = data.class;
-      }else{
-        // console.log("tab3 data about name do not exist???");
-        this.prof.getLocalProfile().then(data => {
-          this.me.name = data.name;
-          this.me.gender = data.gender;
-          this.me.major = data.major;
-          this.me.university = data.university;
-          this.me.class = data.class;
-        });
+    // this.prof.getLocalProfile().then(data => {
+    //   console.log("tab3: data",data);
+    //   if(data){
+    //     this.me.name = data.name;
+    //     this.me.gender = data.gender;
+    //     this.me.major = data.major;
+    //     this.me.university = data.university;
+    //     this.me.class = data.class;
+    //   }else{
+    //     // console.log("tab3 data about name do not exist???");
+    //     this.prof.getLocalProfile().then(data => {
+    //       this.me.name = data.name;
+    //       this.me.gender = data.gender;
+    //       this.me.major = data.major;
+    //       this.me.university = data.university;
+    //       this.me.class = data.class;
+    //     });
+    //   }
+    // });
+    console.log("init editprofile");
+    this.subscriptions.add(this.prof.meSubject.subscribe(
+      (val) => {
+        console.log("tab3 me",val);
+        this.me = val;
       }
-    });
+    ));
+  }
+  ngOnDestroy(){
+    console.log("destroy editprofile");
+    this.subscriptions.unsubscribe();
   }
   // ngAfterContentInit(){}
   update(){

@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { ProfileService } from '../services/profile.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { FileTransferObject } from '@ionic-native/file-transfer';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-editpic',
   templateUrl: './editpic.page.html',
@@ -16,11 +17,23 @@ export class EditpicPage implements OnInit {
   constructor(public alertController: AlertController, public router: Router,public prof: ProfileService, public auth:AuthenticationService, private _location: Location, public camera: Camera) { }
   profileImgUrl:any;
   newpic:any;
+  subscriptions = new Subscription();
+  
   ngOnInit() {
-    this.prof.getLocalAvatar().then((data) =>{
-      // console.log("tab3: avatar",data);
-      this.profileImgUrl = "data:image/jpg;base64,"+data;
-    });
+    // this.prof.getLocalAvatar().then((data) =>{
+    //   // console.log("tab3: avatar",data);
+    //   this.profileImgUrl = "data:image/jpg;base64,"+data;
+    // });
+    this.subscriptions.add(this.prof.picSubject.subscribe(
+      (val) => {
+        console.log("tab3 pic",val);
+        this.profileImgUrl = val;
+      }
+    ));
+  }
+  ngOnDestroy(){
+    console.log("destroy editpic");
+    this.subscriptions.unsubscribe();
   }
   changpic(event: { target: { files: any; }; }){
     console.log(event.target.files);

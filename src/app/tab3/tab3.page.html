@@ -17,7 +17,7 @@
   <ion-list>
     <ion-item (click)="profile()" lines="none">
       <ion-thumbnail slot="start">
-        <img *ngIf="prof.profileImgUrl" [src]="profileImgUrl" id="profile-image">
+        <img *ngIf="profileImgUrl" [src]="profileImgUrl" id="profile-image">
       </ion-thumbnail>
       <ion-label>{{me.name}}</ion-label>
     </ion-item>
@@ -32,6 +32,8 @@
   <ion-button block (click)="logOut()">
       logout
   </ion-button>
+  <a routerLink="/chat" routerLinkActive="active">Chat</a>
+
           <!-- </div>
         </div> -->
 </ion-content>
