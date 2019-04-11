@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl:"http://ec2-3-17-151-69.us-east-2.compute.amazonaws.com:3000",
+  // apiUrl:"http://ec2-3-17-151-69.us-east-2.compute.amazonaws.com:3000",
+  apiUrl:"https://seize-test.herokuapp.com",
   firebase : {
     apiKey: "AIzaSyBLOOFB7s4NYHZJrgdY3QIMCjpeTl71igU",
     authDomain: "clean-healer-232121.firebaseapp.com",
