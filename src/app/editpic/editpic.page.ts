@@ -50,6 +50,10 @@ export class EditpicPage implements OnInit {
     myReader.readAsDataURL(input);
   }
   updatepic(){
+    if(this.newpic ==  null || this.newpic == undefined){
+      console.log("no pic SOTP!");
+      return;
+    }
     let data = {
       "pic":this.newpic,
     };
