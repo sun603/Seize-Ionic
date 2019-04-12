@@ -52,7 +52,7 @@ router.post('/', function(req, res, next){
                     auth_con.destroy();
                     res.json({
                         "status": 200,
-                        "uid": uid
+                        "index": uid
                     })
                 }
             })
