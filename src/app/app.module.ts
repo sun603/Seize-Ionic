@@ -19,9 +19,13 @@ import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { FeedComponent } from './components/feed/feed.component';
+import { MessageComponent } from './components/message/message.component';
+import { FriendlistComponent } from './components/friendlist/friendlist.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, FeedComponent, MessageComponent, FriendlistComponent],
   entryComponents: [],
   imports: [
     BrowserModule, 
@@ -30,9 +34,10 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     IonicStorageModule.forRoot(),
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
-    AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
-    AngularFireStorageModule // imports firebase/storage only needed for storage features
+    // AngularFirestoreModule, // imports firebase/firestore, only needed for database features
+    // AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
+    // AngularFireStorageModule, // imports firebase/storage only needed for storage features
+    AngularFireDatabaseModule,
   ],
   providers: [
     StatusBar,
