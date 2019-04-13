@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FriendlistService } from 'src/app/services/friendlist.service';
 
 @Component({
   selector: 'app-friendlist',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FriendlistComponent implements OnInit {
 
-  constructor() { }
+  friendList:any;
+
+  constructor(private firends: FriendlistService) { }
 
   ngOnInit() {
+    this.friendList = this.firends.fireFriends().valueChanges().subscribe( (val) =>{
+      console.log(val);
+    });
   }
+
 
 }

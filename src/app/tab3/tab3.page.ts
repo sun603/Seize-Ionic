@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ProfileService } from '../services/profile.service';
 import { ProfileModel } from '../models/profile.model';
 import { config, Subscription } from 'rxjs';
+import { FriendlistService } from '../services/friendlist.service';
 
 @Component({
   selector: 'app-tab3',
@@ -15,8 +16,8 @@ export class Tab3Page {
   me:any;
   profileImgUrl:any;
   subscriptions = new Subscription();
-  
-  constructor(private router: Router,private prof: ProfileService, private auth:AuthenticationService){
+  firendlist:any;
+  constructor(private router: Router,private prof: ProfileService, private auth:AuthenticationService, private firends: FriendlistService){
     this.me = new ProfileModel();
   }
   ngOnInit() {
@@ -28,7 +29,7 @@ export class Tab3Page {
     console.log("init tab3");
     this.subscriptions.add(this.prof.picSubject.subscribe(
       (val) => {
-        console.log("tab3 pic",val);
+        // console.log("tab3 pic",val);
         this.profileImgUrl = val;
       }
     ));
@@ -38,7 +39,12 @@ export class Tab3Page {
         this.me = val;
       }
     ));
-    
+    // this.subscriptions.add(this.firends.fireFriends().subscribe(
+    //   (val) =>{
+    //     console.log
+    //   }
+    // ))
+    console.log(this.firends.fireFriends());
   }
 
   ngOnDestroy(){

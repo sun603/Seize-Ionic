@@ -20,12 +20,10 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { FeedComponent } from './components/feed/feed.component';
-import { MessageComponent } from './components/message/message.component';
-import { FriendlistComponent } from './components/friendlist/friendlist.component';
+import { ComponentsModule } from './components/components.module';
 
 @NgModule({
-  declarations: [AppComponent, FeedComponent, MessageComponent, FriendlistComponent],
+  declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule, 
@@ -38,6 +36,7 @@ import { FriendlistComponent } from './components/friendlist/friendlist.componen
     // AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
     // AngularFireStorageModule, // imports firebase/storage only needed for storage features
     AngularFireDatabaseModule,
+    ComponentsModule,
   ],
   providers: [
     StatusBar,
