@@ -51,6 +51,7 @@ export class LoginPage implements OnInit {
                   "auth_token": val["auth"],
                 };
                 this.profile.getwebProfile(data);
+                this.profile.updateView();
                 this.auth.authenticationState.next(true);
               });
             }else if (val["status"]== 404){
