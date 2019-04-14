@@ -98,7 +98,7 @@ router.post('/', function(req, res, next){
                                                     "pic": pic_stream
                                                 };
                                                 final_result.push(temp_data);
-                                                console.log("result pushed");
+                                                //console.log("result pushed");
                                             })
                                         }
                                     })
@@ -118,7 +118,7 @@ router.post('/', function(req, res, next){
         // callback();
         // console.log('after callback');
         await f1();
-        console.log("final result: ", final_result);
+        //console.log("final result: ", final_result);
         let return_data = {
             "status": 200,
             "info": final_result
