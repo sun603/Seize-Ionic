@@ -118,13 +118,19 @@ router.post('/', function(req, res, next){
         // console.log('before callback');
         // callback();
         // console.log('after callback');
-        await f1();
-        //console.log("final result: ", final_result);
-        let return_data = {
-            "status": 200,
-            "info": final_result
+
+        try {
+            await f1();
+            //console.log("final result: ", final_result);
+            let return_data = {
+                "status": 200,
+                "info": final_result
+            }
+            res.json(return_data);
         }
-        res.json(return_data);
+        catch(e){
+            error(e);
+        }
     }
 
     f2();
