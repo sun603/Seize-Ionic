@@ -15,7 +15,7 @@ const unknown = "/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABkAAD
 
 
 router.post('/', function(req, res, next){
-    let uid_string = req.body.uid + ""; // array, 长字符串
+    let uid_string = req.body.index + ""; // array, 长字符串
     let uid_array = uid_string.split(",");
 
     let final_result = [];
