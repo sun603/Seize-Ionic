@@ -39,12 +39,6 @@ export class Tab3Page {
         this.me = val;
       }
     ));
-    // this.subscriptions.add(this.firends.fireFriends().subscribe(
-    //   (val) =>{
-    //     console.log
-    //   }
-    // ))
-    console.log(this.firends.fireFriends());
   }
 
   ngOnDestroy(){

@@ -13,9 +13,27 @@ export class FriendlistComponent implements OnInit {
   constructor(private firends: FriendlistService) { }
 
   ngOnInit() {
-    this.friendList = this.firends.fireFriends().valueChanges().subscribe( (val) =>{
-      console.log(val);
-    });
+    // this.friendList = this.firends.fireFriends().subscribe( (val) =>{
+    //   console.log(val);
+    //   this.friendList = val;
+    // });
+    // this.firends.getList().then(
+    //   (firendlist) =>{
+    //     console.log(firendlist);
+    //     this.friendList = firendlist;
+    //   }
+    // ).catch( 
+    //   (err) =>{
+    //     this.firends.getList().then(
+    //       (firendlist) =>{
+    //         console.log(firendlist);
+    //       },
+    //       (err) =>{
+    //         console.log(err);
+    //       }
+    //     )},
+    // );
+    this.friendList = this.firends.getList();
   }
 
 

@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+
 import { FeedComponent } from './feed/feed.component';
 import { MessageComponent } from './message/message.component';
 import { FriendlistComponent } from './friendlist/friendlist.component';
@@ -11,7 +13,8 @@ import { FriendlistComponent } from './friendlist/friendlist.component';
     FriendlistComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    IonicModule
   ],
   exports: [
     FeedComponent,
