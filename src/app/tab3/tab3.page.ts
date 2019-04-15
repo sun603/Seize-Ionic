@@ -6,6 +6,8 @@ import { ProfileService } from '../services/profile.service';
 import { ProfileModel } from '../models/profile.model';
 import { config, Subscription } from 'rxjs';
 import { FriendlistService } from '../services/friendlist.service';
+import { PopoverController } from '@ionic/angular';
+import { PopoverComponent } from '../components/popover/popover.component';
 
 @Component({
   selector: 'app-tab3',
@@ -17,7 +19,7 @@ export class Tab3Page {
   profileImgUrl:any;
   subscriptions = new Subscription();
   firendlist:any;
-  constructor(private router: Router,private prof: ProfileService, private auth:AuthenticationService, private firends: FriendlistService){
+  constructor(private router: Router,private prof: ProfileService, private auth:AuthenticationService, private firends: FriendlistService, private popoverController:PopoverController){
     this.me = new ProfileModel();
   }
   ngOnInit() {
@@ -49,9 +51,6 @@ export class Tab3Page {
   updatename(data){
     this.me.name = data.name;
   }
-  logOut(){
-    this.auth.logout();
-  }
 
   editprofile(){
     this.router.navigate(['/editprofile']);
@@ -59,5 +58,15 @@ export class Tab3Page {
 
   profile(){
     this.router.navigate(['/profile']);
+  }
+
+  async presentPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: PopoverComponent,
+      event: ev,
+      animated: true,
+      translucent: true
+    });
+    return await popover.present();
   }
 }

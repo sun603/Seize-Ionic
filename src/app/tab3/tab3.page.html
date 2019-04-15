@@ -3,6 +3,12 @@
     <ion-title>
       Contact
     </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button color="danger" (click)="presentPopover()">
+      <!-- <ion-button color="danger" (click)="presentPopover($event)"> -->
+        Settings
+      </ion-button>
+  </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -29,10 +35,7 @@
   <!-- <ion-button block (click)="editprofile()">
     edit profile
   </ion-button> -->
-  <ion-button block (click)="logOut()">
-      logout
-  </ion-button>
-  <a routerLink="/chat" routerLinkActive="active">Chat</a>
+  <!-- <a routerLink="/chat" routerLinkActive="active">Chat</a> -->
 
           <!-- </div>
         </div> -->
