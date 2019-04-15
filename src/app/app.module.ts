@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
 import { IonicStorageModule } from '@ionic/storage';
 
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+// import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
@@ -21,6 +21,9 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { ComponentsModule } from './components/components.module';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { Crop } from '@ionic-native/crop/ngx';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,7 +45,12 @@ import { ComponentsModule } from './components/components.module';
     StatusBar,
     SplashScreen,
     Camera,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    ImagePicker,
+    Crop,
+      FileTransfer,
+      // FileUploadOptions,
+      FileTransferObject
   ],
   bootstrap: [AppComponent]
 })
