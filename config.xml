@@ -88,5 +88,4 @@
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <engine name="ios" spec="4.5.5" />
     <engine name="android" spec="7.1.4" />
-    <allow-navigation href="http://10.186.2.14:8100" sessionid="cddb20a0" />
 </widget>

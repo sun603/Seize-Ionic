@@ -11,6 +11,8 @@ import { Crop } from '@ionic-native/crop/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
+declare let window: any;
+
 @Component({
   selector: 'app-editpic',
   templateUrl: './editpic.page.html',
@@ -41,24 +43,35 @@ export class EditpicPage implements OnInit {
         this.crop.crop(results[i], { quality: 100 })
             .then(
                 newImage => {
-                  console.log('new image path is: ' + newImage);
-                  const fileTransfer: FileTransferObject = this.transfer.create();
-                  const uploadOpts: FileUploadOptions = {
-                    fileKey: 'file',
-                    fileName: newImage.substr(newImage.lastIndexOf('/') + 1)
-                  };
+                  console.log('new image path is: ' , (typeof newImage), newImage);
+                  this.newpic = readFile(newImage, function(err) {
+                    console.log('newpic = ', this.newpic);
+                    this.updatepic();
+                  });
 
-                  // fileTransfer.upload(newImage, 'http://192.168.0.7:3000/api/upload', uploadOpts)
-                  //     .then((data) => {
-                  //       console.log(data);
-                  //       this.respData = JSON.parse(data.response);
-                  //       console.log(this.respData);
-                  //       this.fileUrl = this.respData.fileUrl;
-                  //     }, (err) => {
-                  //       console.log(err);
-                  //     });
+                  function readFile( pathToFile , callback) {
+                    console.log(pathToFile);
+                    pathToFile = pathToFile.substring(0, pathToFile.indexOf('?'));
+                    console.log(pathToFile);
+                    window.resolveLocalFileSystemURL( pathToFile , function (fileEntry) {
+                      fileEntry.file(function (file) {
+                        console.log('file: ', file);
+                        const reader: FileReader = new FileReader();
+                        reader.onloadend = (e) => {
+                          console.log(e);
+                          let tmp: string = reader.result as string;
+                          tmp = tmp.replace(/.*\,/,"");
+                          console.log('tmp: ', tmp);
+                          return tmp;
+                          // return event.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                      });
+                    });
+                  }
+
                 },
-                error => console.error('Error cropping image', error)
+                error => {console.log(error); console.error('Error cropping image', error); }
             );
       }
     }, (err) => { console.log(err); });
@@ -83,6 +96,7 @@ export class EditpicPage implements OnInit {
   changpic(event: { target: { files: any; }; }){
     console.log(event.target.files);
     let newpicfile = event.target.files[0];
+    console.log("type of newpic: ", (typeof newpicfile), newpicfile);
     this.reading(newpicfile);
   }
   reading(input){
