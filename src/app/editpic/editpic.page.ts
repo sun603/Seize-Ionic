@@ -5,8 +5,12 @@ import { AuthenticationService } from '../services/authentication.service'
 import { Location } from '@angular/common';
 import { ProfileService } from '../services/profile.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { FileTransferObject } from '@ionic-native/file-transfer';
 import { Subscription } from 'rxjs';
+
+import { Crop } from '@ionic-native/crop/ngx';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+
 @Component({
   selector: 'app-editpic',
   templateUrl: './editpic.page.html',
@@ -14,11 +18,52 @@ import { Subscription } from 'rxjs';
 })
 export class EditpicPage implements OnInit {
 
-  constructor(public alertController: AlertController, public router: Router,public prof: ProfileService, public auth:AuthenticationService, private _location: Location, public camera: Camera) { }
-  profileImgUrl:any;
-  newpic:any;
+  constructor(public alertController: AlertController,
+              public router: Router,
+              public prof: ProfileService,
+              public auth: AuthenticationService,
+              private _location: Location,
+              public camera: Camera,
+              private imagePicker: ImagePicker,
+              private crop: Crop,
+              private transfer: FileTransfer
+  ) { }
+  profileImgUrl: any;
+  newpic: any;
   subscriptions = new Subscription();
-  
+  fileUrl: any = null;
+  respData: any;
+
+  cropUpload() {
+    this.imagePicker.getPictures({ maximumImagesCount: 1, outputType: 0 }).then((results) => {
+      for (let i = 0; i < results.length; i++) {
+        console.log('Image URI: ' + results[i]);
+        this.crop.crop(results[i], { quality: 100 })
+            .then(
+                newImage => {
+                  console.log('new image path is: ' + newImage);
+                  const fileTransfer: FileTransferObject = this.transfer.create();
+                  const uploadOpts: FileUploadOptions = {
+                    fileKey: 'file',
+                    fileName: newImage.substr(newImage.lastIndexOf('/') + 1)
+                  };
+
+                  // fileTransfer.upload(newImage, 'http://192.168.0.7:3000/api/upload', uploadOpts)
+                  //     .then((data) => {
+                  //       console.log(data);
+                  //       this.respData = JSON.parse(data.response);
+                  //       console.log(this.respData);
+                  //       this.fileUrl = this.respData.fileUrl;
+                  //     }, (err) => {
+                  //       console.log(err);
+                  //     });
+                },
+                error => console.error('Error cropping image', error)
+            );
+      }
+    }, (err) => { console.log(err); });
+  }
+
   ngOnInit() {
     // this.prof.getLocalAvatar().then((data) =>{
     //   // console.log("tab3: avatar",data);
@@ -26,7 +71,7 @@ export class EditpicPage implements OnInit {
     // });
     this.subscriptions.add(this.prof.picSubject.subscribe(
       (val) => {
-        console.log("tab3 pic",val);
+        console.log('tab3 pic', val);
         this.profileImgUrl = val;
       }
     ));
