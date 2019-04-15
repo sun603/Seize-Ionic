@@ -25,7 +25,7 @@
     "@ionic-native/crop": "^5.4.0",
     "@ionic-native/file": "^5.4.0",
     "@ionic-native/file-transfer": "^5.4.0",
-    "@ionic/angular": "^4.0.0",
+    "@ionic/angular": "^4.2.1-dev.201904102020.52e5a8d",
     "@ionic/pro": "2.0.4",
     "@ionic/storage": "^2.2.0",
     "cordova-android": "7.1.4",
