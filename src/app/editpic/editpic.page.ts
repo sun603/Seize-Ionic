@@ -44,7 +44,9 @@ export class EditpicPage implements OnInit {
             .then(
                 newImage => {
                   console.log('new image path is: ' , (typeof newImage), newImage);
-                  this.newpic = readFile(newImage, function(err) {
+                  readFile(newImage, function(pic) {
+                    console.log('pic = ', pic);
+                    this.newpic = pic;
                     console.log('newpic = ', this.newpic);
                     this.updatepic();
                   });
@@ -61,8 +63,8 @@ export class EditpicPage implements OnInit {
                           console.log(e);
                           let tmp: string = reader.result as string;
                           tmp = tmp.replace(/.*\,/,"");
-                          console.log('tmp: ', tmp);
-                          return tmp;
+                          // console.log('tmp: ', tmp);
+                          callback(tmp);
                           // return event.target.result;
                         };
                         reader.readAsDataURL(file);
