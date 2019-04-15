@@ -39,7 +39,7 @@ export class FriendlistComponent implements OnInit {
 
   openchat(firend:any){
     console.log(firend);
-    this.router.navigate(['/chat',2]);
+    this.router.navigate(['/chat',5259]);
   }
 
 

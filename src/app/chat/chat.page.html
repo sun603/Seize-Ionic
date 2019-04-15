@@ -1,22 +1,35 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>chat</ion-title>
+    <ion-buttons slot="start">
+        <ion-back-button defaultHref="./tabs/tab3"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-
+  <ion-item *ngFor="let mess of messsub | async">{{mess.message}}</ion-item>
 </ion-content>
 
 <ion-footer>
-  <ion-grid>
-    <ion-row>
-      <ion-col size="10">
-        <!-- <ion-input type="text" placeholder="Type a message" [(ngModel)]="data.message" name="message"></ion-input> -->
-      </ion-col>
-      <ion-col size="2" (click)="sendMessage()">
-        <ion-icon name="paper-plane"></ion-icon>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-footer>
+    <ion-toolbar>
+      <ion-grid>
+        <ion-row>
+          <ion-buttons slots="start">
+            <ion-button  (click)="sendPictrue()">
+                <ion-icon name="camera"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-input type="text" placeholder="" [(ngModel)]="inputmessage" ></ion-input>
+          <!-- <ion-input></ion-input> -->
+          <!-- <ion-textarea placeholder="Type to compose" lineHeight="22" spellcheck=true wrap="soft"></ion-textarea> -->
+          <!-- <ion-textarea></ion-textarea> -->
+          <ion-buttons slots="end">
+            <ion-button (click)="sendMessage()">
+              <ion-icon name="paper-plane"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+  </ion-footer>
