@@ -87,9 +87,6 @@
     <plugin name="cordova-plugin-file-transfer" spec="1.7.1" />
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <engine name="ios" spec="4.5.5" />
-<<<<<<< HEAD
+    <engine name="android" spec="8.0.0" />
     <allow-navigation href="http://10.186.2.14:8100" sessionid="cddb20a0" />
-=======
-    <engine name="android" spec="7.1.4" />
->>>>>>> 6e5a6e2e5b13935904ca2a52f97c353eafc845e7
 </widget>
