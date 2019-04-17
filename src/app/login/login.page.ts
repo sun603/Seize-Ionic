@@ -8,6 +8,7 @@ import { ProfileService } from '../services/profile.service';
 import { environment } from '../../environments/environment'
 import { localstoragesettings } from '../settings/localstorage.setting';
 import { FriendlistService } from '../services/friendlist.service';
+import { InitService } from '../services/init.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginPage implements OnInit {
   private email:any;
   private password:any;
 
-  constructor(private router: Router, private auth: AuthenticationService, public alertController: AlertController, private storage: Storage, public profile: ProfileService, private friendlistService:FriendlistService) {
+  constructor(private router: Router, private auth: AuthenticationService, public alertController: AlertController, private storage: Storage, private init:InitService) {
   }
 
   ngOnInit() {
@@ -51,10 +52,9 @@ export class LoginPage implements OnInit {
                 let data = {
                   "auth_token": val["auth"],
                 };
-                // this.profile.getwebProfile(data);
-                this.profile.updateView();
-                this.friendlistService.getWebFriendListIndex();
-                this.auth.authenticationState.next(true);
+                this.init.onlogin().then((val) => {
+                    this.auth.authenticationState.next(true);
+                })
               });
             }else if (val["status"]== 404){
               this.presentAlert("server in maintain, try again later");

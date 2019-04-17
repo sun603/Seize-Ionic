@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FriendlistService } from 'src/app/services/friendlist.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-friendlist',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 export class FriendlistComponent implements OnInit {
 
   friendList:any;
-
+  subscriptions = new Subscription();
   constructor(private firends: FriendlistService, private router:Router) { }
 
   ngOnInit() {
@@ -34,7 +35,14 @@ export class FriendlistComponent implements OnInit {
     //       }
     //     )},
     // );
-    this.friendList = this.firends.getList();
+    // this.friendList = this.firends.getList();
+    this.firends.getList();
+    this.subscriptions.add(this.firends.firendProfile.subscribe(
+      (val) =>{
+        console.log("firend view ",val);
+        this.friendList = val;
+      }
+    ));
   }
 
   openchat(firend:any){

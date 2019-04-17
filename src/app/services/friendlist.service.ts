@@ -3,23 +3,40 @@ import { HttpClient } from '@angular/common/http';
 import { AuthenticationService } from './authentication.service';
 import { environment } from 'src/environments/environment';
 import { apisettings } from '../settings/api.settings';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, take } from 'rxjs/operators';
 import { Storage } from '@ionic/storage';
-import { AngularFireDatabase, AngularFireList, } from '@angular/fire/database';
+import { AngularFireDatabase, AngularFireList, AngularFireAction, DatabaseSnapshot, } from '@angular/fire/database';
 import { FriendModel } from '../models/friend.model';
-import { from, Observable } from 'rxjs';
+import { from, Observable, BehaviorSubject } from 'rxjs';
 import { localstoragesettings } from '../settings/localstorage.setting';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FriendlistService {
-  constructor(public http: HttpClient, public storage: Storage, public auth: AuthenticationService, private db: AngularFireDatabase) {
+  firendProfile:BehaviorSubject<any> = new BehaviorSubject(null);
+  constructor(public http: HttpClient, public storage: Storage, public auth: AuthenticationService, private db: AngularFireDatabase) {}
+  onlogin(): Promise<any>{
+    return new Promise((resolve,reject) => {
+      this.getWebFriendListIndex().then((val)=>{
+        this.getwebFriendProfile().then( (val)=>{
+          this.getList();
+          resolve(null);
+        }).catch( (err) =>{
+          console.log(err);
+        this.auth.logout();
+        });
+      }).catch((err)=>{
+        console.log(err);
+        this.auth.logout();
+      });
+    });
   }
-  fireFriends(): any  {
+  fireFriends(): Observable<AngularFireAction<DatabaseSnapshot<{}>>[]>{
     //https://stackoverflow.com/questions/41585514/how-to-return-observable-after-some-promise-get-resolved-in-ionic-2-angular-2
     return from(this.getIndex()).pipe(mergeMap( 
       (index) => {
+        console.log(index);
         // let list:AngularFireList<FriendModel>;
         // let list: Observable<FriendModel[]>;
         // list = this.db.list('friend_list/' +index).valueChanges();
@@ -70,53 +87,61 @@ export class FriendlistService {
   //     });
   //   });
   // }
-  getwebFriendProfile(){
-    this.getWebFriendListIndex().then( (val) => {
-      this.fireFriends().subscribe((list) =>{
+  getwebFriendProfile(): Promise<any>{
+    return new Promise( (resolve,reject) => {
+      this.fireFriends().pipe(
+        take(1)
+      ).subscribe((list) =>{
         let data = {}
         data['index'] = [];
         for (let friend of list){
           data['index'].push(friend["key"]);
         }
-        console.log(data);
-        this.getFriendProfile(data).subscribe(
+        console.log("getwebFriendProfile",data);
+        this.getFriendProfile(data).pipe(
+          take(1)
+        ).subscribe(
           (data) =>{
-            console.log(data);
-            this.storage.set(localstoragesettings.firendprof,data["info"]);
+            console.log("getwebFriendProfile => getFriendProfile",data);
+            if(data['status'] == 200){
+              this.storage.set(localstoragesettings.firendprof,data["info"]).then(() =>{
+                resolve(null);
+              });
+            }else{
+              reject(null);
+            }
           });
-        });
-    });
-  }
-  getList(){
-    return new Promise((resolve,reject) => {
-      this.storage.get(localstoragesettings.firendprof).then(
-        (val) =>{
-          if(val== null || val== undefined){
-            console.log("no prof");
-            this.getwebFriendProfile();
-            reject(null);
-          }
-          resolve(val);
-        },
-        (err)=>{
-          this.getwebFriendProfile();
-          reject(err);
       });
     });
   }
-  getlocalFriendListIndex(): Promise<any> {
-    return new Promise((resolve,reject) => {
-      this.storage.get(localstoragesettings.index).then(
-        (val) =>{
-          if(val == null){
-
-          }else{
-
-          }
+  getList(){
+    this.storage.get(localstoragesettings.firendprof).then(
+      (val) =>{
+        if(val== null || val== undefined){
+          console.log("no profile in getlist");
+        }else{
+          console.log(val);
+          this.firendProfile.next(val);
         }
-      )}
+      },
+      (err)=>{
+        console.log(err);
+      }
     );
   }
+  // getlocalFriendListIndex(): Promise<any> {
+  //   return new Promise((resolve,reject) => {
+  //     this.storage.get(localstoragesettings.index).then(
+  //       (val) =>{
+  //         if(val == null){
+
+  //         }else{
+
+  //         }
+  //       }
+  //     )}
+  //   );
+  // }
   getWebFriendListIndex(): Promise<any>{
     return new Promise((resolve,reject) => {
       this.auth.getauth().then( res => {
