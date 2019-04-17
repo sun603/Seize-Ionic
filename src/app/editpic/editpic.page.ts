@@ -11,8 +11,6 @@ import { Crop } from '@ionic-native/crop/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
-declare let window: any;
-
 @Component({
   selector: 'app-editpic',
   templateUrl: './editpic.page.html',
@@ -43,6 +41,7 @@ export class EditpicPage implements OnInit {
         this.crop.crop(results[i], { quality: 100 })
             .then(
                 newImage => {
+
                   console.log('new image path is: ' , (typeof newImage), newImage);
                   readFile(newImage, function(pic) {
                     console.log('pic = ', pic);
@@ -74,8 +73,17 @@ export class EditpicPage implements OnInit {
                     });
                   }
 
+                  // fileTransfer.upload(newImage, 'http://192.168.0.7:3000/api/upload', uploadOpts)
+                  //     .then((data) => {
+                  //       console.log(data);
+                  //       this.respData = JSON.parse(data.response);
+                  //       console.log(this.respData);
+                  //       this.fileUrl = this.respData.fileUrl;
+                  //     }, (err) => {
+                  //       console.log(err);
+                  //     });
                 },
-                error => {console.log(error); console.error('Error cropping image', error); }
+                error => console.error('Error cropping image', error)
             );
       }
     }, (err) => { console.log(err); });
@@ -100,7 +108,6 @@ export class EditpicPage implements OnInit {
   changpic(event: { target: { files: any; }; }){
     console.log(event.target.files);
     let newpicfile = event.target.files[0];
-    console.log("type of newpic: ", (typeof newpicfile), newpicfile);
     this.reading(newpicfile);
   }
   reading(input){
