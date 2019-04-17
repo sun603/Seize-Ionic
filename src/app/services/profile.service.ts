@@ -47,7 +47,8 @@ export class ProfileService {
         };
         this.getwebAvatar(data, res =>{
           console.log("from web pic",res);
-          this.picSubject.next("data:image/jpg;base64,"+res);
+          // this.picSubject.next("data:image/jpg;base64,"+res);
+          this.picSubject.next(res);
         })
       },
       error =>{
@@ -203,7 +204,8 @@ export class ProfileService {
               "auth_token": res,
             };
             this.getwebAvatar(pdata, (res) =>{
-              this.picSubject.next("data:image/jpg;base64,"+res);
+              // this.picSubject.next("data:image/jpg;base64,"+res);
+              this.picSubject.next(res);
             });
           },
           (err) => {

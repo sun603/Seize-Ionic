@@ -62,7 +62,7 @@ export class EditpicPage implements OnInit {
                         reader.onloadend = (e) => {
                           console.log(e);
                           let tmp: string = reader.result as string;
-                          tmp = tmp.replace(/.*\,/,"");
+                          // tmp = tmp.replace(/.*\,/,"");
                           // console.log('tmp: ', tmp);
                           callback(tmp);
                           // return event.target.result;
@@ -105,7 +105,8 @@ export class EditpicPage implements OnInit {
   let myReader:FileReader = new FileReader();
     myReader.onloadend = (e) => {
       let tmp:string = myReader.result as string;
-      this.newpic = tmp.replace(/.*\,/,"");
+      // this.newpic = tmp.replace(/.*\,/,"");
+      this.newpic = tmp;
       console.log("base64 file" ,this.newpic);
     }
     myReader.readAsDataURL(input);
