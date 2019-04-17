@@ -27,7 +27,7 @@ var uid;
 
 function f2(){
     // clear expired posts
-    let time_stamp = Date.now() - 1000*30;
+    let time_stamp = Date.now() - 1000*60;
     console.log("checked time: ", time_stamp);
     let checking_sql = "DELETE FROM matching_pool WHERE time_posted < " + time_stamp;
 
