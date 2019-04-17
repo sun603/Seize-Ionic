@@ -51,6 +51,8 @@ export class EditpicPage implements OnInit {
                     this.updatepic();
                   });
 
+                  
+
                   function readFile( pathToFile , callback) {
                     console.log(pathToFile);
                     pathToFile = pathToFile.substring(0, pathToFile.indexOf('?'));
