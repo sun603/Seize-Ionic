@@ -19,17 +19,7 @@ export class AuthenticationService {
 
   authenticationState = new BehaviorSubject(false);
 
-  readonly httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      // 'Authorization': 'my-auth-token',
-      // 'Access-Control-Allow-Origin' : '*',
-    })
-  };
-  apiUrl = '';
-
   constructor(private http: HttpClient, private storage: Storage, private plt: Platform) {
-    this.apiUrl = environment.apiUrl;
     this.plt.ready().then(() => {
       this.checkToken();
     });
@@ -48,11 +38,11 @@ export class AuthenticationService {
   }
 
   login(data){
-    return this.http.post(this.apiUrl+apisettings.login, data).pipe(map(res => res));
+    return this.http.post(environment.apiUrl+apisettings.login, data).pipe(map(res => res));
   }
 
   signup(data){
-    return this.http.post(this.apiUrl+apisettings.signup, data).pipe(map(res => res));
+    return this.http.post(environment.apiUrl+apisettings.signup, data).pipe(map(res => res));
   }
 
   logout() {
@@ -65,7 +55,7 @@ export class AuthenticationService {
   }
 
   forget(data,api) {
-    return this.http.post(this.apiUrl+api, data).pipe(map(res => res));
+    return this.http.post(environment.apiUrl+api, data).pipe(map(res => res));
   }
 
   isAuthenticated() {
