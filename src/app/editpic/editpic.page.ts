@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { Crop } from '@ionic-native/crop/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { take } from 'rxjs/operators';
 
 declare let window: any;
 
@@ -43,34 +44,16 @@ export class EditpicPage implements OnInit {
         this.crop.crop(results[i], { quality: 100 })
             .then(
                 newImage => {
+                  
                   console.log('new image path is: ' , (typeof newImage), newImage);
-                  readFile(newImage, function(pic) {
+                  this.readFile(newImage).then(function(pic) {
                     console.log('pic = ', pic);
                     this.newpic = pic;
                     console.log('newpic = ', this.newpic);
                     this.updatepic();
                   });
 
-                  function readFile( pathToFile , callback) {
-                    console.log(pathToFile);
-                    pathToFile = pathToFile.substring(0, pathToFile.indexOf('?'));
-                    console.log(pathToFile);
-                    window.resolveLocalFileSystemURL( pathToFile , function (fileEntry) {
-                      fileEntry.file(function (file) {
-                        console.log('file: ', file);
-                        const reader: FileReader = new FileReader();
-                        reader.onloadend = (e) => {
-                          console.log(e);
-                          let tmp: string = reader.result as string;
-                          // tmp = tmp.replace(/.*\,/,"");
-                          // console.log('tmp: ', tmp);
-                          callback(tmp);
-                          // return event.target.result;
-                        };
-                        reader.readAsDataURL(file);
-                      });
-                    });
-                  }
+     
 
                 },
                 error => {console.log(error); console.error('Error cropping image', error); }
@@ -78,13 +61,35 @@ export class EditpicPage implements OnInit {
       }
     }, (err) => { console.log(err); });
   }
+  readFile( pathToFile): Promise<any> {
+    return new Promise((resolve,reject) => {
+      console.log(pathToFile);
+      pathToFile = pathToFile.substring(0, pathToFile.indexOf('?'));
+      console.log(pathToFile);
+      window.resolveLocalFileSystemURL( pathToFile , function (fileEntry) {
+        fileEntry.file(function (file) {
+          console.log('file: ', file);
+          const reader: FileReader = new FileReader();
+          reader.onloadend = (e) => {
+            console.log(e);
+            let tmp: string = reader.result as string;
+            // tmp = tmp.replace(/.*\,/,"");
+            // console.log('tmp: ', tmp);
+            resolve(tmp);
+            // return event.target.result;
+          };
+          reader.readAsDataURL(file);
+        });
+      });
+    });
+  }
 
   ngOnInit() {
     // this.prof.getLocalAvatar().then((data) =>{
     //   // console.log("tab3: avatar",data);
     //   this.profileImgUrl = "data:image/jpg;base64,"+data;
     // });
-    this.subscriptions.add(this.prof.picSubject.subscribe(
+    this.subscriptions.add(this.prof.picSubject.pipe(take(1)).subscribe(
       (val) => {
         console.log('tab3 pic', val);
         this.profileImgUrl = val;

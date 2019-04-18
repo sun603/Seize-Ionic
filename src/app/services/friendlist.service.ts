@@ -26,11 +26,13 @@ export class FriendlistService {
           resolve(null);
         }).catch( (err) =>{
           console.log(err);
-        this.auth.logout();
+          this.auth.logout();
+          resolve(err);
         });
       }).catch((err)=>{
         console.log(err);
-        this.auth.logout();
+        resolve(err);
+        // this.auth.logout();
       });
     });
   }
@@ -133,6 +135,9 @@ export class FriendlistService {
       this.fireFriends().pipe(
         take(1)
       ).subscribe((list) =>{
+        if(list == null){
+          reject(null);
+        }
         let data = {}
         data['index'] = [];
         for (let friend of list){
