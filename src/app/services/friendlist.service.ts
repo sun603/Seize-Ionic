@@ -184,8 +184,19 @@ export class FriendlistService {
         return this.http.post(environment.apiUrl+apisettings.friendprofile, data).pipe(map(res => res));
       }));
   }
+  // getIndex(): Promise<any>{
+  //   return new Promise((resolve,reject) => {
+  //     this.storage.get("index").then(
+  //       (val) =>{
+  //         resolve(val);
+  //       },
+  //       (err) =>{
+  //         reject(err);
+  //       }
+  //     );
+  //   });
+  // }
   getIndex(): Promise<any>{
     return this.storage.get("index");
   }
-
 }

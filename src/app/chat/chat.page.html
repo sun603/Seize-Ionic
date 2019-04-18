@@ -8,7 +8,27 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-item *ngFor="let mess of messsub | async">{{mess.message}}</ion-item>
+  <!-- <ion-item *ngFor="let msg of messsub | async" ng-class="(msg.id == myid)? 'myMessage':'otherMessage'">{{msg.message}}</ion-item> -->
+  <div *ngFor="let msg of messsub | async">
+    <div class="messageContainer"
+      [ngClass]="{'isOwnMessageContainer':(msg.id == myid)}">
+      <div class="messageData"
+          [ngClass]="{'isOwnMessageData':(msg.id == myid)}">
+          <!-- <span class="sender"
+              [ngClass]="{'isOwnSender':(mess.id == myid)}">
+              {{ userName }}
+          </span> -->
+          <span class="timestamp" 
+              [ngClass] = "{'isOwnTimestamp':(msg.id == myid)}">
+              {{ msg.timestamp | date:'medium' }}
+          </span>
+      </div>
+      <div class="messageContent"
+          [ngClass]="{'isOwnMessageContent':(msg.id == myid)}">
+          {{msg.message}}
+      </div>
+    </div>
+  </div>
 </ion-content>
 
 <ion-footer>
