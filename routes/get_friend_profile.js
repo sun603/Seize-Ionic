@@ -18,7 +18,7 @@ router.post('/', function(req, res, next){
     let uid_string = req.body.index + ""; // array, 长字符串
     let uid_array = uid_string.split(",");
 
-    let final_result = [];
+    let final_result = {};
 
     function f1() {
         return new Promise(function (resolve) {
@@ -98,7 +98,8 @@ router.post('/', function(req, res, next){
                                                     "name": name,
                                                     "pic": pic_stream
                                                 };
-                                                final_result.push(temp_data);
+                                                // final_result.push(temp_data);
+                                                final_result[temp_data.index.toString()] = temp_data;
                                                 console.log("result pushed: ", uid);
                                             })
                                         }
