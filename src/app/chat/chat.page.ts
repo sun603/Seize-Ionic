@@ -43,4 +43,7 @@ export class ChatPage implements OnInit {
       }
     }
   }
+  sendPictrue(){
+    this.chatService.takePicture(this.myid,this.roomid);
+  }
 }
