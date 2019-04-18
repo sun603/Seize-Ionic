@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import { AuthenticationService } from './authentication.service';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { FriendlistService } from './friendlist.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ import { AlertController } from '@ionic/angular';
 export class MatchService {
   waitflag:boolean;
   timerId:any;
-  constructor(public http: HttpClient,public auth: AuthenticationService, public router: Router, public alertController: AlertController) { 
+  constructor(public http: HttpClient,public auth: AuthenticationService, public router: Router, private friendlist:FriendlistService, private alertController:AlertController) { 
     this.waitflag = false;
   }
 
@@ -53,6 +54,9 @@ export class MatchService {
       this.httpfind(data).subscribe(
         (val) =>{
           if(val["status"]== 200){
+            //mactch TODO
+            console.log(val);
+            this.matched(val['uid']);
             resolve(val);
           }else if(val["status"]== 201){
             console.log("Logout at find for 201",val);
@@ -135,9 +139,11 @@ export class MatchService {
           this.httpcheck(data).subscribe(res =>{
             if(res["status"] && res["status"] == 200){
               console.log("match",res);
-              this.presentAlert("match with "+res["name"]);
-              this.router.navigate(['/tabs']);
+              // this.presentAlert("match with "+res["name"]);
+              // this.router.navigate(['/tabs']);
               clearInterval(this.timerId);
+              // TODO match 
+              this.matched(res['uid']);
             }else if(res["status"] && res["status"] == 201){
               console.log("check 201",res);
               this.auth.logout();
@@ -181,6 +187,22 @@ export class MatchService {
   // }
   httpcheck(data){
     return this.http.post(environment.apiUrl+apisettings.check, data).pipe(map(res => res));
+  }
+  matched(id){
+    this.friendlist.isinlist(id).then( (val) =>{
+      console.log("matched",val);
+      if(val){
+        this.friendlist.firendtoroom(id).then((rid) =>{
+          this.router.navigate(['/chat',rid]);
+        });
+      }else{
+        this.friendlist.onMactch().then(()=>{
+          this.friendlist.firendtoroom(id).then((rid) =>{
+            this.router.navigate(['/chat',rid]);
+          });
+        })
+      }
+    });
   }
 
   async presentAlert(msg) {

@@ -9,6 +9,8 @@ import { AngularFireDatabase, AngularFireList, AngularFireAction, DatabaseSnapsh
 import { FriendModel } from '../models/friend.model';
 import { from, Observable, BehaviorSubject } from 'rxjs';
 import { localstoragesettings } from '../settings/localstorage.setting';
+import { flattenStyles } from '@angular/platform-browser/src/dom/dom_renderer';
+import { Platform } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +34,11 @@ export class FriendlistService {
       });
     });
   }
+  onMactch(): Promise<any>{
+    return new Promise((resolve,reject) => {
+      this.onlogin().then( ()=> {resolve()}).catch(() =>{reject()});
+    });
+  }
   firendtoroom(firend:number):Promise<any>{
     return new Promise((resolve,reject) => {
       let my:number;
@@ -49,6 +56,21 @@ export class FriendlistService {
           reject(err);
         }
       );
+    });
+  }
+  isinlist(id):Promise<boolean>{
+    return new Promise((resolve,reject) => {
+      this.firendProfile.pipe(take(1)).subscribe((list)=>{
+        console.log(id,list);
+        if(String(id) in list){
+          resolve(true);
+        }else{
+          resolve(false);
+        }
+      },
+      (err)=>{
+        resolve(false);
+      });
     });
   }
   fireFriends(): Observable<AngularFireAction<DatabaseSnapshot<{}>>[]>{
@@ -139,7 +161,7 @@ export class FriendlistService {
         if(val== null || val== undefined){
           console.log("no profile in getlist");
         }else{
-          console.log(val);
+          console.log("getlist",val);
           this.firendProfile.next(val);
         }
       },

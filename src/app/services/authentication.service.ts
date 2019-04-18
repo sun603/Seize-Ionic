@@ -11,6 +11,7 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment'
 import { apisettings } from '../settings/api.settings'
 import { localstoragesettings } from '../settings/localstorage.setting';
+import { InitService } from './init.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,21 +20,23 @@ export class AuthenticationService {
 
   authenticationState = new BehaviorSubject(false);
 
-  constructor(private http: HttpClient, private storage: Storage, private plt: Platform) {
-    this.plt.ready().then(() => {
-      this.checkToken();
-    });
+  constructor(private http: HttpClient, private storage: Storage) {
+    
   }
 
-  checkToken() {
-    this.storage.get(localstoragesettings.TOKEN_KEY).then(res => {
-      if(res){
-        console.log("checkToken: ",res);
-        this.authenticationState.next(true);
-      }
-    },
-    (reason) => {
-      console.log("checkToken: no checkToken",reason);
+  checkToken():Promise<any> {
+    return new Promise((resolve,reject) => {
+      this.storage.get(localstoragesettings.TOKEN_KEY).then(res => {
+        if(res){
+          console.log("checkToken: ",res);
+          this.authenticationState.next(true);
+        }
+        resolve();
+      },
+      (reason) => {
+        console.log("checkToken: no checkToken",reason);
+        reject();
+      });
     });
   }
 

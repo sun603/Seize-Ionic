@@ -11,6 +11,7 @@ import { ProfileModel } from '../models/profile.model';
 import { AuthenticationService } from './authentication.service';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { localstoragesettings } from '../settings/localstorage.setting';
+import { Platform } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +19,7 @@ import { localstoragesettings } from '../settings/localstorage.setting';
 export class ProfileService {
   picSubject:BehaviorSubject<string> = new BehaviorSubject(null);
   meSubject:BehaviorSubject<ProfileModel> = new BehaviorSubject(null);
-  constructor(public http: HttpClient, public storage: Storage, public auth: AuthenticationService) {
-    this.updateView();
-  }
+  constructor(public http: HttpClient, public storage: Storage, public auth: AuthenticationService, public plt:Platform ) { }
   updateOnAppStart(){
     // update local from web
   }
