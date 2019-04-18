@@ -140,7 +140,7 @@ export class MatchService {
             if(res["status"] && res["status"] == 200){
               console.log("match",res);
               // this.presentAlert("match with "+res["name"]);
-              // this.router.navigate(['/tabs']);
+              this.router.navigate(['/tabs']);
               clearInterval(this.timerId);
               // TODO match 
               this.matched(res['uid']);
