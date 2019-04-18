@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var uid;
+let add_friend = require('./add_friends.js');
 
 /*
 * TODO: Search in the matching_pool
@@ -25,7 +26,35 @@ var uid;
 *       }
 * */
 
+function f2(){
+    // clear expired posts
+    let time_stamp = Date.now() - 1000*60;
+    console.log("checked time: ", time_stamp);
+    let checking_sql = "DELETE FROM matching_pool WHERE time_posted < " + time_stamp;
+
+    let checking_con = mysql.createConnection({
+        host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+        user: "shao44",
+        password: "ShaoZH0923?",
+        database: "cs307_sp19_team31"
+    });
+
+    checking_con.connect(function(err){
+        checking_con.query(checking_sql, function(err, result){
+            // expired post deleted.
+            console.log("expired post checked.");
+        });
+    });
+}
+
+async function f1(){
+    await f2();
+    return;
+}
+
 router.post('/', function(req, res, next){
+    f1();
+
     let auth_code = req.body.auth_token;
     let seat_type = req.body.seat_type;
     let noise_level_low_search = req.body.noise_level1;
@@ -250,6 +279,7 @@ router.post('/', function(req, res, next){
                                                     profile_con.query(profile_sql, function (err, result) {
                                                         let name = result[0].name;
                                                         profile_con.destroy();
+                                                        add_friend(uid, poster_uid);
                                                         res.json({
                                                             "status": 200,
                                                             "uid": poster_uid,

@@ -77,7 +77,7 @@ router.post('/', function(req, res, next){
                                 var major = result[0].major;
                                 // uid, seat_type, noise_level
                                 select_con.destroy();
-                                let post_sql = "insert matching_pool (uid, school, class, major, seat_type, library, noise_level, pc, power)" +
+                                let post_sql = "insert matching_pool (uid, school, class, major, seat_type, library, noise_level, pc, power, time_posted)" +
                                     " values " +
                                     "(" + uid + ", " +
                                     "\"" + school + "\", " +
@@ -87,7 +87,8 @@ router.post('/', function(req, res, next){
                                     "\"" + library + "\", " +
                                     noise_level + ", " +
                                     pc + ", " +
-                                    power + ")";
+                                    power + ", " +
+                                    Date.now() + ")";
                                 let post_con = mysql.createConnection({
                                     host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
                                     user: "shao44",

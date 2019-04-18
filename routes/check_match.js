@@ -85,10 +85,24 @@ router.post('/', function(req, res, next){
                                     console.log("search_uid: ", search_uid);
                                     if (search_uid === null){
                                         search_con.destroy();
-                                        res.json({
-                                            "status": 202,
-                                            "error_message": "match not found"
+                                        // update timestamp
+                                        let t_stamp = Date.now();
+                                        let time_sql = "UPDATE matching_pool SET time_posted = " + t_stamp;
+                                        let time_con = mysql.createConnection({
+                                            host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+                                            user: "shao44",
+                                            password: "ShaoZH0923?",
+                                            database: "cs307_sp19_team31"
                                         });
+
+                                        time_con.connect(function(err){
+                                            time_con.query(time_sql, function(err, result){
+                                                res.json({
+                                                    "status": 202,
+                                                    "error_message": "match not found"
+                                                });
+                                            })
+                                        })
                                     }
                                     else {
                                         search_con.destroy();

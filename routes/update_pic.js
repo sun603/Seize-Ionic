@@ -12,8 +12,6 @@ var path = require('path');
 router.post('/', function(req, res, next){
     var auth_code = req.body.auth_token;    // user authentication token
     var uid;                                // user id
-    var pic_id;                             // picture id
-    var pic_dir = './profile_pic/';         // file path of the profile picture
     var pic_stream = req.body.pic;          // picture file stream
 
     var auth_sql = "SELECT * FROM user_auth WHERE auth_code = \"" + auth_code + "\"";
