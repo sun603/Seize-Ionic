@@ -76,7 +76,8 @@ it ('check for correct auth_token and search', function(done){
     let data = {
         "auth_token": token,
         "seat_type": "s1",
-        "noise_level": 4,
+        "noise_level1": 2,
+        "noise_level2": 9,
         "library": "Hicks Undergraduate",
         "pc": true,
         "power": true
@@ -89,6 +90,7 @@ it ('check for correct auth_token and search', function(done){
         .expect(200)
         .expect(function(res)
         {
+            console.log(res.body);
             assert.equal(res.body.status, 200);
             assert.equal(res.body.uid, 64);
         })
