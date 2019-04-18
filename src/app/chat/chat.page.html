@@ -24,8 +24,14 @@
           </span>
       </div>
       <div class="messageContent"
-          [ngClass]="{'isOwnMessageContent':(msg.id == myid)}">
+          [ngClass]="{'isOwnMessageContent':(msg.id == myid)}"
+          *ngIf="msg.message">
           {{msg.message}}
+      </div>
+      <div class="messageContent"
+          [ngClass]="{'isOwnMessageContent':(msg.id == myid)}"
+          *ngIf="msg.pic">
+          <img *ngIf="msg.pic" [src]="msg.pic" class="msg-image">
       </div>
       <div *ngIf="(msg.id == myid)" class="messageData"
           [ngClass]="{'isOwnMessageData':(msg.id == myid)}">
