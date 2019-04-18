@@ -25,10 +25,10 @@ let resume = require('./routes/resume.js');
 let check_match = require('./routes/check_match.js');
 let get_friend_list = require('./routes/get_friend_list.js');
 let get_friend_profile = require('./routes/get_friend_profile.js');
+let add_friend = require('./routes/add_friends.js');
 
 var app = express();
 var bodyParser = require('body-parser');
-
 
 /*app.configure(function() {
   app.use(express.bodyParser({ keepExtensions: true, uploadDir: '/tmp' }));
@@ -58,6 +58,8 @@ app.post('/', function (req, res) {
   console.log(req.body);
   res.json(req.body);
 })
+
+app.use('add_friend', add_friend);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

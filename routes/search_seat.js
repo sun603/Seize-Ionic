@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var uid;
-let add_friend = require('add_friends.js');
 
 /*
 * TODO: Search in the matching_pool
