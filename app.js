@@ -27,6 +27,7 @@ let get_friend_list = require('./routes/get_friend_list.js');
 let get_friend_profile = require('./routes/get_friend_profile.js');
 let add_friend = require('./routes/add_friends.js');
 
+
 var app = express();
 var bodyParser = require('body-parser');
 
@@ -82,6 +83,18 @@ app.use('/resume', resume);
 app.use('/check_match', check_match);
 app.use('/get_friend_list', get_friend_list);
 app.use('/get_friend_profile', get_friend_profile);
+
+// firebase
+
+let _firebase = require('firebase');
+var config = {
+  apiKey: "AIzaSyBLOOFB7s4NYHZJrgdY3QIMCjpeTl71igU",
+  authDomain: "clean-healer-232121.firebaseapp.com",
+  databaseURL: "https://clean-healer-232121.firebaseio.com",
+  storageBucket: "clean-healer-232121.appspot.com",
+};
+exports.fb = _firebase.initializeApp(config);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
