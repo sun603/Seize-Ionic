@@ -3,10 +3,12 @@ var server = require("../app.js");
 var assert = require("assert");
 var mysql = require('mysql');
 
+var token;
+var uid = 64;
 /*
 * testing get friend list for user:
-* email: shao44@purdue.edu
-* password: ShaoZH0923?
+* email: test_user_1@purdue.edu
+* password: TestUSER1
 * */
 it('acquiring token from login', function(done)
 {
@@ -42,4 +44,23 @@ it ('checking for incorrect auth_token', function(done){
             assert.equal(res.body.status, 201);
         })
         .end(done);
+});
+
+it ('check if route post is successful', function(done){
+    let data = {
+        "auth_token": token
+    };
+
+    request(server)
+        .post('/get_friend_list')
+        .send(data)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .expect(function(res){
+            assert.equal(res.body.status, 200);
+            assert.equal(res.body.index, uid);
+        })
+        .end(done);
+
 });
