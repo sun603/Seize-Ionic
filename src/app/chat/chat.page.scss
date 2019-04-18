@@ -13,15 +13,19 @@
 .messageContainer{
     display: flex;
     height: auto;
-    width: 100%;
-    min-width: 400px;
+    width: 80%;
+    min-width: 200px;
     border-radius: 5px;
     align-items:stretch;
     background-color: #eee;
     box-shadow: 0 3px 6px rgba(0,0,0,0.26), 0 3px 6px rgba(0,0,0,0.23);
+    margin: 10px 0;
 }
 
 .isOwnMessageContainer{
+    position: relative;
+    top: 0;
+    left: 20%;
     background-color: #01579B;
 }
 
@@ -38,6 +42,7 @@
 }
 
 .isOwnSender{
+    display: block;
     color: #E1F5FE;
 }
 
@@ -62,4 +67,8 @@
 .isOwnMessageContent{
     background-color: #E3F2FD;
     color: #01579B;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }

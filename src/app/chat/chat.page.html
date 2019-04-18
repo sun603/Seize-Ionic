@@ -12,7 +12,7 @@
   <div *ngFor="let msg of messsub | async">
     <div class="messageContainer"
       [ngClass]="{'isOwnMessageContainer':(msg.id == myid)}">
-      <div class="messageData"
+      <div *ngIf="(msg.id != myid)" class="messageData"
           [ngClass]="{'isOwnMessageData':(msg.id == myid)}">
           <!-- <span class="sender"
               [ngClass]="{'isOwnSender':(mess.id == myid)}">
@@ -26,6 +26,17 @@
       <div class="messageContent"
           [ngClass]="{'isOwnMessageContent':(msg.id == myid)}">
           {{msg.message}}
+      </div>
+      <div *ngIf="(msg.id == myid)" class="messageData"
+          [ngClass]="{'isOwnMessageData':(msg.id == myid)}">
+          <!-- <span class="sender"
+              [ngClass]="{'isOwnSender':(mess.id == myid)}">
+              {{ userName }}
+          </span> -->
+          <span class="timestamp" 
+              [ngClass] = "{'isOwnTimestamp':(msg.id == myid)}">
+              {{ msg.timestamp | date:'medium' }}
+          </span>
       </div>
     </div>
   </div>
