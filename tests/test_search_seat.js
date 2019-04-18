@@ -13,7 +13,7 @@ var uid = 64;
 * */
 it('acquiring token from login', function(done)
 {
-    let login_sql = "SELECT * FROM user_auth WHERE uid = 64"
+    let login_sql = "SELECT * FROM user_auth WHERE uid = 64";
     let login_con = mysql.createConnection({
         host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
         user: "shao44",
@@ -49,12 +49,15 @@ it('check for incorrect auth_token', function(done){
 
 it('post seat by user', function(done)
 {
-    let data = {
-        "auth_token": token,
-        "seat_type": "Sofa",
-        "noise_level": 1,
-        "library":"Hicks Undergraduate"
-    };
+    let data =
+        {
+            "auth_token": token,
+            "seat_type": "s1",
+            "noise_level": 4,
+            "library": "Hicks Undergraduate",
+            "pc": true,
+            "power": true
+        };
 
     request(server)
         .post("/post_seat")
@@ -72,9 +75,11 @@ it('post seat by user', function(done)
 it ('check for correct auth_token and search', function(done){
     let data = {
         "auth_token": token,
-        "seat_type": "Sofa",
-        "noise_level": 1,
-        "library":"Hicks Undergraduate"
+        "seat_type": "s1",
+        "noise_level": 4,
+        "library": "Hicks Undergraduate",
+        "pc": true,
+        "power": true
     };
     request(server)
         .post("/search_seat")
