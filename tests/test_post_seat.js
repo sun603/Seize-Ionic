@@ -52,7 +52,7 @@ it('post seat by user', function(done) {
     let data =
     {
         "auth_token": token,
-        "seat_type": "Sofa",
+        "seat_type": "s1",
         "noise_level": 4,
         "library": "Hicks Undergraduate",
         "pc": true,
@@ -74,76 +74,76 @@ it('post seat by user', function(done) {
         .end(done);
 });
 
-// it('checking if seat_type info is correct.', function(done){
-//     let check_sql = "SELECT * FROM matching_pool WHERE uid = " + uid;
-//     console.log("seat_type check_sql: ", check_sql);
-//     let check_con = mysql.createConnection({
-//         host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
-//         user: "shao44",
-//         password: "ShaoZH0923?",
-//         database: "cs307_sp19_team31"
-//     });
-//
-//     check_con.connect(function(err){
-//         check_con.query(check_sql, function(err, result){
-//             console.log("result: ", result);
-//             let test_result = 'a';
-//             if (result !== undefined){
-//                 if (result.length !== 0){
-//                     test_result = result[0].seat_type;
-//                 }
-//             }
-//             console.log("seat_type = ", test_result);
-//             assert.equal(test_result, "s1");
-//             done();
-//         });
-//     });
-// });
+it('checking if seat_type info is correct.', function(done){
+    let check_sql = "SELECT * FROM matching_pool WHERE uid = " + uid;
+    console.log("seat_type check_sql: ", check_sql);
+    let check_con = mysql.createConnection({
+        host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+        user: "shao44",
+        password: "ShaoZH0923?",
+        database: "cs307_sp19_team31"
+    });
 
-// it ('checking if noise_level info is correct.', function(done){
-//     let check_sql = "SELECT * FROM matching_pool WHERE uid = " + uid;
-//     console.log("check_sql: ", check_sql);
-//     let check_con = mysql.createConnection({
-//         host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
-//         user: "shao44",
-//         password: "ShaoZH0923?",
-//         database: "cs307_sp19_team31"
-//     });
-//
-//     check_con.connect(function(err){
-//         check_con.query(check_sql, function(err, result){
-//             let test_result = "0";
-//             if (result !== undefined){
-//                 if (result.length !== 0){
-//                     test_result = result[0].noise_level;
-//                 }
-//             }
-//             assert.equal(test_result, "1");
-//             console.log("seat_type = ", test_result);
-//         });
-//     });
-//     done();
-// });
-//
-// it ('checking if library info is correct.', function(done){
-//     let check_sql = "SELECT * FROM matching_pool WHERE uid = " + uid;
-//     console.log("check_sql: ", check_sql);
-//     let check_con = mysql.createConnection({
-//         host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
-//         user: "shao44",
-//         password: "ShaoZH0923?",
-//         database: "cs307_sp19_team31"
-//     });
-//
-//     check_con.connect(function(err){
-//         check_con.query(check_sql, function(err, result){
-//             assert.equal(result[0].library, "Hicks Undergraduate");
-//             console.log("library = ", result[0].library);
-//         });
-//     });
-//     done();
-// });
-//
+    check_con.connect(function(err){
+        check_con.query(check_sql, function(err, result){
+            console.log("result: ", result);
+            let test_result = 'a';
+            if (result !== undefined){
+                if (result.length !== 0){
+                    test_result = result[0].seat_type;
+                }
+            }
+            console.log("seat_type = ", test_result);
+            assert.equal(test_result, "s1");
+            done();
+        });
+    });
+});
+
+it ('checking if noise_level info is correct.', function(done){
+    let check_sql = "SELECT * FROM matching_pool WHERE uid = " + uid;
+    console.log("check_sql: ", check_sql);
+    let check_con = mysql.createConnection({
+        host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+        user: "shao44",
+        password: "ShaoZH0923?",
+        database: "cs307_sp19_team31"
+    });
+
+    check_con.connect(function(err){
+        check_con.query(check_sql, function(err, result){
+            let test_result = "0";
+            if (result !== undefined){
+                if (result.length !== 0){
+                    test_result = result[0].noise_level;
+                }
+            }
+            assert.equal(test_result, "4");
+            console.log("seat_type = ", test_result);
+        });
+    });
+    done();
+});
+
+it ('checking if library info is correct.', function(done){
+    let check_sql = "SELECT * FROM matching_pool WHERE uid = " + uid;
+    console.log("check_sql: ", check_sql);
+    let check_con = mysql.createConnection({
+        host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
+        user: "shao44",
+        password: "ShaoZH0923?",
+        database: "cs307_sp19_team31"
+    });
+
+    check_con.connect(function(err){
+        check_con.query(check_sql, function(err, result){
+            assert.equal(result[0].library, "Hicks Undergraduate");
+            console.log("library = ", result[0].library);
+        });
+    });
+    done();
+});
+
 // it ('delete test1 post_seat info', function(done){
 //     let delete_sql = "DELETE FROM matching_pool WHERE uid = 64";
 //     let delete_con = mysql.createConnection({
