@@ -49,12 +49,15 @@ it('check for incorrect auth_token', function(done){
 
 it('post seat by user', function(done)
 {
-    let data = {
-        "auth_token": token,
-        "seat_type": "Sofa",
-        "noise_level": 1,
-        "library":"Hicks Undergraduate"
-    };
+    let data =
+        {
+            "auth_token": token,
+            "seat_type": "s1",
+            "noise_level": 4,
+            "library": "Hicks Undergraduate",
+            "pc": true,
+            "power": true
+        };
 
     request(server)
         .post("/post_seat")
@@ -72,9 +75,11 @@ it('post seat by user', function(done)
 it ('check for correct auth_token and search', function(done){
     let data = {
         "auth_token": token,
-        "seat_type": "Sofa",
-        "noise_level": 1,
-        "library":"Hicks Undergraduate"
+        "seat_type": "s1",
+        "noise_level": 4,
+        "library": "Hicks Undergraduate",
+        "pc": true,
+        "power": true
     };
     request(server)
         .post("/search_seat")
