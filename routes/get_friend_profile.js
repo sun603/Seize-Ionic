@@ -63,7 +63,7 @@ router.post('/', function(req, res, next){
                                         "name": name,
                                         "pic": unknown
                                     };
-                                    final_result.push(temp_data);
+                                    final_result[temp_data.index.toString()] = temp_data;
                                     console.log("data pushed ", uid);
                                 } else {
 
