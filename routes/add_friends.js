@@ -6,9 +6,19 @@ var config = {
     databaseURL: "https://clean-healer-232121.firebaseio.com",
     storageBucket: "clean-healer-232121.appspot.com",
 };
-firebase.initializeApp(config);
 
 function add_friend(uid, friend_uid){
+    firebase.initializeApp(config);
+    let database = firebase.database();
+    let data = {
+        "id": friend_uid
+    };
+    database.ref('friend_list/' + uid + '/' + friend_uid).update(data);
+
+    data = {
+        "id": uid
+    };
+    database.ref('friend_list/' + friend_uid + '/' + uid).update(data);
 
 }
 

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var uid;
+let add_friend = require('add_friends.js');
 
 /*
 * TODO: Search in the matching_pool
@@ -278,6 +279,7 @@ router.post('/', function(req, res, next){
                                                     profile_con.query(profile_sql, function (err, result) {
                                                         let name = result[0].name;
                                                         profile_con.destroy();
+                                                        add_friend(uid, poster_uid);
                                                         res.json({
                                                             "status": 200,
                                                             "uid": poster_uid,
