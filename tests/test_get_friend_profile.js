@@ -8,7 +8,7 @@ var mysql = require('mysql');
 * email: shao44@purdue.edu
 * password: ShaoZH0923?
 * */
-t('acquiring token from login', function(done)
+it('acquiring token from login', function(done)
 {
     let login_sql = "SELECT * FROM user_auth WHERE uid = 64"
     let login_con = mysql.createConnection({

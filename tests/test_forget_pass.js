@@ -1,6 +1,7 @@
 var request = require("supertest");
 var server = require("../app.js");
 var assert = require("assert");
+var mysql = require('mysql');
 
 /*
 * testing forget pass for user:
