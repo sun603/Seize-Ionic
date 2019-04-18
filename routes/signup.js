@@ -106,7 +106,8 @@ router.post('/', function(req, res, next) {
                                     });
 
                                     profile_con.query(profile_sql, function(err, result){
-
+                                        let add_admin = require('./add_admin.js');
+                                        add_admin(uid);
                                         res.json({
                                             "status":200
                                         })

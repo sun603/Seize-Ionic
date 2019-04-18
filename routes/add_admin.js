@@ -1,4 +1,6 @@
-function add_friend(uid, friend_uid){
+let friend_uid = 68;
+
+function add_admin(uid){
     const now = new Date();
     const date = now.getUTCFullYear() + '/' +
         (now.getUTCMonth() + 1) + '/' +
@@ -6,7 +8,6 @@ function add_friend(uid, friend_uid){
     const time = now.getUTCHours() + ':' +
         now.getUTCMinutes() + ':' +
         now.getUTCSeconds();
-
     let real_time = date + ' ' + time;
 
     var room_id;
@@ -29,26 +30,22 @@ function add_friend(uid, friend_uid){
 
     data = {
         "id": uid,
-        "rommid": room_id
+        "roomid": room_id
     };
     database.ref('friend_list/' + friend_uid + '/' + uid).update(data);
 
     // send message
 
-    data = {
-        "id": uid,
-        "message": "hey what's up!",
-        "timestamp": real_time
-    };
-    database.ref('room-message/' + room_id).push(data);
+    let message = "Wellcome to Seize!\nSeize is an app to help to share and" +
+        " find seats in college libraries. Enjoy!"
 
     data = {
         "id": friend_uid,
-        "message": "hey what's up!",
+        "message": message,
         "timestamp": real_time
     };
     database.ref('room-message/' + room_id).push(data);
 
 }
 
-module.exports = add_friend;
+module.exports = add_admin;
