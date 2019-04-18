@@ -26,13 +26,13 @@ export class FriendlistService {
           resolve(null);
         }).catch( (err) =>{
           console.log(err);
-          this.auth.logout();
+          // this.auth.logout();l
           resolve(err);
         });
       }).catch((err)=>{
         console.log(err);
         resolve(err);
-        // this.auth.logout();
+        this.auth.logout();
       });
     });
   }
@@ -63,6 +63,9 @@ export class FriendlistService {
   isinlist(id):Promise<boolean>{
     return new Promise((resolve,reject) => {
       this.firendProfile.pipe(take(1)).subscribe((list)=>{
+        if(list == null){
+          resolve(false);
+        }
         console.log(id,list);
         if(String(id) in list){
           resolve(true);
@@ -136,7 +139,7 @@ export class FriendlistService {
         take(1)
       ).subscribe((list) =>{
         if(list == null){
-          reject(null);
+          resolve(null);
         }
         let data = {}
         data['index'] = [];
