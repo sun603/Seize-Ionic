@@ -32,6 +32,25 @@ export class FriendlistService {
       });
     });
   }
+  firendtoroom(firend:number):Promise<any>{
+    return new Promise((resolve,reject) => {
+      let my:number;
+      this.getIndex().then( val => {
+        my = val;
+        if(my<firend){
+          resolve(Number(String(my)+String(firend)));
+        }else{
+          resolve(Number(String(firend)+String(my)));
+        }
+      }).catch(
+        (err) =>{
+          console.log(err);
+          this.auth.logout();
+          reject(err);
+        }
+      );
+    });
+  }
   fireFriends(): Observable<AngularFireAction<DatabaseSnapshot<{}>>[]>{
     //https://stackoverflow.com/questions/41585514/how-to-return-observable-after-some-promise-get-resolved-in-ionic-2-angular-2
     return from(this.getIndex()).pipe(mergeMap( 

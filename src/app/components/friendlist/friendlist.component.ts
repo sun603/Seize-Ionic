@@ -46,8 +46,11 @@ export class FriendlistComponent implements OnInit {
   }
 
   openchat(firend:any){
-    console.log(firend);
-    this.router.navigate(['/chat',5259]);
+    console.log("open chat",firend,firend['index']);
+    this.firends.firendtoroom(firend['index']).then((id) =>{
+      this.router.navigate(['/chat',id]);
+    });
+    
   }
 
 
