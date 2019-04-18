@@ -18,18 +18,6 @@ function add_friend(uid, friend_uid){
 
     let real_time = date + ' ' + time;
 
-    firebase.initializeApp(config);
-    let database = firebase.database();
-    let data = {
-        "id": friend_uid
-    };
-    database.ref('friend_list/' + uid + '/' + friend_uid).update(data);
-
-    data = {
-        "id": uid
-    };
-    database.ref('friend_list/' + friend_uid + '/' + uid).update(data);
-
     var room_id;
     if (uid < friend_uid){
         room_id = uid + '' + friend_uid;
@@ -37,6 +25,22 @@ function add_friend(uid, friend_uid){
     else{
         room_id = friend_uid + '' + uid;
     }
+
+    firebase.initializeApp(config);
+    let database = firebase.database();
+    let data = {
+        "id": friend_uid,
+        "roomid": room_id
+    };
+    database.ref('friend_list/' + uid + '/' + friend_uid).update(data);
+
+    data = {
+        "id": uid,
+        "rommid": room_id
+    };
+    database.ref('friend_list/' + friend_uid + '/' + uid).update(data);
+
+    // send message
 
     data = {
         "id": uid,
