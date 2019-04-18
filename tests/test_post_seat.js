@@ -49,11 +49,14 @@ it ('checking for incorrect auth_token', function(done){
 });
 
 it('post seat by user', function(done) {
-    let data = {
+    let data =
+    {
         "auth_token": token,
-        "seat_type": "s1",
-        "noise_level": 1,
-        "library":"Hicks Undergraduate"
+        "seat_type": "Sofa",
+        "noise_level": 4,
+        "library": "Hicks Undergraduate",
+        "pc": true,
+        "power": true
     };
 
     request(server)
