@@ -115,8 +115,8 @@ router.post('/', function(req, res, next){
                                     }
                                     else{
                                         // user already have pic
-                                        let update_sql = "update profile_pic set pic_data = " +
-                                            pic_stream + " where pic_id = " + uid;
+                                        let update_sql = "update profile_pic set pic_data = \"" +
+                                            pic_stream + "\" where pic_id = " + uid;
                                         let update_con = mysql.createConnection({
                                             host: "cs307-spring19-team31.c2n62lnzxryr.us-east-2.rds.amazonaws.com",
                                             user: "shao44",
