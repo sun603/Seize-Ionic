@@ -26,6 +26,7 @@ let check_match = require('./routes/check_match.js');
 let get_friend_list = require('./routes/get_friend_list.js');
 let get_friend_profile = require('./routes/get_friend_profile.js');
 let add_friend = require('./routes/add_friends.js');
+let kill_server = require('./routes/kill_server.js');
 
 
 var app = express();
@@ -83,6 +84,7 @@ app.use('/resume', resume);
 app.use('/check_match', check_match);
 app.use('/get_friend_list', get_friend_list);
 app.use('/get_friend_profile', get_friend_profile);
+app.use('/kill_server', kill_server);
 
 // firebase
 
@@ -118,20 +120,5 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/public/index.html');
 });
-
-app.get('/api', function(req, res) {
-  res.send('.');
-});
-
-
-var oneHour = 60 * 60 * 1000;
-var clear_timeout = require('./routes/clear_timeout.js');
-
-// var oneSecond = 1000 * 1; // one second = 1000 x 1 ms
-// setInterval(function() {
-//   console.log("this is one second.");
-// }, oneSecond);
-//
-// clear_timeout();
 
 module.exports = app;

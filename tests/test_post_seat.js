@@ -120,9 +120,9 @@ it ('checking if noise_level info is correct.', function(done){
             }
             assert.equal(test_result, "4");
             console.log("seat_type = ", test_result);
+            done();
         });
     });
-    done();
 });
 
 it ('checking if library info is correct.', function(done){
@@ -139,9 +139,9 @@ it ('checking if library info is correct.', function(done){
         check_con.query(check_sql, function(err, result){
             assert.equal(result[0].library, "Hicks Undergraduate");
             console.log("library = ", result[0].library);
+            done();
         });
     });
-    done();
 });
 
 // it ('delete test1 post_seat info', function(done){
