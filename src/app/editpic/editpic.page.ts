@@ -11,7 +11,7 @@ import { Crop } from '@ionic-native/crop/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { take } from 'rxjs/operators';
-
+import { Platform } from '@ionic/angular';
 declare let window: any;
 
 @Component({
@@ -29,7 +29,8 @@ export class EditpicPage implements OnInit {
               public camera: Camera,
               private imagePicker: ImagePicker,
               private crop: Crop,
-              private transfer: FileTransfer
+              private transfer: FileTransfer,
+              private plt:Platform
   ) { }
   profileImgUrl: any;
   newpic: any;
@@ -46,40 +47,50 @@ export class EditpicPage implements OnInit {
                 newImage => {
                   
                   console.log('new image path is: ' , (typeof newImage), newImage);
-                  this.readFile(newImage).then(function(pic) {
-                    console.log('pic = ', pic);
-                    this.newpic = pic;
-                    console.log('newpic = ', this.newpic);
-                    this.updatepic();
-                  });
-
-     
-
+                  this.readFile(newImage, this.updatepic);
                 },
                 error => {console.log(error); console.error('Error cropping image', error); }
             );
       }
     }, (err) => { console.log(err); });
   }
-  readFile( pathToFile): Promise<any> {
-    return new Promise((resolve,reject) => {
-      console.log(pathToFile);
-      pathToFile = pathToFile.substring(0, pathToFile.indexOf('?'));
-      console.log(pathToFile);
-      window.resolveLocalFileSystemURL( pathToFile , function (fileEntry) {
-        fileEntry.file(function (file) {
-          console.log('file: ', file);
-          const reader: FileReader = new FileReader();
-          reader.onloadend = (e) => {
-            console.log(e);
-            let tmp: string = reader.result as string;
-            // tmp = tmp.replace(/.*\,/,"");
-            // console.log('tmp: ', tmp);
-            resolve(tmp);
-            // return event.target.result;
-          };
-          reader.readAsDataURL(file);
-        });
+  cropUpload2() {
+    this.imagePicker.getPictures({ maximumImagesCount: 1, outputType: 1 }).then((results) => {
+      if(results[0]){
+        console.log("pic uri",results[0]);
+        this.updatepic('data:image/jpeg;base64,'+results[0]);
+      }
+    }).then( ()=>{
+      this._location.back();
+    }).catch((err?)=>{
+        this._location.back();
+      }
+    );
+  }
+  tmpfunc(pic){
+    console.log('pic = ', pic);
+    // this.newpic = pic;
+    // console.log('newpic = ', this.newpic);
+    this.updatepic(pic);
+  }
+  readFile( pathToFile , callback) {
+    // console.log(pathToFile);
+    pathToFile = pathToFile.substring(0, pathToFile.indexOf('?'));
+    console.log(pathToFile);
+    window.resolveLocalFileSystemURL( pathToFile , function (fileEntry) {
+      fileEntry.file(function (file) {
+        console.log('file: ', file);
+        const reader: FileReader = new FileReader();
+        reader.onloadend = (e) => {
+          console.log(e);
+          let tmp: string = reader.result as string;
+          // tmp = tmp.replace(/.*\,/,"");
+          console.log('tmp: ', tmp);
+          // this.newpic = tmp;
+          callback(tmp);
+          // return event.target.result;
+        };
+        reader.readAsDataURL(file);
       });
     });
   }
@@ -95,6 +106,9 @@ export class EditpicPage implements OnInit {
         this.profileImgUrl = val;
       }
     ));
+    if(this.plt.is('ios') || this.plt.is('android')){
+      this.cropUpload2();
+    }
   }
   ngOnDestroy(){
     console.log("destroy editpic");
@@ -116,17 +130,21 @@ export class EditpicPage implements OnInit {
     }
     myReader.readAsDataURL(input);
   }
-  updatepic(){
-    if(this.newpic ==  null || this.newpic == undefined){
+  updatepic(pic?){
+    let data = {};
+    if(pic){
+      data["pic"] = pic;
+    }else if(this.newpic ==  null || this.newpic == undefined){
       console.log("no pic SOTP!");
       return;
+    }else{
+      data["pic"] =this.newpic;
     }
-    let data = {
-      "pic":this.newpic,
-    };
     this.prof.updatepic(data).then(res =>{
       console.log(res);
       if(res["status"] == 200){
+        this._location.back();
+      }else{
         this._location.back();
       }
     }).catch(err =>{
