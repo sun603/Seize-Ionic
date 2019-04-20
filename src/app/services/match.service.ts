@@ -157,7 +157,7 @@ export class MatchService {
         }).catch( err =>{
           console.log(err);
         });
-      }, oneSecond*10);
+      }, oneSecond*2);
     }else{
       if(this.timerId){
         clearInterval(this.timerId);
