@@ -146,6 +146,7 @@ export class MatchService {
               this.matched(res['uid']);
             }else if(res["status"] && res["status"] == 201){
               console.log("check 201",res);
+              clearInterval(this.timerId);
               this.auth.logout();
             }else if(res["status"] == 202){
               console.log("cont to wait",res);
