@@ -181,7 +181,7 @@ router.post('/', function(req, res, next){
 
                                             console.log(result);
                                             // 0. Find the best match from
-                                            conosole.log("result found: ", result);
+                                            console.log("result found: ", result);
 
                                             var n = result.length;
                                             var grid = new Array(n);
