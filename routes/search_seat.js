@@ -181,6 +181,7 @@ router.post('/', function(req, res, next){
 
                                             console.log(result);
                                             // 0. Find the best match from
+                                            conosole.log("result found: ", result);
 
                                             var n = result.length;
                                             var grid = new Array(n);
@@ -203,6 +204,7 @@ router.post('/', function(req, res, next){
                                                 if ( noise_level_high_search >= result[i].noise_level &&
                                                      noise_level_low_search <= result[i].noise_level){
                                                     // do nothing, valid noise level
+                                                    t = 1;
                                                 }
                                                 else{
                                                     t = 0;
