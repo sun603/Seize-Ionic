@@ -27,6 +27,7 @@ router.post('/', function(req, res, next){
 
     auth_con.connect(function(err){
         if (err){
+            auth_con.destroy();
             res.json({
                 "status": 404,
                 "error message": "database connection error"
@@ -34,12 +35,14 @@ router.post('/', function(req, res, next){
         } else{
             auth_con.query(auth_sql, function(err, result){
                 if (result === undefined){
+                    auth_con.destroy();
                     res.json({
                         "status": 404,
                         "error message": "database connection capacity error"
                     });
                 }
                 else if (result.length === 0) {
+                    auth_con.destroy();
                     res.json({
                         "status": 201,
                         "error message": "invalid auth_token"
@@ -68,12 +71,14 @@ router.post('/', function(req, res, next){
                         else{
                             search_con.query(search_sql, function(err, result){
                                 if (result === undefined){
+                                    search_con.destroy();
                                     res.json({
                                         "status": 404,
                                         "error message": "database connection capacity error"
                                     });
                                 }
                                 else if (result.length === 0) {
+                                    search_con.destroy();
                                     res.json({
                                         "status": 205,
                                         "error message": "Unknown error - user not posted in matching pool"
@@ -97,6 +102,7 @@ router.post('/', function(req, res, next){
 
                                         time_con.connect(function(err){
                                             time_con.query(time_sql, function(err, result){
+                                                time_con.destroy();
                                                 res.json({
                                                     "status": 202,
                                                     "error_message": "match not found"
